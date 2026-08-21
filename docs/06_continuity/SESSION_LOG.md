@@ -1,46 +1,22 @@
 # Session Log
 
-## 2026-08-21 — Repository Initialization and Collaboration/Handoff Definition
+## 2026-08-21 — Repository Initialization
+The project repository was established as the persistent source of truth. Project-control files, Dataset Requirement Matrix, registry and qualification template were established.
 
-### Context
+## 2026-08-21 — Dataset Search & Qualification
+Recovered the repository state, performed evidence-backed candidate research, qualified a complementary portfolio and recorded D1–D10 coverage/gaps. KEEP: WiSig, Oregon State WiFi RFFP, Oregon State LoRa RFFP, SMoRFFI. SECONDARY: ORACLE, Bluetooth smartphone RF database. No D1–D10 scientific validation was claimed.
 
-The project has three foundational source documents: the initial IDP, the complete project architecture, and the Dataset Requirement Matrix. The project repository is being established as the permanent source of truth for a four-member team.
+## 2026-08-21 — Branch anomaly investigation
+### Finding
+`main` and `develop` had diverged histories. `main` was protected, so direct force movement was rejected. PR #2 was merged into `develop`, integrating the dataset qualification work.
 
-### Work Completed
+A direct PR from `develop` to `main` was attempted but GitHub reported merge conflicts because the branches had independent histories. That PR was closed without merge. No branch was force-reset.
 
-- Confirmed repository: `SujitSaiY2007/RF-Fingerprinting-Project`.
-- Initialized the repository as the project master/source-of-truth repository.
-- Added the master README and project-control files.
-- Added `PROJECT_STATE.md`.
-- Added `CURRENT_OBJECTIVE.md`.
-- Added `PROJECT_MASTER_PLAN.md`.
-- Added the project baseline, dataset strategy records, dataset registry and qualification template.
-- Established `main` as the stable branch and `develop` as the integration branch.
-- Established branch/PR-based collaboration guidance.
-- Established the ChatGPT continuation protocol.
+### Repair strategy
+Created `reconcile/main-stable-2026-08-21` from `main` and synchronized the qualified dataset portfolio, project state, current objective, handoff and continuity decisions/log into that stable-tree branch. The branch will be promoted to `main` through a normal PR.
 
-### Current Team Status
+### Current state
+The repository is being repaired without rewriting protected history. After the reconciliation PR is merged, `main` and `develop` should be re-compared. If their trees are equivalent but histories remain divergent, the remaining difference is historical ancestry rather than structural project content and should not be force-rewritten.
 
-There are four team members. **All four are currently working on the same overall workstream: Dataset Search & Validation/Qualification.** There is no fixed technical division among the four members at this stage. Each member may independently investigate the same or overlapping datasets and questions.
-
-### Integration Decision
-
-Individual work should remain attributable through appropriate task/research branches. Meaningful contributions are integrated through Pull Requests into `develop`; the integrated stable state is promoted to `main` through Pull Request/review. This workflow is for collaboration and traceability, not permanent technical ownership.
-
-A merge into `main` is a repository integration event, not scientific validation.
-
-### Current Objective
-
-Continue Dataset Search & Qualification. Build an evidence-backed dataset portfolio for D1–D10, compare overlapping team findings, document missing requirements and limitations, and establish KEEP / SECONDARY / REJECT decisions.
-
-### Current Next Step
-
-Begin/continue candidate dataset search and qualification against the Dataset Requirement Matrix. Do not begin substantial model implementation until the dataset portfolio is sufficiently qualified for the next validation step.
-
-### Continuity Requirement
-
-The next ChatGPT session must read the project-control files and latest continuity records before substantive work, provide a Continuity Check, and execute the current objective rather than restarting the project.
-
-### Important Constraint
-
-Do not treat D1–D10 as completed merely because requirements have been written. Requirements define what must be demonstrated; actual validation remains future work.
+## 2026-08-21 — D1 transition
+Dataset qualification is complete as a development-substrate gate. The next project gate is D1 Raw RF Data / Ingestion, beginning with WiSig and Oregon State WiFi. D1 must establish provenance, manifests/checksums, metadata normalization, sample representation and integrity checks before substantive downstream implementation.
