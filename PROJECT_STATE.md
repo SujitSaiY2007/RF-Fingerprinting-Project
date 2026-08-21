@@ -9,57 +9,61 @@
 - Integration branch: `develop`
 - Development status: **Phase 1 — Preparation**
 - Current workstream: **Dataset Search & Validation / Qualification**
-- Implementation status: **Not started / intentionally gated**
+- Implementation status: **D1 ready to begin after PR/repository reconciliation**
 - Team size: **4 members**
 
 ## Current team model
 
-All four team members are currently working on the same overall workstream at individual levels: Dataset Search & Validation / Qualification. There is no permanent technical division or fixed member-to-module ownership. Independent overlap is expected and should be consolidated through GitHub evidence.
+All four team members remain on the same overall dataset-search/qualification workstream. No permanent technical division exists.
 
-## Completed in this workstream
+## Dataset qualification milestone
 
-- Recovered the repository continuity layer and verified the Dataset Requirement Matrix.
-- Confirmed that the dataset registry was previously only a header/template and contained no qualified candidates.
-- Performed a first external evidence-backed candidate search.
-- Added a preliminary portfolio and qualification records for WiSig, Oregon State WiFi RFFP, Oregon State LoRa RFFP, SMoRFFI, ORACLE and a Bluetooth smartphone database.
-- Populated `datasets/dataset_registry.csv` with preliminary decisions and known limitations.
-- Established that a multi-dataset portfolio is necessary at the current evidence level.
+The initial portfolio has now been qualified sufficiently to select development substrates for D1–D10. This is a **portfolio readiness decision**, not scientific validation of D1–D10.
 
-## Current preliminary portfolio
+### Primary KEEP datasets
 
-**KEEP:** WiSig; Oregon State WiFi RFFP; Oregon State LoRa RFFP; SMoRFFI.
+- WiSig — scale, receiver variation, multi-day robustness.
+- Oregon State WiFi RFFP — temporal/domain variation with repeated Pycom devices.
+- Oregon State LoRa RFFP — same-model, environmental/location/distance/receiver variation.
+- SMoRFFI — large-scale same-model discrimination.
 
-**SECONDARY:** ORACLE; Bluetooth smartphone database.
+### SECONDARY datasets
 
-These are preliminary qualification decisions, not final portfolio lock decisions.
+- ORACLE — controlled hardware-impairment/distance benchmark.
+- Bluetooth smartphone RF database — optional cross-technology benchmark; non-blocking.
 
-## Important evidence-based interpretation
+## D1–D10 coverage decision
 
-- WiSig is strongest for scale, receiver variation and multi-day robustness.
-- Oregon State WiFi is strong for temporal/domain variation with repeated Pycom devices.
-- Oregon State LoRa is strong for same-model and environmental robustness outside WiFi.
-- SMoRFFI is especially important for large-scale same-model discrimination.
-- ORACLE is valuable as a controlled hardware-impairment/distance benchmark but is too limited to be the primary portfolio.
-- D8 remains incompletely qualified because a defensible continual-learning protocol requires verified sequential/session semantics.
-- D9 should continue to use legitimate RF data plus controlled/synthetic poisoning under DEC-005.
+The portfolio provides a defensible data substrate for all ten stages. D6 is supported by constructible identity-level holdouts; D8 has adequate repeated temporal observations but still requires a formally specified continual-learning protocol; D9 uses legitimate RF data plus controlled/synthetic poisoning under DEC-005.
 
-## Current blockers / open questions
+The portfolio does not itself prove any stage. Scientific completion remains experiment-dependent.
 
-1. Direct inspection of each candidate's actual metadata/download package is still required before final lock.
-2. Dataset-specific license/redistribution/use terms must be confirmed from the actual dataset source, not inferred from the paper license alone.
-3. SMoRFFI receiver/session/day/environment coverage is not yet sufficiently established for D7/D8.
-4. Oregon State scenario-level metadata and exact sequential semantics require direct inspection.
-5. A final split protocol for D6 unknown-device evaluation must be defined before claiming open-set support.
-6. Portfolio lock criteria and final dataset-to-D-stage responsibility matrix still need to be finalized.
+## Remaining non-dataset gaps
 
-## Repository consistency issue discovered
+1. Leakage-safe session/day/device split implementation.
+2. Explicit D6 unknown-identity holdout protocol and metrics.
+3. Explicit chronological D8 profile-update stream, frozen evaluation population, acceptance and rollback rules.
+4. Controlled/synthetic D9 poisoning generation and evaluation.
+5. Cross-dataset normalization and common RF representation.
+6. Later hardware-transfer validation.
 
-`main` and `develop` are currently **diverged** rather than being in the clean relationship described by the collaboration model. GitHub reports `develop` ahead by 7 commits and behind `main` by 7 commits. The latest closed PR #1 established the initial infrastructure, but later continuity commits exist on the branches without a subsequent reconciliation. This is a repository-state issue, not a scientific issue, and must be resolved before relying on `develop` as a clean integration base.
+These are experimental/design gates, not blockers to beginning D1.
 
-## Next exact action
+## Repository consistency issue
 
-Perform direct dataset-package/metadata/access verification for the four KEEP candidates, beginning with WiSig and Oregon State RFFP, then SMoRFFI and ORACLE as required. Convert every major claim from "reported by source" to "verified for project use" or explicitly leave it unresolved. Then produce the final coverage/gap matrix and only after that decide whether the portfolio can be locked.
+`main` and `develop` remain diverged by 7 commits in each direction. This is a repository integration issue and should be reconciled before using `develop` as the long-term integration baseline.
+
+## Phase transition decision
+
+**Dataset Search & Qualification is complete for the purpose of selecting D1 development substrates, subject to scientific re-evaluation if implementation reveals a material contradiction.** Further dataset searching should be triggered only by a specific evidence gap, access/licensing failure, or reproducibility failure.
+
+## Exact next action
+
+1. Review/merge the dataset qualification PR into `develop` after team review.
+2. Deliberately reconcile `develop` and `main`.
+3. Begin D1: raw RF ingestion/provenance validation on WiSig + Oregon State WiFi as the initial implementation pair.
+4. Preserve SMoRFFI and Oregon LoRa as parallel validation substrates for later D3–D7 work.
 
 ## Validation status
 
-D1–D10 remain scientifically incomplete. No dataset qualification is itself evidence that any D-stage has been validated.
+D1–D10 remain scientifically incomplete. Dataset qualification is a readiness gate, not validation evidence.
