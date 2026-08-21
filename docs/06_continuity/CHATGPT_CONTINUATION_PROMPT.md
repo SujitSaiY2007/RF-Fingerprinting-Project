@@ -31,6 +31,25 @@ The project is physics-based RF fingerprinting with continuous device learning. 
 
 The development philosophy is software-first: existing/public datasets are the primary development and validation substrate. Hardware capture is a later transfer-validation domain unless the repository explicitly changes this decision.
 
+## Current team collaboration state
+
+There are four team members. **At the current stage, all four members are working on the same overall workstream: Dataset Search & Validation. There is no permanent technical division among the members.** Each member may independently investigate datasets, requirements, evidence, qualification criteria, documentation, or related validation questions. Overlap is expected and is not itself a problem.
+
+Do not invent permanent member-to-module ownership unless the team explicitly decides to introduce such a division later.
+
+## Git integration model
+
+Team collaboration and technical ownership are separate concerns.
+
+- `main` = stable project state / integrated final-product baseline.
+- `develop` = team integration branch.
+- `feature/*`, `research/*`, or other task branches = isolated individual work where useful.
+- Members should use Pull Requests to integrate meaningful work into `develop`.
+- After review and appropriate validation, `develop` can be promoted into `main` through a Pull Request.
+- The PR description must explain what was added, what evidence supports it, and any unresolved limitations.
+- If multiple members independently investigate the same dataset/topic, their evidence should be compared and consolidated; do not silently overwrite or discard another member's work.
+- A Git merge into `main` means the change is integrated into the stable repository. It does **not** by itself mean that a scientific hypothesis or D-stage has been validated.
+
 ## Validation framework
 
 D1 Raw RF Data / Ingestion
