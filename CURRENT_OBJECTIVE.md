@@ -1,53 +1,32 @@
 # CURRENT OBJECTIVE
 
-## Objective
+## Current gate
+**D1 — Raw RF Data / Ingestion**
 
-Perform Dataset Search & Qualification for the RF Fingerprinting project.
+The Dataset Search & Validation / Qualification workstream is complete as a development-substrate selection gate. It is not scientific validation.
 
-## Current team mode
+## Immediate objective
+Establish a reproducible, provenance-aware, integrity-checked ingestion layer for the selected RF datasets, beginning with WiSig and Oregon State WiFi RFFP.
 
-All four team members are currently working on this same objective independently. There is **no fixed technical division of the project among the four members at this stage**. Independent work may overlap intentionally and should be consolidated through GitHub rather than treated as competing implementations.
+## D1 must establish
+- Dataset/version identity and source provenance.
+- Acquisition instructions without committing raw RF archives.
+- File/package manifests and checksums where feasible.
+- Raw sample representation and dtype/shape interpretation.
+- Metadata extraction into a common internal schema.
+- Device/session/day/receiver/environment identifiers needed for later leakage-safe experiments.
+- Basic integrity and loadability tests.
+- Explicit handling of missing metadata.
+- Reproducible local data-root configuration.
 
-## Required Output
+## Scientific discipline
+Do not treat successful file loading as D1 scientific validation. D1 is complete only when its defined ingestion experiment, evidence, evaluation protocol and acceptance criteria are satisfied.
 
-Create a defensible dataset portfolio in which every selected dataset has an explicit experimental responsibility.
+## Initial datasets
+1. WiSig — primary scale/receiver/day substrate.
+2. Oregon State WiFi RFFP — primary temporal/domain substrate.
 
-For every candidate dataset record:
+Oregon State LoRa and SMoRFFI remain reserved for complementary downstream validation responsibilities.
 
-- Dataset name and source
-- Intended D-stage(s)
-- Raw IQ availability
-- Device/transmitter labels
-- Number and type of physical transmitters
-- Same-model availability
-- Session/day structure
-- Receiver information
-- Distance/environment information
-- Sampling rate and center frequency
-- Waveform/protocol information
-- Sequential/temporal structure
-- Known/unknown-device suitability
-- Documentation and provenance
-- License and intended-use compatibility
-- Reproducibility/accessibility
-- Data integrity
-- Missing information
-- Validation experiments possible
-- Qualification decision: KEEP / SECONDARY / REJECT
-- Reason for decision
-
-## GitHub integration
-
-Individual members should preserve meaningful independent work in their own task/research branches where isolation is useful. Use Pull Requests to integrate contributions into `develop`; after review and appropriate validation, promote the integrated stable state to `main` through a Pull Request. The branch structure is about safe integration, **not about permanent division of technical ownership**.
-
-When multiple members investigate the same dataset, keep the work attributable and mergeable. Consolidation should compare evidence and conclusions rather than silently overwriting one member's findings.
-
-## Research Discipline
-
-Do not modify project claims to fit available datasets. If a dataset cannot support a desired claim, record that limitation explicitly.
-
-Do not download or commit large raw datasets into Git. Store metadata, manifests, qualification records, scripts, and reproducibility information instead.
-
-## Completion Condition
-
-This objective is complete only when the candidate dataset portfolio is sufficiently qualified to support the next implementation/validation step without relying on undocumented assumptions.
+## Continuity
+Any material D1 decision, dataset limitation, protocol or acceptance result must be recorded in GitHub. Raw large datasets must remain outside Git.
