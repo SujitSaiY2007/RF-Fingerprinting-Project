@@ -26,20 +26,20 @@ The repository stores project knowledge, decisions, implementation, experiments,
 
 ## DEC-007 — Current team collaboration model
 
-The project has four team members and no permanent division into technical ownership areas. All four are currently working on Dataset Search & Validation independently; overlap is intentional.
+The project has four team members. There is currently no permanent division of the project into four separate technical ownership areas. All four members are presently working on the same project workstream: Dataset Search & Validation, independently at the individual level. Do not invent a fixed member-to-module assignment.
 
-## DEC-008 — Preliminary multi-dataset portfolio
+## DEC-008 — Integration into main
 
-The first evidence-backed qualification pass indicates that a multi-dataset portfolio is necessary. Preliminary KEEP candidates are WiSig, Oregon State WiFi RFFP, Oregon State LoRa RFFP and SMoRFFI. ORACLE and the Bluetooth smartphone database are retained as SECONDARY candidates. These decisions are preliminary and do not constitute final portfolio lock.
+A merge into `main` is a repository integration event, not scientific validation. `main` is the stable state; `develop` is the integration branch; task/research branches provide isolation and attribution.
 
-## DEC-009 — Same-model coverage is a distinct requirement
+## DEC-009 — Dataset portfolio qualification gate
 
-Large heterogeneous datasets such as WiSig should not be assumed to prove subtle same-model fingerprinting. A dedicated same-model dataset such as SMoRFFI and/or the Oregon State same-model LoRa dataset is required for that responsibility.
+As of 2026-08-21, the dataset search/qualification workstream has produced a sufficiently complementary development-substrate portfolio to begin D1. Primary KEEP datasets are WiSig, Oregon State WiFi RFFP, Oregon State LoRa RFFP and SMoRFFI. ORACLE and the Bluetooth smartphone database remain SECONDARY. This decision does not certify D1–D10 and may be reopened if package-level ingestion or experimentation exposes a material contradiction.
 
-## DEC-010 — No automatic D7/D8 inference from dataset size
+## DEC-010 — No open-ended dataset hunt before D1
 
-Multi-device data does not automatically establish domain-shift or continual-learning suitability. D7 requires verified acquisition/environment/session variation; D8 additionally requires defensible temporal/sequential semantics. These must be directly verified from metadata before qualification.
+After the initial portfolio qualification, additional dataset search is no longer the default next action. Search should resume only in response to a specific experimental, reproducibility, licensing/access or metadata gap. The next gate is D1 implementation and validation.
 
-## DEC-011 — Repository branch-state discrepancy
+## DEC-011 — Continual-learning dataset caveat
 
-The current `main` and `develop` refs are diverged. GitHub reports `develop` seven commits ahead and seven commits behind `main`. This conflicts with the intended clean integration relationship and must be reconciled as repository maintenance before relying on `develop` as a clean baseline.
+No public dataset is currently treated as automatically proving D8. Repeated days/sessions provide candidate observations, but the project must construct and validate a chronological update protocol with a frozen evaluation population, profile acceptance criteria and rollback protection.
