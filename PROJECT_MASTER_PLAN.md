@@ -1,94 +1,82 @@
 # PROJECT MASTER PLAN
 
-## 1. Project Definition
+## 1. Project foundation
 
-Establish the problem, objectives, intended contribution, assumptions, limitations, and success criteria from the initial IDP.
+- Preserve the initial IDP as the origin of the project.
+- Maintain the research question, objectives, scope and contribution as controlled project records.
+- Maintain a decision log so later changes are traceable.
 
-## 2. Architecture Definition
+## 2. Preparation phase
 
-Maintain the complete software pipeline:
+### 2.1 Research and architecture baseline
+- Establish the complete software-oriented system architecture.
+- Map claims to required evidence and experiments.
+- Define interfaces between ingestion, DSP, RF-physics features, representation, identification, open-set recognition, continual learning and poisoning protection.
 
-RF signal/dataset -> data ingestion -> signal preprocessing -> RF physics features -> device representation -> device identification -> continual learning -> security/poisoning protection -> edge/real-time system.
+### 2.2 Dataset strategy
+- Maintain the Dataset Requirement Matrix.
+- Search existing/public datasets first.
+- Qualify datasets against explicit requirements rather than dataset popularity.
+- Record dataset quality, provenance, licensing and reproducibility.
+- Lock an initial dataset portfolio before substantial model implementation.
 
-The physical ESP32/SDR chain is a later hardware-transfer validation domain.
+## 3. D1–D10 validation framework
 
-## 3. Dataset Strategy
+### D1 — Raw RF Data / Ingestion
+Validate that required raw RF/IQ data can be loaded, interpreted and represented consistently.
 
-Use a dataset portfolio rather than forcing one dataset to support every claim.
+### D2 — Synchronization & DSP
+Validate required signal-processing operations such as burst extraction, synchronization, filtering and related preprocessing.
 
-D1 Raw RF Data / Ingestion
-D2 Synchronization & DSP
-D3 Physics-Based RF Features
-D4 Device Representation / Embedding
-D5 Closed-Set Identification
-D6 Open-Set Recognition
-D7 Robustness / Domain Shift
-D8 Continual Learning / Profile Evolution
-D9 Poisoning / Adversarial Protection
-D10 End-to-End Validation
+### D3 — Physics-Based RF Features
+Validate extraction of transmitter/device-relevant RF characteristics and their stability/utility under the defined experimental conditions.
 
-## 4. Dataset Search & Qualification
+### D4 — Device Representation / Embedding
+Develop and evaluate learned representations suitable for device discrimination and later metric/open-set processing.
 
-For each candidate:
+### D5 — Closed-Set Identification
+Establish a baseline for identifying known devices under a defined closed-world protocol.
 
-Project claim -> required evidence -> experiment -> required data -> candidate dataset -> qualification -> decision.
+### D6 — Open-Set Recognition
+Evaluate known-vs-unknown device behaviour using a protocol that prevents leakage between known and unknown identities.
 
-Apply the Dataset Qualification protocol and record provenance, license, reproducibility, metadata completeness, rawness, labels, diversity, independence, compatibility, and research value.
+### D7 — Robustness / Domain Shift
+Evaluate changes caused by acquisition conditions, receiver/domain differences, sessions, environments or other defined shifts.
 
-## 5. Data Foundation
+### D8 — Continual Learning / Profile Evolution
+Evaluate controlled profile updates over sequential observations while monitoring stability, forgetting and erroneous updates.
 
-After qualification, acquire approved datasets externally, create manifests and metadata records, and implement loaders that convert heterogeneous sources into a common internal RF representation.
+### D9 — Poisoning / Adversarial Protection
+Evaluate whether inconsistent or malicious observations can corrupt device profiles and test the defined protection mechanisms.
 
-D1 validation must establish that the selected data can reproduce the planned processing pipeline.
+### D10 — End-to-End Validation
+Integrate the validated components and evaluate the complete software pipeline against the project claims.
 
-## 6. DSP / Signal Processing
+## 4. Hardware transfer
 
-Implement and validate burst extraction, timing alignment, CFO estimation/correction, filtering, normalization, and signal-quality checks.
+Hardware is a later validation domain. Software/data validation should not be blocked by requiring an ESP32/SDR capture chain for every stage. Hardware work begins after the relevant software evidence is established.
 
-Do not proceed to ML merely because a loader works; DSP validation must pass its defined experiments.
+## 5. Engineering lifecycle
 
-## 7. RF Physics Features
+For every component:
 
-Investigate measurable transmitter-related features such as CFO, IQ imbalance, EVM, spectral characteristics, and other justified features. Evaluate intra-device stability versus inter-device separation before relying on them in ML.
+`Requirement -> Design -> Implementation -> Unit Test -> Experiment -> Result -> Interpretation -> Decision`
 
-## 8. Representation Learning
+## 6. Research lifecycle
 
-Develop a device representation/embedding model. Prefer independent session/day evaluation rather than random sample splitting where metadata permits.
+For every research claim:
 
-Candidate metric-learning approaches include triplet loss and supervised contrastive learning, subject to experimental evidence.
+`Claim -> What must be proven -> Experiment -> Required data -> Dataset search -> Dataset qualification -> Validation -> Conclusion`
 
-## 9. Closed-Set Identification
+## 7. Team workflow
 
-Establish a baseline known-device identification problem with defensible train/validation/test separation and appropriate metrics.
+- `main`: stable project state.
+- `develop`: integration branch when the team begins multi-branch implementation.
+- `feature/*`: member/task branches.
+- Pull requests are the normal integration mechanism.
+- Issues define work items and preserve accountability.
+- Significant research decisions must be recorded in `docs/06_continuity/DECISIONS.md`.
 
-## 10. Open-Set Recognition
+## 8. Completion standard
 
-Introduce a known-vs-unknown decision mechanism, threshold selection using validation data, and open-set metrics including FAR, FRR, unknown detection rate, AUROC, AUPR, F1, and threshold sensitivity.
-
-## 11. Robustness / Domain Shift
-
-Evaluate temporal, receiver, distance, environment, SNR, and channel variation only when supported by dataset metadata. Use explicit train/test variation matrices.
-
-## 12. Continual Learning
-
-Compare static and continual models under sequential observations. Measure identity performance over time, profile drift, adaptation speed, false acceptance/rejection, and forgetting.
-
-## 13. Poisoning Protection
-
-Use legitimate sequential RF data plus controlled/synthetic poisoning. Compare an unprotected continual learner against the protected update mechanism. Report poisoning acceptance, profile displacement, identity degradation, legitimate update acceptance, recovery time, and attack effort.
-
-## 14. End-to-End Validation
-
-Integrate the validated components and evaluate on held-out configurations/datasets not used to tune every individual component.
-
-## 15. Hardware Transfer
-
-Only after software/data validation is mature, introduce the intended ESP32/SDR capture chain and evaluate transfer to the physical target environment.
-
-## 16. Edge Deployment
-
-Measure latency, resource use, and operational constraints on the intended edge platform after the algorithmic pipeline has been validated.
-
-## 17. Final Research Package
-
-Maintain reproducible code, dataset provenance, experiment records, metrics, figures, tables, limitations, claims supported by evidence, and final technical documentation.
+A phase is complete only when its defined acceptance criteria and evidence exist. Presence of code alone does not constitute validation.
