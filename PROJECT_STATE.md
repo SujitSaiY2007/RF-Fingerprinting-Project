@@ -39,7 +39,14 @@ This does not constitute scientific validation of D1–D10.
 D6 requires explicit unseen-identity holdouts; D8 requires a chronological profile-update protocol with frozen evaluation and rollback; D9 requires controlled/synthetic poisoning; D10 requires integrated end-to-end validation; hardware transfer remains later.
 
 ## Repository consistency
-A prior structural anomaly existed because `main` and `develop` had independent histories. PR #2 has now been integrated into `develop`. A reconciliation branch based on `main` is being prepared to synchronize the stable tree without force-moving protected `main`. The branches should only be considered fully reconciled after the reconciliation PR is merged and the refs are re-compared.
+A prior structural anomaly existed because `main` and `develop` had independent histories. PR #2 has now been integrated into `develop`. PR #4 is the current reconciliation mechanism, using a branch based on `main` so protected history is not force-rewritten.
+
+### Temporary branch-protection exception — 2026-08-21
+The team requested **Option B**: temporarily relax the `main` branch protection requirement for an approving review so the repository owner can merge PR #4 personally, with the intention of restoring the protection rule afterward.
+
+This was attempted through the available GitHub integration. The integration does not expose branch-protection/rules administration, so the protection requirement could not be changed programmatically. An attempted auto-merge path also failed because GitHub auto-merge is disabled for this repository. **No branch-protection rule was changed.** PR #4 therefore remains blocked pending either a manual rule change by a repository administrator or an approval from another authorized reviewer.
+
+This is an operational repository constraint, not a scientific/project-state decision. Once the reconciliation is complete, restore/enforce the intended protection rule and record the final rule state here.
 
 ## Next action
 Complete the main/develop reconciliation through PR review/merge, verify the branches are structurally aligned, then begin D1.
