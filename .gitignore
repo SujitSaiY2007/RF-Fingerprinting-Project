@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local environments / secrets
+.env
+.env.*
+*.key
+*.pem
+
+# Large RF/data artifacts
+*.iq
+*.iq8
+*.iq16
+*.cf32
+*.cfile
+*.h5
+*.hdf5
+*.mat
+*.npy
+*.npz
+*.parquet
+*.pkl
+*.pickle
+
+# Generated outputs
+results/generated/
+results/tmp/
+*.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
