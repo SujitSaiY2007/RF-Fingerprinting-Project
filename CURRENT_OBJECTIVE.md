@@ -2,42 +2,35 @@
 
 ## Objective
 
-Perform Dataset Search & Qualification for the RF Fingerprinting project.
+Execute the Dataset Search & Validation / Qualification workstream of Phase 1 and produce a defensible, evidence-backed multi-dataset portfolio for D1–D10.
 
-## Required Output
+## Completed in current pass
 
-Create a defensible dataset portfolio in which every selected dataset has an explicit experimental responsibility.
+- Established six serious candidates and recorded preliminary qualification records.
+- Populated the dataset registry.
+- Identified four primary KEEP candidates and two SECONDARY candidates.
+- Determined that no single candidate currently covers the full D1–D10 evidence space.
 
-For every candidate dataset record:
+## Current required work
 
-- Dataset name and source
-- Intended D-stage(s)
-- Raw IQ availability
-- Device/transmitter labels
-- Number and type of physical transmitters
-- Same-model availability
-- Session/day structure
-- Receiver information
-- Distance/environment information
-- Sampling rate and center frequency
-- Waveform/protocol information
-- Sequential/temporal structure
-- Known/unknown-device suitability
-- Documentation and provenance
-- License and intended-use compatibility
-- Reproducibility/accessibility
-- Data integrity
-- Missing information
-- Validation experiments possible
-- Qualification decision: KEEP / SECONDARY / REJECT
-- Reason for decision
+1. Directly verify the actual downloadable data packages and metadata for the KEEP candidates.
+2. Confirm dataset-specific access/licensing terms separately from publication licensing.
+3. Verify session/day/sequence semantics, receiver metadata, environment metadata and sample representation rather than relying only on papers or dataset summaries.
+4. Construct a requirement-by-requirement D1–D10 coverage matrix with evidence status: VERIFIED / REPORTED / UNKNOWN / NOT SUPPORTED.
+5. Define the exact experimental responsibility of each final dataset.
+6. Define the minimum portfolio needed for D1–D10 and identify residual gaps that require controlled capture later.
+7. Only after these checks decide whether the portfolio can be locked.
+8. Keep substantial D1 implementation gated until portfolio qualification is sufficient.
 
-## Research Discipline
+## Current preliminary candidates
 
-Do not modify project claims to fit available datasets. If a dataset cannot support a desired claim, record that limitation explicitly.
+- KEEP: WiSig
+- KEEP: Oregon State WiFi RFFP
+- KEEP: Oregon State LoRa RFFP
+- KEEP: SMoRFFI
+- SECONDARY: ORACLE
+- SECONDARY: Bluetooth smartphone RF database
 
-Do not download or commit large raw datasets into Git. Store metadata, manifests, qualification records, scripts, and reproducibility information instead.
+## Completion condition
 
-## Completion Condition
-
-This objective is complete only when the candidate dataset portfolio is sufficiently qualified to support the next implementation/validation step without relying on undocumented assumptions.
+This objective is complete only when every major dataset requirement needed for the next validation step is supported by direct evidence or explicitly documented as an accepted gap with a justified mitigation. A preliminary KEEP decision is not a final portfolio lock.
