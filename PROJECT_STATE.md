@@ -38,15 +38,22 @@ This does not constitute scientific validation of D1–D10.
 ## Remaining scientific gates
 D6 requires explicit unseen-identity holdouts; D8 requires a chronological profile-update protocol with frozen evaluation and rollback; D9 requires controlled/synthetic poisoning; D10 requires integrated end-to-end validation; hardware transfer remains later.
 
-## Repository consistency
-A prior structural anomaly existed because `main` and `develop` had independent histories. PR #2 has now been integrated into `develop`. PR #4 is the current reconciliation mechanism, using a branch based on `main` so protected history is not force-rewritten.
+## Repository consistency — RESOLVED
+The previous `main`/`develop` history divergence has been reconciled without discarding either history.
 
-### Temporary branch-protection exception — 2026-08-21
-The team requested **Option B**: temporarily relax the `main` branch protection requirement for an approving review so the repository owner can merge PR #4 personally, with the intention of restoring the protection rule afterward.
+- Pre-reconciliation `main`: `7770fcb517c5df986b1f5ad4d3e0a07a4995298c`
+- Pre-reconciliation `develop`: `9634ff446958d9f2af0d41e40625a5b5d5b46702`
+- Reconciliation merge commit: `fa88775ac569358cfe93b2f2a12b6d3b70300dd0`
+- Both `main` and `develop` now point to `fa88775ac569358cfe93b2f2a12b6d3b70300dd0`.
+- The reconciliation commit has both pre-reconciliation tips as parents, preserving both histories in the reachable commit graph.
+- Additional archive branches `archive/pre-reconciliation-main-2026-08-21` and `archive/pre-reconciliation-develop-2026-08-21` preserve the two branch tips independently as explicit recovery references.
+- The canonical working tree is the pre-reconciliation stable `main` tree, with the `develop` history preserved as the second parent.
+- GitHub comparison now reports `main` and `develop` as **identical**: 0 commits ahead, 0 behind.
 
-This was attempted through the available GitHub integration. The integration does not expose branch-protection/rules administration, so the protection requirement could not be changed programmatically. An attempted auto-merge path also failed because GitHub auto-merge is disabled for this repository. **No branch-protection rule was changed.** PR #4 therefore remains blocked pending either a manual rule change by a repository administrator or an approval from another authorized reviewer.
+No force-reset or history deletion was used.
 
-This is an operational repository constraint, not a scientific/project-state decision. Once the reconciliation is complete, restore/enforce the intended protection rule and record the final rule state here.
+## Branch protection note
+The temporary Option B request was not executable through the available GitHub integration. No branch-protection rule was changed programmatically. PR #4 was merged after the repository owner handled the required approval-rule condition manually. The intended protection rule should be restored/enforced if it was temporarily relaxed during the merge.
 
 ## Next action
-Complete the main/develop reconciliation through PR review/merge, verify the branches are structurally aligned, then begin D1.
+The repository topology is now clean. Begin D1: Raw RF Data / Ingestion using WiSig + Oregon State WiFi, while preserving Oregon State LoRa and SMoRFFI for complementary downstream validation responsibilities.
