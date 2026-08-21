@@ -2,54 +2,48 @@
 
 **Last initialized:** 2026-08-21
 
-## Current Status
+## Authoritative status
 
-- Project concept defined from the initial IDP.
-- Complete software-oriented architecture documented.
-- Dataset Requirement Matrix established with D1-D10 stages.
-- Dataset acceptance/qualification methodology established.
-- Current repository is being initialized as the permanent project source of truth.
+- Project repository: `SujitSaiY2007/RF-Fingerprinting-Project`
+- Default branch: `main`
+- Development status: **Preparation Phase**
+- Current workstream: **Dataset Search & Qualification**
+- Implementation status: **Not started / intentionally gated**
 
-## Current Phase
+## Established
 
-**Phase 1 — Preparation**
+1. Initial project concept and IDP.
+2. Software-first development strategy using existing/public datasets wherever possible.
+3. Complete conceptual architecture.
+4. Dataset Requirement Matrix.
+5. Ten dataset/validation stages D1–D10.
+6. Dataset quality/provenance requirements.
+7. Dataset acceptance methodology.
+8. Separation of software/data validation from later hardware transfer validation.
 
-## Current Workstream
+## Current objective
 
-**Dataset Search & Qualification**
+Build and qualify the dataset portfolio required to support the claims and experiments across D1–D10. Do not begin substantial model implementation merely because a dataset is available; first establish that the dataset satisfies the requirements needed for the intended experiment.
 
-The next substantive project activity is to identify candidate datasets for the defined experimental responsibilities and qualify them against the matrix and dataset-quality protocol.
+## Immediate next actions
 
-## Completed Knowledge Baseline
+1. Populate the candidate dataset registry.
+2. Search candidate datasets against the D1–D10 requirements.
+3. Record evidence, missing requirements, licensing/provenance, and reproducibility information.
+4. Assign KEEP / REJECT / SECONDARY decisions with reasons.
+5. Identify coverage gaps that may require a secondary dataset or later controlled capture.
+6. Lock the initial dataset portfolio.
+7. Only then begin D1 implementation/validation.
 
-1. Initial problem statement and objectives.
-2. Physics-based RF feature concept.
-3. Embedding/metric-learning direction.
-4. Known/unknown device decision concept.
-5. Continuous device profile update concept.
-6. Edge deployment direction.
-7. Eight-stage system decomposition in the architecture document.
-8. Ten-stage dataset/validation framework D1-D10.
-9. Dataset quality/provenance criteria.
-10. Dataset acceptance protocol.
+## Important constraints
 
-## Current Non-Goals
+- Do not silently change the research question or scope.
+- Do not claim a dataset supports a validation stage without evidence.
+- Do not treat D1–D10 as completed merely because a pipeline component exists.
+- Keep raw large datasets outside Git where appropriate; store metadata, manifests, checksums, acquisition instructions and qualification records in Git.
+- Preserve historical decisions rather than overwriting them.
+- Distinguish source-derived facts, experiment results, inference and speculation.
 
-- Do not start model training before dataset qualification and D1 validation.
-- Do not assume a dataset is suitable because it is labelled RF fingerprinting data.
-- Do not treat random sample splits as valid evidence where session/time independence is unavailable.
-- Do not introduce hardware as a prerequisite for software-stage validation.
+## Continuity rule
 
-## Immediate Next Action
-
-Build the candidate dataset portfolio and qualification records for D1-D10. Each candidate must have a documented role, requirements coverage, missing information, validation possibility, license status, and decision.
-
-## Blocking Questions
-
-- Which public datasets satisfy the mandatory requirements for each D stage?
-- Which dataset combinations provide complementary experimental coverage?
-- Which claims can be supported by each dataset, and which cannot?
-
-## Continuity Instruction
-
-A future ChatGPT session must read this file together with `PROJECT_MASTER_PLAN.md`, `CURRENT_OBJECTIVE.md`, `docs/03_dataset_strategy/dataset_requirement_matrix.md`, and the latest session/decision records before continuing work.
+Any substantial ChatGPT session must end by updating the relevant project-state and continuity files. A future session must read this file and the latest continuity records before taking action.
