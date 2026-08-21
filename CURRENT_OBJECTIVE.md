@@ -2,35 +2,47 @@
 
 ## Objective
 
-Execute the Dataset Search & Validation / Qualification workstream of Phase 1 and produce a defensible, evidence-backed multi-dataset portfolio for D1–D10.
+Dataset Search & Validation / Qualification for Phase 1.
 
-## Completed in current pass
+## Status
 
-- Established six serious candidates and recorded preliminary qualification records.
-- Populated the dataset registry.
-- Identified four primary KEEP candidates and two SECONDARY candidates.
-- Determined that no single candidate currently covers the full D1–D10 evidence space.
+**COMPLETE AS A DEVELOPMENT-SUBSTRATE SELECTION GATE.**
 
-## Current required work
+This does not mean D1–D10 are scientifically validated. It means the current evidence is sufficient to begin D1 without an undocumented dependency on an unqualified dataset.
 
-1. Directly verify the actual downloadable data packages and metadata for the KEEP candidates.
-2. Confirm dataset-specific access/licensing terms separately from publication licensing.
-3. Verify session/day/sequence semantics, receiver metadata, environment metadata and sample representation rather than relying only on papers or dataset summaries.
-4. Construct a requirement-by-requirement D1–D10 coverage matrix with evidence status: VERIFIED / REPORTED / UNKNOWN / NOT SUPPORTED.
-5. Define the exact experimental responsibility of each final dataset.
-6. Define the minimum portfolio needed for D1–D10 and identify residual gaps that require controlled capture later.
-7. Only after these checks decide whether the portfolio can be locked.
-8. Keep substantial D1 implementation gated until portfolio qualification is sufficient.
+## Locked development portfolio
 
-## Current preliminary candidates
+### KEEP — primary
 
-- KEEP: WiSig
-- KEEP: Oregon State WiFi RFFP
-- KEEP: Oregon State LoRa RFFP
-- KEEP: SMoRFFI
-- SECONDARY: ORACLE
-- SECONDARY: Bluetooth smartphone RF database
+- WiSig — scale, receiver variation, multi-day robustness.
+- Oregon State WiFi RFFP — temporal/domain variation and repeated Pycom devices.
+- Oregon State LoRa RFFP — same-model, environment/location/distance/receiver variation.
+- SMoRFFI — large-scale same-model discrimination.
 
-## Completion condition
+### SECONDARY
 
-This objective is complete only when every major dataset requirement needed for the next validation step is supported by direct evidence or explicitly documented as an accepted gap with a justified mitigation. A preliminary KEEP decision is not a final portfolio lock.
+- ORACLE — controlled hardware-impairment/distance benchmark.
+- Bluetooth smartphone RF database — optional cross-technology benchmark; non-blocking.
+
+## D1–D10 coverage
+
+The portfolio provides a defensible data substrate for all D1–D10 responsibilities, but several responsibilities are **protocol-construction problems rather than dataset-availability problems**:
+
+- D6 requires explicit unseen-identity holdouts, thresholds and open-set metrics.
+- D8 requires a formal chronological update stream, frozen evaluation population, profile acceptance and rollback rules.
+- D9 requires controlled/synthetic poisoning over legitimate RF data.
+- D10 requires the integrated end-to-end experiment.
+
+## Remaining gaps
+
+- Implement leakage-safe session/day/device splitting.
+- Verify exact package metadata during D1 ingestion and record checksums.
+- Define D6 open-set protocol.
+- Define D8 continual profile evolution protocol.
+- Define D9 poisoning protocol.
+- Establish cross-dataset common RF representation.
+- Perform later hardware-transfer validation.
+
+## Next gate
+
+Move to **D1 implementation and validation**, beginning with WiSig and Oregon State WiFi. Reopen dataset search only if implementation reveals a material data, access, license or reproducibility contradiction.
