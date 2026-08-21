@@ -23,3 +23,17 @@ Use legitimate real RF data plus controlled/synthetic poisoning for the update-s
 ## DEC-006 — GitHub as project source of truth
 
 The repository stores project knowledge, decisions, implementation, experiments, results, provenance and continuity. ChatGPT sessions should update the repository state rather than maintaining critical knowledge only in chat history.
+
+## DEC-007 — Current team collaboration model
+
+The project has four team members. **There is currently no permanent division of the project into four separate technical ownership areas.** All four members are presently working on the **same project workstream: Dataset Search & Validation**, independently at the individual level. Their work may overlap by design because the team is currently exploring and qualifying the dataset space rather than implementing separate modules.
+
+Do not invent or document a fixed member-to-module assignment unless the team explicitly decides to create one later.
+
+## DEC-008 — Integration into `main`
+
+The GitHub integration model is independent of technical ownership. A team member may work on dataset research/qualification, documentation, code, experiments, or another task as the project evolves. Changes should be made through the agreed branch/PR workflow and integrated after review/validation.
+
+`main` represents the stable project state. `develop` is the integration branch. Task/feature branches are used when work needs isolation. During the current dataset-search workstream, separate branches may represent individual dataset investigations even though all four members are working on the same overall topic.
+
+A Pull Request into `develop` should describe the dataset(s), evidence, qualification findings, decision, or other contribution. After integration and appropriate validation, `develop` can be promoted into `main` through a Pull Request. A merge into `main` does **not** mean that a scientific claim is validated; scientific completion still requires the project's experiment/acceptance criteria.
