@@ -33,8 +33,14 @@ Further dataset search should be triggered only by a specific experimental, repr
 ## DEC-011 — Continual-learning caveat
 No public dataset automatically proves D8. The project must construct a chronological update protocol with frozen evaluation, profile acceptance and rollback protection.
 
-## DEC-012 — Repository reconciliation
-The earlier `main`/`develop` divergence is a repository-history anomaly, not a scientific issue. Because `main` is protected and direct force movement is prohibited, reconciliation must proceed through a normal PR from a branch based on `main`, synchronizing the required stable project content rather than rewriting protected history.
+## DEC-012 — Repository reconciliation without history loss
+The earlier `main`/`develop` divergence was a repository-history anomaly, not a scientific issue. The histories were reconciled using a merge commit with both pre-reconciliation branch tips as parents. Explicit archive branches were also created. No force-reset or history deletion was used.
 
-## DEC-013 — D1 transition
-After dataset qualification, the next project gate is D1 Raw RF Data / Ingestion, beginning with WiSig and Oregon State WiFi.
+## DEC-013 — Canonical branch alignment
+After reconciliation, `main` and `develop` must remain structurally aligned at the same canonical state when no integration work is pending. Future work must use task/research branches and the documented PR workflow rather than creating independent branch histories.
+
+## DEC-014 — D1 transition
+After dataset qualification and repository reconciliation, the next project gate is D1 Raw RF Data / Ingestion, beginning with WiSig and Oregon State WiFi.
+
+## DEC-015 — D1 ingestion boundary
+D1 initially establishes reproducible provenance, manifests/checksums, raw-I/Q interpretation, metadata normalization, integrity/loadability tests and leakage-safe data foundations. It does not prematurely implement downstream ML, continual learning or poisoning defenses.
