@@ -7,38 +7,46 @@ Physics-Based RF Fingerprinting with Continuous Device Learning.
 ## Phase / workstream
 
 - Phase 1 — Preparation
-- Dataset Search & Validation / Qualification
+- Dataset qualification gate completed
+- Next workstream: D1 Raw RF Data / Ingestion
 
 ## Team state
 
-Four members are working on the same dataset-search/qualification workstream. No permanent technical division exists.
+Four members continue to work collaboratively on the same overall project. No permanent technical division has been created.
 
-## What this session completed
+## Dataset milestone completed
 
-- Recovered and checked the project control layer and Dataset Requirement Matrix.
-- Confirmed the registry was initially empty apart from its header.
-- Performed external evidence-backed candidate research.
-- Added preliminary qualification records for WiSig, Oregon State WiFi RFFP, Oregon State LoRa RFFP, SMoRFFI, ORACLE and a Bluetooth smartphone RF database.
-- Populated the dataset registry.
-- Established a preliminary multi-dataset portfolio: WiSig, Oregon WiFi, Oregon LoRa and SMoRFFI as KEEP; ORACLE and Bluetooth as SECONDARY.
-- Identified that no single dataset currently provides sufficient evidence for all D1–D10 responsibilities.
+The first serious candidate search and qualification pass is complete. The development-substrate portfolio is now:
 
-## What remains incomplete
+### KEEP
+- WiSig — scale, receiver variation, multi-day robustness.
+- Oregon State WiFi RFFP — temporal/domain variation with repeated Pycom devices.
+- Oregon State LoRa RFFP — same-model and environmental/location/distance/receiver variation.
+- SMoRFFI — large-scale same-model discrimination.
 
-- The portfolio is **not locked**.
-- Direct download-package and metadata verification remains outstanding.
-- Dataset-specific license/access terms require confirmation.
-- SMoRFFI D7/D8 suitability is unresolved.
-- Oregon scenario-level sequential semantics require verification.
-- D6 open-set protocols still need explicit identity-level split design.
-- D8 continual-learning data protocol is not yet fully qualified.
-- D9 remains a controlled/synthetic poisoning experiment over legitimate RF data.
-- D1 implementation remains intentionally gated.
+### SECONDARY
+- ORACLE — controlled hardware-impairment/distance benchmark.
+- Bluetooth smartphone RF database — optional cross-technology benchmark.
 
-## Important repository issue
+The portfolio is locked for development-substrate selection, not protected from later scientific revision.
 
-`main` and `develop` are currently diverged: GitHub reports each branch as 7 commits ahead of the other. The project documentation describes a clean main -> develop -> main integration flow, but the current refs do not satisfy that state. This must be reconciled before using `develop` as a clean integration baseline.
+## Scientific status
+
+D1–D10 remain incomplete. Dataset qualification is not scientific validation.
+
+## Remaining research/engineering gaps
+
+1. D1 ingestion must verify actual package metadata, checksums, framing and provenance.
+2. D6 requires explicit identity-level unknown-device holdouts and open-set metrics.
+3. D8 requires a chronological profile-update stream, frozen evaluation set, acceptance policy and rollback mechanism.
+4. D9 requires controlled/synthetic poisoning over legitimate RF data.
+5. Cross-dataset normalization/common RF representation must be defined.
+6. Hardware transfer remains a later validation stage.
+
+## Repository issue
+
+`main` and `develop` remain diverged by seven commits in each direction. Reconcile deliberately after PR #2 review; do not silently reset either branch.
 
 ## Exact next action
 
-Directly inspect and verify the actual packages/metadata for WiSig and Oregon State RFFP first. Record each major requirement as VERIFIED, REPORTED, UNKNOWN or NOT SUPPORTED. Then perform the same verification for SMoRFFI and ORACLE, produce the final D1–D10 coverage/gap matrix, and decide whether the portfolio can be locked.
+Review PR #2, reconcile the branch topology, then start D1 implementation on WiSig + Oregon State WiFi. During D1 ingestion, convert reported dataset properties into package-level VERIFIED/UNKNOWN records and capture checksums/manifests without committing raw RF archives.
