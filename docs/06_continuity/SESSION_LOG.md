@@ -29,5 +29,43 @@ D1 must first establish authoritative source/version provenance, acquisition ins
 
 Successful loading is not D1 scientific validation. D1 is complete only when its defined experiment, evidence, evaluation protocol and acceptance criteria are satisfied.
 
-## 2026-08-21 — Next-session handoff
-The next ChatGPT session must recover the repository before substantive work, provide a Continuity Check, verify the now-aligned branch state, and begin D1 without restarting dataset qualification or project architecture. The first substantive task is to define the D1 ingestion specification and acceptance checklist and then directly verify the authoritative WiSig and Oregon State WiFi packages/metadata before implementing the minimal reproducible ingestion layer.
+## 2026-08-25 — Q2/Q4 novelty literature audit
+A broad literature audit was performed in response to the professor's progress-meeting Question 2 (representation, decision making, security novelty) and Question 4 (review of existing solutions/articles).
+
+### Findings
+The audit rejected the following as standalone novelty claims because they are already established/active areas:
+- physics-informed RF representation;
+- learned RF embeddings;
+- open-set RF fingerprint recognition;
+- incremental/continual RF fingerprint learning;
+- physics-aware temporal/test-time adaptation;
+- generic adversarial robustness;
+- historical device profiling by itself.
+
+Representative evidence and source links are preserved in `docs/04_research/novelty_literature_gap_audit.md`.
+
+### Refined research direction
+The stronger candidate research gap is **secure continual RF device-profile evolution**, specifically separating:
+
+`identity recognition`
+
+from
+
+`authorization to modify the persistent device profile`.
+
+The central hypothesis is:
+
+`Identification correctness != authorization to update the persistent profile`
+
+A candidate update gate may combine identity confidence, embedding consistency, RF-physical consistency, temporal consistency, historical-profile consistency and anomaly/deviation evidence.
+
+### D8/D9 coupling
+This creates a direct research connection between D8 Continual Learning / Profile Evolution and D9 Poisoning / Adversarial Protection. D8 should eventually evaluate chronological profile evolution; D9 should test controlled/synthetic poisoning and whether the update-security mechanism limits profile corruption.
+
+### Status
+This is **provisional**. The literature audit must continue with a targeted forensic search for RF/RFFI systems that explicitly separate identity recognition from authorization to modify a persistent profile. No novelty, patentability or superiority claim is finalized yet.
+
+The current objective remains D1; novelty work is a research-control activity and does not authorize premature D4/D8/D9 implementation.
+
+## 2026-08-25 — Updated handoff
+The canonical project-control files were updated with the Q2/Q4 findings. The next session must recover the updated repository state, complete the targeted novelty audit, and then continue D1 without restarting dataset qualification or project architecture.
