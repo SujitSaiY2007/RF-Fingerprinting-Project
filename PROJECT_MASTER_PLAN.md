@@ -5,6 +5,7 @@
 - Preserve the initial IDP as the origin of the project.
 - Maintain the research question, objectives, scope and contribution as controlled project records.
 - Maintain a decision log so later changes are traceable.
+- Treat novelty as an evidence-backed research claim, not an assumption made from the architecture.
 
 ## 2. Preparation phase
 
@@ -12,6 +13,8 @@
 - Establish the complete software-oriented system architecture.
 - Map claims to required evidence and experiments.
 - Define interfaces between ingestion, DSP, RF-physics features, representation, identification, open-set recognition, continual learning and poisoning protection.
+- Perform literature-gap analysis before freezing any claimed novelty.
+- Distinguish enabling components from the actual candidate contribution.
 
 ### 2.2 Dataset strategy
 - Maintain the Dataset Requirement Matrix.
@@ -19,6 +22,31 @@
 - Qualify datasets against explicit requirements rather than dataset popularity.
 - Record dataset quality, provenance, licensing and reproducibility.
 - Lock an initial dataset portfolio before substantial model implementation.
+
+### 2.3 Novelty strategy
+The broad literature audit has established that the following are not standalone novelty claims:
+- physics-informed RF representation;
+- learned RF device embeddings;
+- open-set RF fingerprint recognition;
+- incremental/continual RF fingerprint learning;
+- physics-aware temporal/test-time adaptation;
+- generic adversarial robustness;
+- historical device profiling by itself.
+
+The current **provisional primary novelty hypothesis** is:
+
+> **Secure continual RF device-profile evolution through explicit separation of identity recognition from authorization to modify the persistent device profile.**
+
+Core distinction:
+
+`Identification correctness != authorization to update the persistent profile`
+
+A candidate multi-evidence update gate may combine identity confidence, embedding consistency, RF-physical consistency, temporal consistency, historical-profile consistency and anomaly/deviation evidence.
+
+This is a research hypothesis and must not be presented as finalized novelty until the targeted literature audit and experiments establish the differentiator.
+
+Detailed evidence and the required forensic audit are recorded in:
+`docs/04_research/novelty_literature_gap_audit.md`
 
 ## 3. D1–D10 validation framework
 
@@ -32,25 +60,25 @@ Validate required signal-processing operations such as burst extraction, synchro
 Validate extraction of transmitter/device-relevant RF characteristics and their stability/utility under the defined experimental conditions.
 
 ### D4 — Device Representation / Embedding
-Develop and evaluate learned representations suitable for device discrimination and later metric/open-set processing.
+Develop and evaluate learned representations suitable for device discrimination and later metric/open-set processing. Physics-informed representation is treated as an enabling design component, not automatically as novelty.
 
 ### D5 — Closed-Set Identification
 Establish a baseline for identifying known devices under a defined closed-world protocol.
 
 ### D6 — Open-Set Recognition
-Evaluate known-vs-unknown device behaviour using a protocol that prevents leakage between known and unknown identities.
+Evaluate known-vs-unknown device behaviour using a protocol that prevents leakage between known and unknown identities. Open-set recognition is an established baseline capability, not standalone novelty.
 
 ### D7 — Robustness / Domain Shift
-Evaluate changes caused by acquisition conditions, receiver/domain differences, sessions, environments or other defined shifts.
+Evaluate changes caused by acquisition conditions, receiver/domain differences, sessions, environments or other defined shifts. Physics-aware temporal/test-time adaptation must be compared against existing methods rather than assumed novel.
 
 ### D8 — Continual Learning / Profile Evolution
-Evaluate controlled profile updates over sequential observations while monitoring stability, forgetting and erroneous updates.
+Evaluate controlled profile updates over sequential observations while monitoring stability, forgetting and erroneous updates. D8 must explicitly define **profile-update authorization** as a research variable for the candidate secure continual-learning mechanism.
 
 ### D9 — Poisoning / Adversarial Protection
-Evaluate whether inconsistent or malicious observations can corrupt device profiles and test the defined protection mechanisms.
+Evaluate whether inconsistent or malicious observations can corrupt device profiles and test the defined protection mechanisms. D9 is directly coupled to D8 through the profile-update pathway.
 
 ### D10 — End-to-End Validation
-Integrate the validated components and evaluate the complete software pipeline against the project claims.
+Integrate the validated components and evaluate the complete software pipeline against the project claims, including the secure profile-evolution hypothesis if supported by D8/D9 evidence.
 
 ## 4. Hardware transfer
 
@@ -66,7 +94,7 @@ For every component:
 
 For every research claim:
 
-`Claim -> What must be proven -> Experiment -> Required data -> Dataset search -> Dataset qualification -> Validation -> Conclusion`
+`Claim -> Literature audit -> What must be proven -> Experiment -> Required data -> Dataset search -> Dataset qualification -> Validation -> Conclusion`
 
 ## 7. Team workflow
 
@@ -80,3 +108,10 @@ For every research claim:
 ## 8. Completion standard
 
 A phase is complete only when its defined acceptance criteria and evidence exist. Presence of code alone does not constitute validation.
+
+A novelty claim is complete only when:
+1. nearest prior work is mapped;
+2. the claimed difference is explicit;
+3. an experiment can falsify the claim;
+4. suitable data support the experiment;
+5. experimental evidence demonstrates the claimed contribution.
