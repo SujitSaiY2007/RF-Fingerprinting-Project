@@ -5,7 +5,43 @@
 
 The Dataset Search & Validation / Qualification workstream is complete as a development-substrate selection gate. It is not scientific validation.
 
-## Immediate objective
+## Parallel research-control objective
+A broad Q2/Q4 literature audit has refined the project's novelty direction before downstream ML implementation.
+
+The audit rejected several weak standalone novelty claims because they are already active research areas:
+- physics-informed RF representation;
+- learned RF embeddings;
+- open-set RF fingerprint recognition;
+- incremental/continual RF fingerprint learning;
+- physics-aware temporal/test-time adaptation;
+- generic adversarial robustness.
+
+The current **provisional novelty hypothesis** is:
+
+> **Secure continual RF device-profile evolution through explicit separation of identity recognition from authorization to modify the persistent device profile.**
+
+The central research distinction is:
+
+`Identification correctness != authorization to update the persistent profile`
+
+A candidate multi-evidence update gate may use identity confidence, embedding consistency, RF-physical consistency, temporal consistency, historical-profile consistency and anomaly/deviation evidence before allowing a profile update.
+
+This is a hypothesis, not a finalized novelty claim or frozen implementation.
+
+## Required targeted Q4 audit
+Before implementing the proposed novelty mechanism, perform a forensic literature audit of:
+- continual/incremental RF fingerprint learning;
+- profile-based RF authentication;
+- RF adversarial/poisoning work;
+- secure continual-learning mechanisms;
+- any system that explicitly separates identity recognition from permission to modify a persistent device profile.
+
+For every nearest prior system, record the representation, decision mechanism, profile/update mechanism, security model and exact difference from the project.
+
+The detailed research record is:
+`docs/04_research/novelty_literature_gap_audit.md`
+
+## Immediate D1 objective
 Establish a reproducible, provenance-aware, integrity-checked ingestion layer for the selected RF datasets, beginning with WiSig and Oregon State WiFi RFFP.
 
 ## D1 must establish
@@ -50,8 +86,12 @@ Do not claim D1–D10 completion from code existence. Each stage requires its ow
 ## Repository discipline
 - Large raw RF datasets remain outside Git.
 - Git stores acquisition instructions, manifests, checksums, metadata schemas, scripts, tests, qualification records and appropriate derived results.
-- Material D1 decisions, limitations, protocol changes and acceptance evidence must be recorded in GitHub.
+- Material D1 decisions, novelty decisions, limitations, protocol changes and acceptance evidence must be recorded in GitHub.
 - `main` and `develop` are currently structurally aligned. Do not recreate independent histories; use the documented task/research branch → PR → develop → reviewed promotion → main workflow.
 
 ## Next concrete task
-Before substantive ingestion coding, define the D1 ingestion specification and acceptance checklist, then verify the authoritative download/package structure and metadata for WiSig and Oregon State WiFi. After that, implement the minimal reproducible ingestion layer and its tests.
+1. Complete the targeted Q4 novelty audit and record the nearest-prior comparison.
+2. Do not implement the proposed novelty mechanism until the differentiator is supported by the audit and an experiment can be defined.
+3. Continue D1 by defining the ingestion specification and acceptance checklist.
+4. Verify the authoritative download/package structure and metadata for WiSig and Oregon State WiFi.
+5. Implement the minimal reproducible ingestion layer and tests.
