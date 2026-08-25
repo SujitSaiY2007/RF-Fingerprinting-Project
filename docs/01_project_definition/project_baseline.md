@@ -24,7 +24,22 @@ The proposed system combines conventional RF signal processing, measurable RF ph
 - Detect previously unseen transmitters.
 - Evaluate robustness under environmental/acquisition variation.
 - Adapt device profiles over time without complete retraining.
+- Protect continual profile evolution against erroneous or controlled/synthetic malicious updates.
 - Target local/edge operation.
+
+## Novelty Position — 2026-08-25
+
+A broad literature audit established that physics-informed representation, learned RF embeddings, open-set RF fingerprint recognition, incremental/continual RF fingerprint learning, physics-aware temporal/test-time adaptation and generic adversarial robustness are not standalone novelty claims.
+
+The current **provisional research contribution** is therefore centered on secure continual device-profile evolution:
+
+> **Explicitly separate the decision to identify a device from the decision to authorize a new observation to modify that device's persistent RF profile.**
+
+The candidate mechanism is a multi-evidence update authorization gate using, where experimentally justified, identity confidence, embedding consistency, RF-physical consistency, temporal consistency, historical-profile consistency and anomaly/deviation evidence.
+
+This remains a hypothesis until the targeted literature audit and D8/D9 experiments establish a defensible differentiator.
+
+Detailed evidence and the required forensic audit are recorded in `docs/04_research/novelty_literature_gap_audit.md`.
 
 ## Important Scope Boundary
 
@@ -32,4 +47,4 @@ The project is being developed software-first using existing/public datasets whe
 
 ## Contribution Discipline
 
-The project does not claim to invent RF fingerprinting. The proposed contribution is the integrated framework and its experimentally validated combination of physics-based features, representation learning, open-set recognition, controlled continuous profile evolution, and update protection.
+The project does not claim to invent RF fingerprinting. The project must not claim novelty for individual established techniques. The contribution claim must be based on an explicitly differentiated system mechanism and experimental evidence. No claim of publication-worthiness or patentability is made without appropriate evidence.
