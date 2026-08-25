@@ -1,6 +1,6 @@
 # PROJECT STATE
 
-**Last updated:** 2026-08-21
+**Last updated:** 2026-08-25
 
 ## Authoritative status
 - Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
@@ -35,8 +35,59 @@ This does not constitute scientific validation of D1–D10.
 - D1 must establish common ingestion, provenance, metadata, integrity/checksum and leakage-safe partition foundations.
 - Initial implementation pair: WiSig + Oregon State WiFi.
 
+## Novelty research status — 2026-08-25
+A broad Q2/Q4 literature audit was performed before freezing the project's novelty direction.
+
+### Weak standalone novelty claims rejected
+The following are established or active research areas and are therefore **not** treated as standalone project novelty:
+- physics-informed RF representation;
+- learned RF device embeddings;
+- open-set RF fingerprint recognition;
+- prototype/embedding-based unknown-device decision;
+- incremental/continual RF fingerprint learning;
+- physics-aware temporal/test-time adaptation;
+- generic adversarial robustness of RF fingerprinting;
+- historical device profiling by itself.
+
+Detailed evidence and representative literature are recorded in:
+`docs/04_research/novelty_literature_gap_audit.md`
+
+### Current primary novelty hypothesis
+The project will investigate:
+
+> **Secure continual RF device-profile evolution through explicit separation of identity recognition from authorization to modify the persistent device profile.**
+
+Core distinction:
+
+`Identification correctness != authorization to update the persistent profile`
+
+The candidate system may accept an observation for identity/authentication while rejecting it for profile update when physical, embedding-space, temporal, historical-profile or anomaly evidence is inconsistent.
+
+### Supporting candidate mechanism
+A **multi-evidence update authorization gate** may combine:
+- identity confidence;
+- embedding consistency;
+- RF-physical consistency;
+- temporal consistency;
+- historical-profile consistency;
+- anomaly/deviation evidence.
+
+This mechanism is a research hypothesis, not a frozen algorithm or novelty claim.
+
+### D8/D9 connection
+The novelty investigation connects:
+- **D8 — Continual Learning / Profile Evolution**: chronological profile evolution with frozen evaluation and update acceptance;
+- **D9 — Poisoning / Adversarial Protection**: controlled/synthetic poisoning and evaluation of profile-corruption resistance.
+
+The central security question is whether a continuously learning RF fingerprinting system can evolve legitimate device profiles without allowing anomalous or adversarial observations to silently corrupt them.
+
+### Novelty claim status
+**PROVISIONAL — NOT FINALIZED.**
+
+The team must perform a targeted forensic literature audit before promoting the candidate gap to a formal contribution. The audit must explicitly search whether existing RF/RFFI systems separate identity recognition from authorization to modify a persistent device profile.
+
 ## Remaining scientific gates
-D6 requires explicit unseen-identity holdouts; D8 requires a chronological profile-update protocol with frozen evaluation and rollback; D9 requires controlled/synthetic poisoning; D10 requires integrated end-to-end validation; hardware transfer remains later.
+D6 requires explicit unseen-identity holdouts; D8 requires a chronological profile-update protocol with frozen evaluation, profile acceptance and rollback; D9 requires controlled/synthetic poisoning; D10 requires integrated end-to-end validation; hardware transfer remains later.
 
 ## Repository consistency — RESOLVED
 The previous `main`/`develop` history divergence has been reconciled without discarding either history.
@@ -52,8 +103,11 @@ The previous `main`/`develop` history divergence has been reconciled without dis
 
 No force-reset or history deletion was used.
 
-## Branch protection note
-The temporary Option B request was not executable through the available GitHub integration. No branch-protection rule was changed programmatically. PR #4 was merged after the repository owner handled the required approval-rule condition manually. The intended protection rule should be restored/enforced if it was temporarily relaxed during the merge.
-
 ## Next action
-The repository topology is clean. Begin D1: Raw RF Data / Ingestion using WiSig + Oregon State WiFi, while preserving Oregon State LoRa and SMoRFFI for complementary downstream validation responsibilities.
+Do **not** abandon the D1 gate. The novelty research has been recorded as a project-control update, not as permission to prematurely implement D4/D8/D9.
+
+Immediate sequence:
+1. Complete the targeted Q4 novelty audit around secure profile-update authorization.
+2. Preserve the resulting evidence and nearest-prior comparison in GitHub.
+3. Then continue the D1 Raw RF Data / Ingestion work using WiSig + Oregon State WiFi.
+4. Do not implement the final novelty mechanism until the targeted audit and experiment design establish the exact differentiator.
