@@ -44,3 +44,26 @@ After dataset qualification and repository reconciliation, the next project gate
 
 ## DEC-015 — D1 ingestion boundary
 D1 initially establishes reproducible provenance, manifests/checksums, raw-I/Q interpretation, metadata normalization, integrity/loadability tests and leakage-safe data foundations. It does not prematurely implement downstream ML, continual learning or poisoning defenses.
+
+## DEC-016 — Literature audit invalidates weak standalone novelty claims
+The 2026-08-25 Q2/Q4 literature audit established that physics-informed RF representation, open-set RF fingerprint recognition, incremental/continual RF fingerprint learning, physics-aware temporal adaptation, and generic adversarial robustness are already active research areas. These are therefore treated as enabling components/baselines rather than standalone project novelty.
+
+The detailed evidence and representative sources are recorded in `docs/04_research/novelty_literature_gap_audit.md`.
+
+## DEC-017 — Secure continual profile evolution is the primary novelty hypothesis
+The project will investigate, but not yet claim as proven novelty, a security-aware continual RF device-profile evolution mechanism in which identity recognition is explicitly separated from authorization to modify the persistent device profile.
+
+The core research distinction is:
+
+`Identification correctness != authorization to update the persistent profile`
+
+A newly observed sample may therefore be accepted for identity/authentication while being rejected for profile update when its physical, embedding-space, temporal, historical-profile or anomaly evidence is inconsistent.
+
+## DEC-018 — Multi-evidence update authorization as a candidate mechanism
+The candidate update gate may combine identity confidence, embedding consistency, RF-physical consistency, temporal consistency, historical-profile consistency and anomaly/deviation evidence. The scoring function and thresholds are not frozen and must be established through design, ablation and experiment rather than assumed.
+
+## DEC-019 — D8/D9 research coupling
+D8 Continual Learning / Profile Evolution and D9 Poisoning / Adversarial Protection should be experimentally connected through the secure profile-update pathway. D8 establishes chronological profile evolution; D9 evaluates whether anomalous or controlled/synthetic poisoned observations can corrupt that pathway and whether the candidate update gate prevents or limits corruption.
+
+## DEC-020 — Novelty remains provisional until targeted audit
+The secure profile-update pathway is currently a candidate research gap, not a finalized novelty claim. Before promotion to a formal contribution, the team must perform a targeted audit of RF/RFFI continual learning, profile-based RF authentication, poisoning/adversarial RF work and closely related continual-learning security literature, explicitly checking whether prior systems separate identity recognition from permission to modify a persistent device profile.
