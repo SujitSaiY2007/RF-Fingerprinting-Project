@@ -145,3 +145,27 @@ The reason for selection is execution suitability: ORACLE provides real RF/IQ re
 This does **not** promote ORACLE into the primary qualified dataset portfolio, remove it from its existing secondary classification, or supersede WiSig/Oregon State as the project's broader validation datasets. It is a Track A execution decision only.
 
 ManySig remains preserved separately for Track B validation/reproduction/cross-checking, and Oregon State acquisition remains independent of the Track A critical path.
+
+## DEC-028 — SMoRFFI selected as the Track A working dataset; ORACLE retained separately
+Following evaluation of the Track A objective against the practical access constraint, the project **supersedes DEC-027** and selects **SMoRFFI as the Track A working dataset**.
+
+Rationale:
+- SMoRFFI is explicitly a real RF fingerprinting dataset rather than a general RF/protocol-classification dataset.
+- Its qualified record reports 123 same-model commercial IEEE 802.11g devices, raw I/Q data and RF features, making it directly relevant to device-level fingerprinting and the D3–D6/D10 objectives.
+- It is a better fit for the rapid implementation objective than ORACLE's current official distribution, which requires a large archive download.
+- SMoRFFI is already present in the project's **KEEP — primary same-model dataset** qualification portfolio; no new dataset-qualification milestone is created by this decision.
+
+### Scope and scientific boundary
+SMoRFFI becomes the **Track A implementation substrate**, subject to actual package accessibility, metadata inspection and D1 loadability/integrity checks before scientific claims are made from it.
+
+The existing SMoRFFI qualification states that its strongest defined responsibility is **D3–D6 and D10**, while D7/D8 require package-level metadata verification. Therefore Track A must not assume that SMoRFFI alone can scientifically support every D7/D8 claim. If a concrete D7/D8 requirement is not covered, a qualified Track B dataset may be used for that stage without delaying the minimum vertical implementation.
+
+### Preservation and non-regression
+- **WiSig ManySig remains preserved separately as Track B** validation/reproduction/cross-checking data.
+- **ORACLE remains qualified and secondary**, and may be used later as a controlled benchmark when justified; its prior Track A implementation work is not deleted.
+- Oregon State WiFi/LoRa and the remaining qualified portfolio are unchanged.
+- No prior dataset qualification, novelty finding, D1–D10 definition, leakage control, poisoning control, branch rule or scientific completion standard is removed or weakened.
+- This decision changes the **Track A execution substrate only** and does not constitute D1–D10 scientific validation.
+
+## DEC-029 — Track A access criterion
+For the fast-track path, a dataset must satisfy both **scientific task fit** and **practical access suitability**. A scientifically strong dataset is not sufficient if its official acquisition method makes it a critical-path bottleneck under the project's time constraint. Conversely, download convenience alone is never sufficient for selection.
