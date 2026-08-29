@@ -11,8 +11,46 @@
 - Current substage: **D2.1 — Sample representation — COMPLETE**
 - D1: **COMPLETE at source/schema/ingestion-foundation level**
 - D1–D10 scientific validation: **not yet complete**
+- Researcher learning state: **Learning Phase — D2 learning gate OPEN**
+- Current learning target: **Layers 1–2**, beginning with Complex Numbers → I/Q Representation. The researcher is completing this learning gate before substantive D2.2 work.
+- Authoritative learning map: `docs/04_research/LEARNING_GATES.md` (7 explicitly defined learning layers).
+- Current handoff: `docs/04_research/HANDOFF_NEXT_CHAT.md`
 - Team size: 4
 - All four members remain on the same overall workstream.
+
+## Learning workflow — ACTIVE
+Technical learning is a first-class, stage-gated project track. Each D-stage has two parallel dimensions: engineering completion and researcher learning completion.
+
+A stage may be engineered while its learning gate is open, but the stage must not be represented as fully knowledge-complete until its required learning gate is passed.
+
+Learning completion is based on understanding and application, not hours watched or course completion. The researcher must be able to explain the concept, interpret a small technical example, connect it to the project stage, and identify a major failure mode.
+
+The authoritative 7-layer map and complete topic lists are maintained in `docs/04_research/LEARNING_GATES.md`.
+
+### Stage-to-learning gate
+- D1 → Layer 1 foundations + dataset/data provenance.
+- D2 → Layers 1–2; complex numbers, I/Q, sampling, discrete signals, Fourier/FFT, statistics/normalization, leakage and deterministic preprocessing.
+- D3 → Layers 1–3; add RF/wireless fundamentals, modulation, noise/SNR and RF impairments.
+- D4 → Layers 1–4; add ML, neural networks, CNNs, embeddings and PyTorch.
+- D5 → Layers 1–5; add evaluation, experimental design, baselines and reproducibility.
+- D6 → Layers 1–6; add open-set recognition, rejection and unknown-device reasoning.
+- D7 → Layers 1–6 with temporal/domain/receiver/environment shift understanding.
+- D8 → Layers 1–7 with continual learning, profile evolution and update authorization.
+- D9 → Layers 1–7 with threat models, poisoning and profile-corruption evaluation.
+- D10 → All layers relevant to the implemented system with end-to-end technical/methodological understanding.
+
+### Current researcher learning phase
+The immediate D2 learning sprint is:
+1. Complex numbers and complex arithmetic.
+2. Magnitude, phase and conjugates.
+3. I/Q representation and complex baseband.
+4. Sampling and sampling rate.
+5. Discrete signals.
+6. Fourier/DFT/FFT concepts.
+7. Basic statistics and normalization.
+8. Data leakage and deterministic preprocessing.
+
+The researcher intends to complete this gate before proceeding further into substantive D2.2 execution. Learning checks should be project-linked and should not be replaced by passive course completion.
 
 ## Dataset qualification milestone
 The dataset-search/qualification gate is complete for development-substrate selection.
@@ -30,15 +68,11 @@ The dataset-search/qualification gate is complete for development-substrate sele
 This does not constitute scientific validation of D1–D10.
 
 ## Accelerated execution decision
-The project is now being fast-tracked toward a demonstrable D1–D10 software pipeline.
-
-The execution principle is:
+The project is fast-tracked toward a demonstrable D1–D10 software pipeline.
 
 > **Build the smallest defensible end-to-end system first, then strengthen individual stages.**
 
 ### Two-track execution model — ACTIVE
-The project now separates execution into two connected tracks:
-
 **Track A — Fast Implementation / Demonstration**
 - Build the minimum defensible D1–D10 vertical path quickly.
 - Current Track A substrate: SMoRFFI.
@@ -48,16 +82,12 @@ The project now separates execution into two connected tracks:
 **Track B — Research Validation / Strengthening**
 - Add larger subsets, additional days/devices and other qualified datasets only when required.
 - Strengthen cross-condition/cross-dataset validation, ablations, statistical analysis and failure analysis.
-- Use Track B to support or falsify research claims rather than to manufacture positive evidence.
+- Use Track B to support or falsify research claims rather than manufacture positive evidence.
 
-This changes execution priority and dependency structure; it does **not** lower the scientific completion standard or delete prior decisions.
+This changes execution priority/dependency structure; it does not lower scientific completion standards or delete prior decisions.
 
-## Dataset acquisition policy under the two-track model
-The project aims to acquire necessary development datasets once, preserve raw copies unchanged and reuse them throughout D1–D10. Repeated downloads of the same dataset are not expected.
-
-Additional acquisition is permitted only for a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement. No open-ended dataset hunt is allowed.
-
-Large raw RF datasets remain outside Git.
+## Dataset acquisition policy
+Acquire necessary development datasets once, preserve raw copies unchanged and reuse them. Additional acquisition is permitted only for a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement. No open-ended dataset hunt. Large raw RF datasets remain outside Git.
 
 ## Completion-level discipline
 Distinguish:
@@ -66,66 +96,27 @@ Distinguish:
 3. **Demonstrated** — integrated path operates on real data.
 4. **Scientifically validated** — stage-specific acceptance evidence supports the claim.
 
-Track A accelerates implementation/testing/demonstration. Track B supplies additional evidence where scientific validation requires it.
-
-D-stage completion still requires evidence and acceptance criteria. Code existence alone is not completion.
-
-The first implementation pair remains **SMoRFFI + Oregon State WiFi RFFP** for the accelerated path, with WiSig ManySig preserved as Track B.
+Track A accelerates implementation/testing/demonstration. Track B supplies additional evidence where scientific validation requires it. D-stage completion still requires evidence and acceptance criteria.
 
 ## Novelty research status — 2026-08-29
-A broad literature audit was followed by a targeted forensic audit of RF/RFFI systems involving profile/model updating, sample admission, continual learning and RF security.
+A broad literature audit and targeted forensic audit were completed for RF/RFFI systems involving profile/model updating, sample admission, continual learning and RF security.
 
-### Weak standalone novelty claims rejected
-The following are established or active research areas and are not treated as standalone project novelty:
-- RF fingerprinting;
-- learned RF embeddings;
-- physics-informed RF representation;
-- open-set RF fingerprint recognition;
-- prototype/embedding-based unknown-device decision;
-- incremental/continual RF fingerprint learning;
-- temporal/domain/test-time adaptation;
-- adaptive RF model/profile updating;
-- generic adversarial/backdoor robustness;
-- historical device profiling by itself;
-- reliability/sample selection before learning, in the broad sense.
+Weak standalone novelty claims rejected include RF fingerprinting, learned RF embeddings, physics-informed representation, open-set RF fingerprint recognition, prototype/embedding unknown-device decisions, continual RF learning, temporal/domain/test-time adaptation, adaptive profile updating, generic adversarial/backdoor robustness, historical profiling by itself, and reliability/sample selection in the broad sense.
 
-### Important prior-art findings
-1. **Nagravision WO2023046581A1** already combines RF/IQ authentication, anomaly detection, persistent device models and model updating with new RF observations for environmental adaptation.
-2. **Liu et al. (2024)** combines temporal adaptation, continual learning and selective admission of “reliable” new signals before database/model update.
-3. Other RF/PHY authentication work uses online adaptation and multiple physical attributes.
-4. RF backdoor research establishes that learned RF identity models are security-sensitive.
+Important prior-art findings include Nagravision WO2023046581A1 combining RF/IQ authentication, anomaly detection, persistent device models and updating; Liu et al. (2024) combining temporal adaptation, continual learning and selective admission of reliable new signals; other RF/PHY online adaptation work; and RF backdoor research establishing security sensitivity.
 
-The canonical comparison is:
-`docs/04_research/targeted_prior_art_matrix.md`
+Canonical comparison: `docs/04_research/targeted_prior_art_matrix.md`.
 
 ## Revised primary novelty hypothesis
-The project will investigate:
-
 > **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
 
 Core distinction:
 `Identification correctness != authorization to update the persistent profile`
 
-A candidate system may therefore accept an observation for operational identity while rejecting/quarantining it for persistent profile modification.
-
-### Supporting candidate mechanism
-A multi-evidence update-authorization policy may use:
-- identity confidence;
-- embedding consistency;
-- RF-physical consistency;
-- temporal consistency;
-- historical-profile consistency;
-- anomaly/deviation evidence.
-
-The exact policy and thresholds are not frozen.
-
-### Novelty status
-**PROVISIONAL — NOT FINALIZED.**
-
-The targeted audit substantially narrowed the gap but does not prove that no prior system has the same architecture. The strongest remaining uncertainty is whether a security-specific separation provides measurable value beyond a well-designed reliability/admission baseline.
+Novelty remains **PROVISIONAL — NOT FINALIZED**. The strongest remaining uncertainty is whether security-specific separation provides measurable value beyond a well-designed reliability/admission baseline.
 
 ## D1–D10 fast-track relationship
-- D1: reproducible raw-data foundation. **COMPLETE for Track-A SMoRFFI source/schema/ingestion foundation.**
+- D1: reproducible raw-data foundation — **COMPLETE for Track-A SMoRFFI source/schema/ingestion foundation**.
 - D2: minimal deterministic synchronization/preprocessing.
   - **D2.1: sample representation — COMPLETE.**
   - D2.2: actual package/schema inspection and signal-field confirmation.
@@ -141,47 +132,47 @@ The targeted audit substantially narrowed the gap but does not prove that no pri
 - D9: controlled/synthetic poisoning and profile-corruption evaluation.
 - D10: integrated end-to-end demonstration.
 
-D8 and D9 are the primary experimental stages for proving/falsifying the candidate contribution, but they must use validated upstream artifacts.
+D8/D9 are primary experimental stages for proving/falsifying the candidate contribution, but require validated upstream artifacts.
 
 ## D1 completion milestone — 2026-08-29
-SMoRFFI D1 is now recorded as complete at the **source/schema/ingestion-foundation** level.
+SMoRFFI D1 is complete at the **source/schema/ingestion-foundation** level.
 
-Completed artifacts:
-- `src/smorffi_d1.py` — metadata-first SMoRFFI CSV ingestion.
-- `tests/test_smorffi_d1.py` — deterministic IQ/feature/invalid-identity tests.
-- `datasets/SMORFFI_D1_EVIDENCE.md` — source structure, acquisition evidence, schema decisions, integrity boundary and scientific limits.
-- `datasets/dataset_registry.csv` — SMoRFFI D1 status and published acquisition metadata.
+Artifacts:
+- `src/smorffi_d1.py`
+- `tests/test_smorffi_d1.py`
+- `datasets/SMORFFI_D1_EVIDENCE.md`
+- `datasets/dataset_registry.csv`
 
-Published source evidence establishes 123 CSV files per release, 1,000 records per device, MAC/device identifiers, raw preamble data and RF-feature variants. The published acquisition is one USRP B210, 123 same-model M5Stack Core2 devices, 20 MS/s, IEEE 802.11g, Channel 6, 20 MHz bandwidth, fixed 25 cm separation, controlled indoor single-day collection.
+Published source evidence establishes 123 CSV files per release, 1,000 records per device, MAC/device identifiers, raw preamble data and RF-feature variants. Published acquisition: one USRP B210, 123 same-model M5Stack Core2 devices, 20 MS/s, IEEE 802.11g, Channel 6, 20 MHz bandwidth, fixed 25 cm separation, controlled indoor single-day collection.
 
-The implementation deliberately does not infer chronology, session, receiver, environment or multi-day metadata that the source does not provide. Large RF archives remain outside Git.
+The implementation does not infer chronology, session, receiver, environment or multi-day metadata that the source does not provide. Large RF archives remain outside Git.
 
-**Integrity boundary:** a byte-level checksum of the full downloaded Kaggle archive has not been independently reproduced in this environment. The repository records the deterministic SHA-256 helper and the exact evidence required for a future local acquisition record. Therefore this D1 completion must not be represented as proof of local archive acquisition.
+**Integrity boundary:** a byte-level checksum of the full downloaded Kaggle archive has not been independently reproduced in this environment. Therefore D1 completion must not be represented as proof of local archive acquisition.
 
 ## D2.1 completion milestone — 2026-08-29
-The D2.1 sample representation contract is recorded in `docs/04_research/D2_1_SAMPLE_REPRESENTATION.md`.
-
-Established:
+`docs/04_research/D2_1_SAMPLE_REPRESENTATION.md` defines the sample contract:
 - one source CSV row is one atomic source observation / candidate sample;
 - signal-derived information is the model-input boundary;
-- device identity and source identifiers are labels/provenance, not predictive inputs;
+- device identity/source identifiers are labels/provenance, not predictive inputs;
 - source file, row index, device ID/MAC and original source row are retained for provenance;
 - unavailable metadata is not inferred;
-- exact numeric signal shape, parser, scaling, windowing/padding and normalization are deliberately deferred to D2.2/D2.3 until the actual package schema is inspected;
+- exact numeric signal shape, parser, scaling, windowing/padding and normalization are deferred to D2.2/D2.3 until actual package inspection;
 - no device identity shortcut may enter the baseline model input;
-- later transformations must remain traceable to their source observation.
+- later transformations remain traceable to the source observation.
 
-This substage does not claim optimal preprocessing, model performance or scientific validation.
+D2.1 does not claim optimal preprocessing, model performance or scientific validation.
 
 ## Current next action
-1. Begin D2.2 by inspecting the actual SMoRFFI package/schema available for execution.
-2. Confirm the exact signal field(s), parsing representation and numeric sample shape from observed data rather than assumption.
-3. Define deterministic preprocessing and leakage-safe splitting after schema confirmation.
-4. Preserve raw/source rows and provenance; derived artifacts remain reproducible from D1 inputs.
-5. Keep D7/D8 claims blocked until a dataset with the required temporal/receiver/environment metadata is selected.
-6. Maintain the Track-A/Track-B separation and branch synchronization rules.
+1. **Researcher completes and passes the D2 Learning Gate (Layers 1–2).**
+2. Use the next-chat handoff in `docs/04_research/HANDOFF_NEXT_CHAT.md` to resume from this exact state.
+3. After the learning check, begin D2.2 by inspecting the actual SMoRFFI package/schema available for execution.
+4. Confirm exact signal fields, parsing representation and numeric sample shape from observed data rather than assumptions.
+5. Define deterministic preprocessing and leakage-safe splitting after schema confirmation.
+6. Preserve raw/source rows and provenance; derived artifacts remain reproducible from D1 inputs.
+7. Keep D7/D8 claims blocked until a dataset with required temporal/receiver/environment metadata is selected.
+8. Maintain Track-A/Track-B separation and branch synchronization rules.
 
 ## Continuity rule
-When a significant progress milestone is completed and agreed at the end of a chat, the canonical project state must be synchronized so that `main` and `develop` contain the same agreed project state. Work-in-progress task branches and open PRs may remain ahead during implementation, but they must not silently alter `main`.
+When a significant progress milestone is completed and agreed at the end of a chat, synchronize the canonical project state so `main` and `develop` contain the same agreed project state. Work-in-progress task branches/open PRs may remain ahead during implementation but must not silently alter `main`.
 
 All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls, branch rules and scientific completion standards remain unchanged unless explicitly superseded by a recorded decision.
