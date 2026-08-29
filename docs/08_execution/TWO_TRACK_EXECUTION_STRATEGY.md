@@ -32,9 +32,9 @@ New sequence:
 - formats that can be parsed programmatically;
 - enough variation for the minimum D1–D10 path.
 
-Candidate examples identified for rapid evaluation include **AirID**, **ORACLE**, and other public RF/IQ repositories with direct web-accessible data. These are candidates, not automatically accepted project datasets; each must still pass the existing qualification criteria before being used for a scientific claim.
+**Current Track A decision:** Use **ORACLE** as the first Track A candidate/working substrate, subject to final D1 accessibility, integrity, metadata and project-qualification checks before any scientific claim is made from it. This is an execution decision, not a claim that ORACLE has superseded the qualified primary dataset portfolio.
 
-**Important separation:** The user's uploaded **WiSig ManySig archive is preserved but is NOT the Track A working substrate by default.** It is kept as a separate acquired dataset for later controlled validation/reproduction and cross-checking. The project must not contaminate the fast implementation path with a dependency on extracting or uploading ManySig.
+**Track A exclusions:** The user's uploaded **WiSig ManySig archive is deliberately kept separate from Track A**. It is preserved for Track B validation/reproduction/cross-checking and is not a dependency of the fast implementation path. Oregon State WiFi acquisition is likewise not permitted to block Track A.
 
 Track A executes the minimum vertical path:
 
@@ -51,7 +51,7 @@ Activities include:
 - Oregon State WiFi validation when acquisition is practical;
 - larger subsets and additional days/devices where required;
 - Oregon State LoRa and SMoRFFI where their defined experimental responsibilities are needed;
-- ORACLE or Bluetooth as secondary benchmarks when justified;
+- ORACLE or Bluetooth as secondary benchmarks when justified beyond its Track A use;
 - stronger cross-condition/cross-dataset validation;
 - statistical analysis, ablation and failure analysis;
 - experiments required to support or falsify the novelty hypothesis.
@@ -121,4 +121,4 @@ Failures and limitations must be recorded rather than hidden.
 
 This strategy does **not** delete or replace the qualified dataset portfolio, prior-art findings, D1–D10 definitions, branch rules, leakage controls, poisoning controls, knowledge base, or scientific completion criteria.
 
-It changes only the **execution priority and dependency structure**. The additional separation of Track A from the already acquired ManySig copy is an execution convenience, not a change to ManySig's qualified status.
+It changes only the **execution priority and dependency structure**. The explicit separation of Track A from the already acquired ManySig copy is an execution decision: ManySig remains preserved and qualified for Track B rather than serving as the Track A dependency.
