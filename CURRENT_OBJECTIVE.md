@@ -165,3 +165,16 @@ It defines the theory and practical skills to learn alongside implementation.
 6. Build the minimum vertical D1–D10 path aggressively.
 7. Record implementation/evaluation evidence continuously.
 8. Add Track B data only when a concrete validation requirement is documented.
+
+## SUPERSEDING TRACK-A DECISION — 2026-08-29
+DEC-028 supersedes the ORACLE Track A selection above. **SMoRFFI is now the Track A working dataset.**
+
+SMoRFFI was selected because it is already a qualified real RF fingerprinting dataset with a large same-model device population and is a better fit for the rapid implementation objective than the official ORACLE distribution's large archive download requirement.
+
+Current Track A rule:
+- verify actual SMoRFFI package accessibility, metadata and loadability first;
+- use SMoRFFI for the minimum D1–D6/D10 implementation path supported by its verified data;
+- do not assume SMoRFFI provides sufficient D7/D8 metadata until package inspection confirms it;
+- use a qualified Track B dataset for a specific D7/D8 requirement if necessary, without making that dependency block the vertical path.
+
+ManySig, ORACLE and Oregon State datasets retain their previous qualified roles and are not deleted or downgraded.

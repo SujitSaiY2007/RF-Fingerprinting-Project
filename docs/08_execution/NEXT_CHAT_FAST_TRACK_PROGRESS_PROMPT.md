@@ -31,14 +31,18 @@ The immediate objective is to obtain a **small but complete demonstrable impleme
 The active execution model is:
 
 ### Track A — Fast Implementation / Demonstration
-Build the minimum defensible real-data D1–D10 vertical path as the immediate critical path using **internet-accessible real RF/IQ data that the execution environment can fetch or inspect directly**, minimizing user-side large-file download/upload requirements.
+Build the minimum defensible real-data D1–D10 vertical path as the immediate critical path using **SMoRFFI as the selected working dataset**, subject first to actual package accessibility, metadata and D1 loadability/integrity checks.
+
+SMoRFFI is selected because it is already a qualified real RF fingerprinting dataset with a large same-model device population and is better aligned with the rapid implementation objective than the official ORACLE distribution's large archive download requirement.
 
 The user's uploaded **WiSig ManySig archive is explicitly kept separate from Track A**. Do not make Track A dependent on extracting, re-uploading or processing the ManySig archive unless a later decision deliberately promotes it into the working substrate.
 
-Candidate internet-accessible datasets may include AirID, ORACLE or other public RF/IQ sources with stable direct access. Candidates must still pass the existing qualification gate before being used for scientific claims. Do not begin an open-ended dataset search; evaluate only candidates that directly solve the Track A access problem.
+ORACLE is **not** the current Track A dataset. It remains a qualified secondary benchmark and prior ORACLE implementation work is preserved.
+
+Track A must not assume that SMoRFFI alone supports every D7/D8 requirement. Its existing qualification assigns its strongest defined responsibility to D3–D6 and D10, with D7/D8 contingent on package-level metadata verification. If a specific D7/D8 experiment requires variation not present in verified SMoRFFI data, use a qualified Track B dataset for that requirement without allowing it to block the minimum vertical path.
 
 ### Track B — Research Validation / Strengthening
-Use the preserved ManySig dataset plus Oregon State WiFi, other qualified datasets, larger subsets, additional days/devices and cross-condition data when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use Track B for stronger cross-condition/cross-dataset validation, ablations, statistical analysis, failure analysis and support/falsification of the novelty hypothesis.
+Use the preserved ManySig dataset plus Oregon State WiFi, Oregon State LoRa, ORACLE, SMoRFFI broader subsets and other qualified datasets when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use Track B for stronger cross-condition/cross-dataset validation, ablations, statistical analysis, failure analysis and support/falsification of the novelty hypothesis.
 
 Detailed policy:
 `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
@@ -129,7 +133,7 @@ Build:
 - local data-root configuration;
 - manifests/checksums;
 - metadata schema;
-- loader for the selected Track A dataset;
+- loader for **SMoRFFI Track A**;
 - existing WiSig/Oregon loaders retained for Track B;
 - integrity/loadability tests;
 - dataset inspection report;
@@ -149,7 +153,7 @@ Minimum normalized record, where available:
 
 Acceptance: another team member can reproduce the ingestion after setting one local data-root configuration.
 
-Track A establishes minimum D1 evidence first on the selected directly accessible real dataset. Track B broadens D1 evidence with ManySig and other datasets when justified.
+Track A establishes minimum D1 evidence first on SMoRFFI. Track B broadens D1 evidence with ManySig and other datasets when justified.
 
 ## D2 — Synchronization & DSP
 Build a deterministic minimum chain:
@@ -224,6 +228,8 @@ Create a shift matrix using at least one available change:
 - environment/location;
 - SNR/channel condition.
 
+For SMoRFFI, **verify package-level metadata first**. Do not fabricate a D7 shift from information the dataset does not actually provide. If SMoRFFI lacks a suitable shift dimension, use a qualified Track B dataset for D7.
+
 Measure performance degradation.
 
 Use this to demonstrate why adaptation is needed.
@@ -249,6 +255,8 @@ C. `Identify -> Reliability/Consistency -> Update`
 D. candidate security-gated update.
 
 Maintain a **frozen evaluation set** that is never used for profile updates.
+
+If SMoRFFI package metadata cannot support a defensible chronological D8 protocol, use a qualified Track B dataset for that experiment rather than inferring chronology.
 
 Measure:
 - adaptation speed;
@@ -313,6 +321,7 @@ The central demonstration should be:
 14. Add further data only when a concrete validation requirement is documented.
 15. Preserve the distinction between implementation/demo evidence and scientific validation.
 16. Keep ManySig separate from Track A unless a later explicit decision promotes it.
+17. Do not treat dataset download convenience alone as sufficient scientific justification for Track A selection.
 
 ## 7. Repository outputs expected
 
@@ -357,8 +366,8 @@ Use the documented task/research branch -> PR -> develop -> review -> PR -> main
 5. Read `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`.
 6. Inspect which D1–D10 code/evidence already exists.
 7. Do not restart dataset qualification.
-8. Select/verify **one directly accessible Track A RF/IQ dataset** using the existing qualification gate; prefer a dataset the execution environment can fetch without user-side transfer.
-9. Begin/continue the Track A D1 implementation immediately using that dataset.
+8. Verify **SMoRFFI Track A** package accessibility, actual data files and metadata using the existing qualification gate.
+9. Begin/continue the Track A D1 implementation immediately using SMoRFFI.
 10. Keep ManySig and Track B acquisition/validation separate so they do not block Track A.
 11. After each meaningful stage, update evidence and continuity records.
 
@@ -371,3 +380,8 @@ The fast-track is successful when the repository contains a reproducible demonst
 and the result is compared against automatic and confidence/reliability-based updating.
 
 The conclusion may support, weaken, equalize, or falsify the novelty hypothesis. Follow the evidence.
+
+## SUPERSEDING DATASET DECISION — 2026-08-29
+**DEC-028 supersedes the earlier ORACLE Track A selection. SMoRFFI is the current Track A working dataset.**
+
+Do not select ORACLE again unless a new explicit project decision changes Track A. Do not treat this selection as D1–D10 scientific validation. Verify SMoRFFI access, package structure, metadata and loadability first. Preserve all prior decisions and the qualified portfolio.

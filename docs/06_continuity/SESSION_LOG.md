@@ -133,3 +133,15 @@ The user explicitly approved **ORACLE as the first Track A working dataset** aft
 ORACLE is used as the Track A implementation substrate subject to final D1 checks for accessibility, integrity, metadata/provenance and project qualification before scientific claims are made from it.
 
 ManySig remains deliberately separate as a preserved Track B dataset. Oregon State WiFi remains independent of the Track A critical path. The existing qualified dataset portfolio and all prior scientific controls remain unchanged.
+
+## 2026-08-29 — SMoRFFI selected for Track A; ORACLE selection superseded
+After evaluating ORACLE's actual official distribution against the project's fast-track access objective, the user explicitly selected **SMoRFFI** as the new Track A working dataset.
+
+The reason is not download convenience alone: SMoRFFI is already a qualified real RF fingerprinting dataset with 123 same-model commercial IEEE 802.11g devices, raw I/Q data and RF features, directly matching the core device-level fingerprinting objective. The official ORACLE distribution instead requires a large archive download, which conflicts with the time-constrained rapid-access requirement.
+
+DEC-028 therefore supersedes DEC-027. **SMoRFFI is Track A; ORACLE remains qualified secondary; ManySig remains separate Track B.**
+
+### Scientific boundary
+SMoRFFI's existing qualification assigns its strongest defined responsibility to D3–D6 and D10 and leaves D7/D8 contingent on package-level metadata verification. The project will therefore inspect the actual SMoRFFI package before claiming D7/D8 coverage and will use a qualified Track B dataset for any specific D7/D8 requirement that SMoRFFI cannot defensibly support.
+
+No prior dataset qualification, novelty finding, D1–D10 definition, leakage control, poisoning control, branch rule or scientific completion standard is removed or weakened. No raw dataset is added to Git.

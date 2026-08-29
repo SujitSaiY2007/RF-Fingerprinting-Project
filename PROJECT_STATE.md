@@ -102,7 +102,6 @@ The project will investigate:
 > **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
 
 Core distinction:
-
 `Identification correctness != authorization to update the persistent profile`
 
 A candidate system may therefore accept an observation for operational identity while rejecting/quarantining it for persistent profile modification.
@@ -157,3 +156,22 @@ A first reusable ingestion foundation now exists on `task/d1-ingestion-foundatio
 4. Add Track B datasets/conditions when a specific validation requirement justifies them.
 5. Maintain A/B/C/D update-policy baselines for the later security experiment.
 6. Record every material implementation result, failure and decision in GitHub.
+
+## SUPERSEDING STATE UPDATE — 2026-08-29
+The above historical state is superseded for the **current Track A execution substrate** by DEC-028 and DEC-029 in `docs/06_continuity/DECISIONS.md`.
+
+### Current Track A
+**SMoRFFI** is now the selected Track A working dataset. It is already a qualified **KEEP — primary same-model dataset** and is selected because it better satisfies the project's combined scientific-fit and rapid-access objective than the ORACLE distribution.
+
+### Current Track B
+- **WiSig ManySig:** preserved separately for validation/reproduction/cross-checking.
+- **ORACLE:** retained as a qualified secondary controlled benchmark; prior ORACLE ingestion work is preserved and may be reused later.
+- **Oregon State WiFi/LoRa:** unchanged; acquisition remains independent of Track A.
+
+### D1 boundary after the switch
+The Track A D1 work must now verify the actual SMoRFFI package, metadata, access path and loadability before scientific claims. The existing ORACLE-specific implementation is **not deleted**; it is no longer the Track A dependency.
+
+### SMoRFFI stage responsibility caveat
+The existing qualification record assigns SMoRFFI primarily to **D3–D6 and D10** and leaves D7/D8 contingent on package-level metadata verification. Therefore Track A must not assume SMoRFFI alone supplies all evidence needed for D7/D8. If a concrete D7/D8 requirement is not covered, a qualified Track B dataset may be used for that stage.
+
+All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls, branch rules and scientific completion standards remain unchanged.

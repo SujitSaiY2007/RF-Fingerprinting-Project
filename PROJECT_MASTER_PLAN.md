@@ -177,3 +177,15 @@ The distinction between **implemented**, **tested**, **demonstrated** and **scie
 
 The detailed operating policy is:
 `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
+
+## 13. SUPERSEDING TRACK-A DATASET DECISION — 2026-08-29
+
+DEC-028 supersedes the earlier ORACLE/ManySig Track-A substrate references above. **SMoRFFI is the current Track A working dataset.**
+
+The selection is based on both task fit and practical access suitability. SMoRFFI is already a qualified real RF fingerprinting dataset with 123 same-model devices and raw I/Q/RF-feature material, making it a strong fit for the core D3–D6/D10 implementation path without making a large ORACLE archive download the critical path.
+
+SMoRFFI does not automatically satisfy every D7/D8 requirement. Its existing qualification makes D7/D8 contingent on package-level metadata verification. Use qualified Track B data for a specific D7/D8 requirement when necessary.
+
+ManySig remains preserved separately for Track B validation/reproduction/cross-checking. ORACLE remains a qualified secondary controlled benchmark, and its prior ingestion implementation is retained rather than deleted.
+
+No previous dataset qualification, research finding, scientific control or completion criterion is removed by this execution-substrate change.

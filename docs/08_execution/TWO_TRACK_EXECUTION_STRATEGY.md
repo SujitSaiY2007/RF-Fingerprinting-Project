@@ -32,7 +32,7 @@ New sequence:
 - formats that can be parsed programmatically;
 - enough variation for the minimum D1–D10 path.
 
-**Current Track A decision:** Use **ORACLE** as the first Track A candidate/working substrate, subject to final D1 accessibility, integrity, metadata and project-qualification checks before any scientific claim is made from it. This is an execution decision, not a claim that ORACLE has superseded the qualified primary dataset portfolio.
+**Current Track A decision in this document is superseded by DEC-028. The current working dataset is SMoRFFI.**
 
 **Track A exclusions:** The user's uploaded **WiSig ManySig archive is deliberately kept separate from Track A**. It is preserved for Track B validation/reproduction/cross-checking and is not a dependency of the fast implementation path. Oregon State WiFi acquisition is likewise not permitted to block Track A.
 
@@ -122,3 +122,26 @@ Failures and limitations must be recorded rather than hidden.
 This strategy does **not** delete or replace the qualified dataset portfolio, prior-art findings, D1–D10 definitions, branch rules, leakage controls, poisoning controls, knowledge base, or scientific completion criteria.
 
 It changes only the **execution priority and dependency structure**. The explicit separation of Track A from the already acquired ManySig copy is an execution decision: ManySig remains preserved and qualified for Track B rather than serving as the Track A dependency.
+
+## 8. SUPERSEDING TRACK-A DATASET DECISION — 2026-08-29
+
+DEC-028 supersedes the earlier ORACLE Track A selection.
+
+**Current Track A working dataset: SMoRFFI.**
+
+Selection rationale:
+- SMoRFFI is already a qualified real RF fingerprinting dataset, not merely a general RF/protocol-classification dataset.
+- Its qualification record reports 123 same-model commercial IEEE 802.11g devices with raw I/Q data and RF features, directly supporting the core device-fingerprinting path.
+- It better satisfies the combined scientific-fit and rapid-access objective than ORACLE's official large-archive distribution.
+
+### Track-A operating boundary
+SMoRFFI must pass actual package accessibility, metadata inspection and D1 loadability/integrity checks before scientific claims are made from it.
+
+The existing SMoRFFI qualification assigns its strongest defined responsibility to **D3–D6 and D10**, while D7/D8 remain contingent on package-level metadata verification. Therefore the project must not assume that SMoRFFI alone supports all D7/D8 claims. If a concrete D7/D8 requirement is not covered, use a qualified Track B dataset for that specific requirement without allowing it to block the minimum vertical implementation.
+
+### Preserved datasets
+- WiSig ManySig remains separate Track B validation/reproduction/cross-checking data.
+- ORACLE remains a qualified secondary controlled benchmark; its prior Track-A-oriented ingestion work is retained and is not deleted.
+- Oregon State WiFi/LoRa and the remainder of the qualified portfolio are unchanged.
+
+This decision changes the Track-A execution substrate only. It does not lower scientific standards, alter D1–D10 acceptance criteria, or constitute D1–D10 scientific validation.
