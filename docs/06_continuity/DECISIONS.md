@@ -136,3 +136,12 @@ The user-provided WiSig ManySig archive is preserved as a **separate acquired da
 Track A will instead prioritize **internet-accessible real RF/IQ datasets that the execution environment can fetch or inspect directly**, avoiding user-side large-file transfer wherever practical. Candidate datasets must still pass the existing qualification gate before being used for scientific claims.
 
 This is an execution optimization only. It does not downgrade ManySig, change its qualified status, delete it from the project portfolio, or alter the D1–D10 scientific acceptance criteria.
+
+## DEC-027 — ORACLE selected as the Track A working dataset
+Following the explicit decision to separate ManySig from the rapid implementation path, **ORACLE is selected as the first Track A working dataset**, subject to final D1 accessibility, integrity, metadata/provenance and project-qualification checks before scientific claims are made from it.
+
+The reason for selection is execution suitability: ORACLE provides real RF/IQ recordings, device identity labels, accompanying metadata and experimental variation that can support a compact D1–D10 demonstration without requiring the user to first transfer the large ManySig archive or wait for the slow Oregon State download.
+
+This does **not** promote ORACLE into the primary qualified dataset portfolio, remove it from its existing secondary classification, or supersede WiSig/Oregon State as the project's broader validation datasets. It is a Track A execution decision only.
+
+ManySig remains preserved separately for Track B validation/reproduction/cross-checking, and Oregon State acquisition remains independent of the Track A critical path.
