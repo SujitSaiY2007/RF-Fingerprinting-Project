@@ -77,3 +77,14 @@ A detailed continuation prompt was added at:
 `docs/08_execution/NEXT_CHAT_FAST_TRACK_PROGRESS_PROMPT.md`
 
 The next session should inspect the repository, avoid restarting completed dataset qualification, begin D1 immediately and build the minimum vertical path through D10.
+
+## 2026-08-29 — Repository cleanup and synchronization policy
+The two superseded continuity/research documents were archived for traceability:
+- `docs/05_archive/research/novelty_proof_matrix_2026-08-26.md`
+- `docs/05_archive/continuity/CHATGPT_CONTINUATION_PROMPT.md`
+
+Their active replacements remain:
+- `docs/04_research/targeted_prior_art_matrix.md`
+- `docs/08_execution/NEXT_CHAT_FAST_TRACK_PROGRESS_PROMPT.md`
+
+A permanent repository rule was added: when a substantial project change is completed and agreed upon by the end of a project chat, `main` and `develop` must be synchronized to exactly the same canonical commit/state unless an explicitly documented review/integration task remains pending. Branch synchronization does not imply scientific validation or stage completion.
