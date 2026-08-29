@@ -8,6 +8,7 @@
 - Integration branch: `develop`
 - Phase: **Phase 1 — Preparation / accelerated implementation**
 - Current engineering gate: **D2 — Minimal deterministic synchronization / preprocessing**
+- Current substage: **D2.1 — Sample representation — COMPLETE**
 - D1: **COMPLETE at source/schema/ingestion-foundation level**
 - D1–D10 scientific validation: **not yet complete**
 - Team size: 4
@@ -126,6 +127,11 @@ The targeted audit substantially narrowed the gap but does not prove that no pri
 ## D1–D10 fast-track relationship
 - D1: reproducible raw-data foundation. **COMPLETE for Track-A SMoRFFI source/schema/ingestion foundation.**
 - D2: minimal deterministic synchronization/preprocessing.
+  - **D2.1: sample representation — COMPLETE.**
+  - D2.2: actual package/schema inspection and signal-field confirmation.
+  - D2.3: deterministic preprocessing transformation definition.
+  - D2.4: leakage-safe split strategy.
+  - D2.5+: implementation, tests, evidence and acceptance.
 - D3: interpretable RF evidence.
 - D4: simple learned representation/embedding.
 - D5: closed-set identity baseline.
@@ -152,12 +158,28 @@ The implementation deliberately does not infer chronology, session, receiver, en
 
 **Integrity boundary:** a byte-level checksum of the full downloaded Kaggle archive has not been independently reproduced in this environment. The repository records the deterministic SHA-256 helper and the exact evidence required for a future local acquisition record. Therefore this D1 completion must not be represented as proof of local archive acquisition.
 
+## D2.1 completion milestone — 2026-08-29
+The D2.1 sample representation contract is recorded in `docs/04_research/D2_1_SAMPLE_REPRESENTATION.md`.
+
+Established:
+- one source CSV row is one atomic source observation / candidate sample;
+- signal-derived information is the model-input boundary;
+- device identity and source identifiers are labels/provenance, not predictive inputs;
+- source file, row index, device ID/MAC and original source row are retained for provenance;
+- unavailable metadata is not inferred;
+- exact numeric signal shape, parser, scaling, windowing/padding and normalization are deliberately deferred to D2.2/D2.3 until the actual package schema is inspected;
+- no device identity shortcut may enter the baseline model input;
+- later transformations must remain traceable to their source observation.
+
+This substage does not claim optimal preprocessing, model performance or scientific validation.
+
 ## Current next action
-1. Begin D2 on the validated SMoRFFI ingestion output.
-2. Establish deterministic synchronization/preprocessing without leaking device identity into preprocessing decisions.
-3. Preserve raw/source rows and provenance; derived artifacts remain reproducible from D1 inputs.
-4. Keep D7/D8 claims blocked until a dataset with the required temporal/receiver/environment metadata is selected.
-5. Maintain the Track-A/Track-B separation and branch synchronization rules.
+1. Begin D2.2 by inspecting the actual SMoRFFI package/schema available for execution.
+2. Confirm the exact signal field(s), parsing representation and numeric sample shape from observed data rather than assumption.
+3. Define deterministic preprocessing and leakage-safe splitting after schema confirmation.
+4. Preserve raw/source rows and provenance; derived artifacts remain reproducible from D1 inputs.
+5. Keep D7/D8 claims blocked until a dataset with the required temporal/receiver/environment metadata is selected.
+6. Maintain the Track-A/Track-B separation and branch synchronization rules.
 
 ## Continuity rule
 When a significant progress milestone is completed and agreed at the end of a chat, the canonical project state must be synchronized so that `main` and `develop` contain the same agreed project state. Work-in-progress task branches and open PRs may remain ahead during implementation, but they must not silently alter `main`.
