@@ -31,10 +31,14 @@ The immediate objective is to obtain a **small but complete demonstrable impleme
 The active execution model is:
 
 ### Track A — Fast Implementation / Demonstration
-Build the minimum defensible real-data D1–D10 vertical path as the immediate critical path. Use an accessible real-data substrate, beginning with **WiSig ManySig** already acquired by the user. Oregon State WiFi remains the first intended second implementation dataset, but its acquisition speed must not block Track A.
+Build the minimum defensible real-data D1–D10 vertical path as the immediate critical path using **internet-accessible real RF/IQ data that the execution environment can fetch or inspect directly**, minimizing user-side large-file download/upload requirements.
+
+The user's uploaded **WiSig ManySig archive is explicitly kept separate from Track A**. Do not make Track A dependent on extracting, re-uploading or processing the ManySig archive unless a later decision deliberately promotes it into the working substrate.
+
+Candidate internet-accessible datasets may include AirID, ORACLE or other public RF/IQ sources with stable direct access. Candidates must still pass the existing qualification gate before being used for scientific claims. Do not begin an open-ended dataset search; evaluate only candidates that directly solve the Track A access problem.
 
 ### Track B — Research Validation / Strengthening
-In parallel where practical or after Track A, add larger subsets, additional days/devices and qualified datasets when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use Track B for stronger cross-condition/cross-dataset validation, ablations, statistical analysis, failure analysis and support/falsification of the novelty hypothesis.
+Use the preserved ManySig dataset plus Oregon State WiFi, other qualified datasets, larger subsets, additional days/devices and cross-condition data when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use Track B for stronger cross-condition/cross-dataset validation, ablations, statistical analysis, failure analysis and support/falsification of the novelty hypothesis.
 
 Detailed policy:
 `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
@@ -43,7 +47,7 @@ This changes execution order and dependency structure only. It does **not** lowe
 
 ## 2. Dataset acquisition and reuse rule
 
-The qualified datasets remain:
+The qualified portfolio remains:
 
 ### Primary
 1. WiSig
@@ -55,13 +59,13 @@ The qualified datasets remain:
 5. ORACLE
 6. Bluetooth smartphone RF database
 
+The user's ManySig copy is preserved as a separate acquired dataset for Track B validation/reproduction/cross-checking.
+
 Large raw datasets stay outside Git.
 
-Acquire necessary development datasets once where practical, preserve raw copies unchanged and reuse them through D1–D10. Do not repeatedly download the same data. Further acquisition is triggered only by a specific experimental, access/licensing, metadata, integrity or reproducibility need. No open-ended dataset hunt.
+Track A should prefer public datasets that the execution environment can access directly. User-side acquisition is only required when direct programmatic access is unavailable, licensing/terms require it, or the dataset is specifically needed for Track B validation.
 
-First development pair remains:
-
-**WiSig + Oregon State WiFi RFFP.**
+Once accepted for a track, preserve raw data unchanged where practical and reuse it through the relevant D1–D10 work. Further acquisition requires a documented need. No open-ended dataset hunt.
 
 ## 3. Novelty status — revised after targeted audit
 
@@ -125,8 +129,8 @@ Build:
 - local data-root configuration;
 - manifests/checksums;
 - metadata schema;
-- WiSig loader;
-- Oregon State WiFi loader;
+- loader for the selected Track A dataset;
+- existing WiSig/Oregon loaders retained for Track B;
 - integrity/loadability tests;
 - dataset inspection report;
 - leakage-safe identifiers.
@@ -145,7 +149,7 @@ Minimum normalized record, where available:
 
 Acceptance: another team member can reproduce the ingestion after setting one local data-root configuration.
 
-Track A may establish minimum D1 evidence first on accessible real data. Track B can broaden D1 evidence with additional datasets/conditions when justified.
+Track A establishes minimum D1 evidence first on the selected directly accessible real dataset. Track B broadens D1 evidence with ManySig and other datasets when justified.
 
 ## D2 — Synchronization & DSP
 Build a deterministic minimum chain:
@@ -308,6 +312,7 @@ The central demonstration should be:
 13. Do not let large dataset acquisition block the minimum vertical implementation.
 14. Add further data only when a concrete validation requirement is documented.
 15. Preserve the distinction between implementation/demo evidence and scientific validation.
+16. Keep ManySig separate from Track A unless a later explicit decision promotes it.
 
 ## 7. Repository outputs expected
 
@@ -352,9 +357,10 @@ Use the documented task/research branch -> PR -> develop -> review -> PR -> main
 5. Read `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`.
 6. Inspect which D1–D10 code/evidence already exists.
 7. Do not restart dataset qualification.
-8. Begin/continue the Track A D1 implementation immediately using the accessible real-data substrate.
-9. Keep Track B acquisition/validation separate so it does not block Track A.
-10. After each meaningful stage, update evidence and continuity records.
+8. Select/verify **one directly accessible Track A RF/IQ dataset** using the existing qualification gate; prefer a dataset the execution environment can fetch without user-side transfer.
+9. Begin/continue the Track A D1 implementation immediately using that dataset.
+10. Keep ManySig and Track B acquisition/validation separate so they do not block Track A.
+11. After each meaningful stage, update evidence and continuity records.
 
 ## 10. Fast-track success condition
 

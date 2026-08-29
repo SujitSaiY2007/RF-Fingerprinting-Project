@@ -1,32 +1,34 @@
 # D1 Implementation Status — 2026-08-29
 
 ## Current status
-**D1 foundation implemented; D1 scientific/operational acceptance pending real local archives.**
+**D1 foundation extended for ORACLE; real binary loadability remains pending execution against the actual archive.**
 
-## Implemented in this task branch
+## Implemented
 - Common normalized RF metadata record.
 - Manifest-driven CSV ingestion.
-- WiSig metadata loader.
-- Oregon State WiFi RFFP metadata loader.
+- Existing WiSig metadata loader.
+- Existing Oregon State WiFi RFFP metadata loader.
+- ORACLE SigMF-compatible metadata discovery and normalization.
+- ORACLE paired `.sigmf-meta` / `.sigmf-data` validation.
+- ORACLE device/receiver/environment/distance provenance extraction.
+- Explicit ORACLE `complex128` interpretation based on the publisher's dataset note.
 - Deterministic manifest checksum helper.
 - Normalized JSONL writer.
-- Duplicate/malformed-record validation.
-- Unit tests for the above contract.
-- D1 provenance and acceptance specification.
+- Common and ORACLE-specific record validation.
+- Unit tests covering ORACLE metadata normalization, discovery/validation and missing paired data rejection.
+
+## Source verification completed
+The official GENESYS ORACLE documentation confirms Dataset #1 is raw OTA IQ from 16 X310 transmitters, recorded with a fixed B210 receiver at 5 MS/s and 2.45 GHz, with distance variation from 2 ft to 62 ft. It documents paired SigMF-compatible metadata/data files and explicitly states that the released binary samples are stored as 64-bit floating point and should be parsed as `complex128`.
 
 ## Explicit limitation
-The repository does not contain the large RF archives, and the current environment has not provided local copies of those archives. Therefore the loaders have not yet been exercised against real WiSig/Oregon State files in this task.
-
-This is an implementation milestone, **not D1 completion**.
+The actual ORACLE binary archive has not yet been executed through the loader in this environment. Therefore this milestone is **not D1 completion** and does not claim real-archive loadability or scientific validation.
 
 ## Next D1 action
-When the local data root is available:
+1. Make a small ORACLE raw recording plus its `.sigmf-meta` available to the execution environment, or otherwise obtain a directly readable archive subset.
+2. Run the loader against the real files.
+3. Verify byte size / complex128 interpretation and metadata-to-sample consistency.
+4. Generate a real normalized manifest and provenance report.
+5. Establish leakage-safe device/run/distance partition identifiers.
+6. Freeze the D1 Track-A data contract.
 
-1. inspect the actual WiSig compact/raw subset selected for the experiment;
-2. inspect the Oregon State WiFi release structure and metadata files;
-3. generate real manifests;
-4. checksum manifests/source artifacts where feasible;
-5. run the loaders against real files;
-6. produce a dataset inspection report;
-7. establish leakage-safe identifiers and partition metadata;
-8. record any source-specific parsing failures instead of silently normalizing them away.
+After that, move immediately into D2 while retaining the D1 evidence artifact.
