@@ -10,25 +10,30 @@ The project is not allowed to call a stage complete merely because code exists. 
 The project now uses two connected tracks so large dataset acquisition does not become the critical path.
 
 ### Track A — Fast Implementation / Demonstration
-Build the minimum defensible D1–D10 vertical path using an accessible real-data development substrate. **WiSig ManySig** is the immediate substrate already acquired by the user. Oregon State WiFi remains the first intended second implementation dataset when acquisition is practical, but its download speed must not block Track A.
+Build the minimum defensible D1–D10 vertical path using an internet-accessible real RF/IQ development substrate that the execution environment can fetch or inspect directly. **ORACLE is now the first Track A working dataset**, subject to final D1 accessibility, integrity, metadata/provenance and project-qualification checks before scientific claims are made from it.
+
+The user-provided **WiSig ManySig archive is deliberately kept separate from Track A**. It is preserved for Track B validation/reproduction/cross-checking. Oregon State WiFi acquisition likewise remains independent and must not block Track A.
 
 ### Track B — Research Validation / Strengthening
-Add larger subsets, additional days/devices and qualified datasets when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use Track B for stronger cross-condition/cross-dataset validation, statistical analysis, ablations, failure analysis and support/falsification of the research claim.
+Use ManySig and the broader qualified dataset portfolio when a concrete requirement justifies stronger validation: larger subsets, additional days/devices, cross-condition/cross-dataset validation, statistical analysis, ablations, failure analysis and support/falsification of the research claim.
 
 Detailed policy:
 `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
 
 ## Dataset acquisition policy
-Acquire necessary development datasets once where practical, preserve raw copies unchanged and reuse them throughout D1–D10. Repeated downloads are not expected. Additional acquisition requires a documented need. Large raw datasets remain outside Git.
+Track A should minimize user-side downloads and uploads by preferring stable public data that the execution environment can access directly. Once a dataset is accepted for a track, preserve raw data unchanged where practical and reuse it through the relevant D1–D10 work. Additional acquisition requires a documented need. Large raw datasets remain outside Git.
 
 ## Current engineering gate
 **D1 — Raw RF Data / Ingestion**
 
 The dataset-search/qualification workstream is complete as a development-substrate selection gate. It is not scientific validation.
 
-First implementation pair:
-1. **WiSig**
-2. **Oregon State WiFi RFFP**
+Track A working dataset:
+1. **ORACLE** — subject to final D1 checks
+
+Preserved Track B dataset:
+1. **WiSig ManySig** — acquired by user
+2. **Oregon State WiFi RFFP** — acquisition independent of Track A
 
 ## Current research-control position
 The broad literature audit rejected weak standalone novelty claims including:
@@ -152,9 +157,11 @@ Use:
 It defines the theory and practical skills to learn alongside implementation.
 
 ## Next concrete task
-1. Start/continue D1 implementation using the accessible WiSig ManySig substrate.
-2. Do not restart dataset qualification.
-3. Continue Oregon State WiFi acquisition only as practical and do not let it block Track A.
-4. Build the minimum vertical D1–D10 path aggressively.
-5. Record implementation/evaluation evidence continuously.
-6. Add Track B data only when a concrete validation requirement is documented.
+1. Verify ORACLE direct accessibility and inspect its actual raw-I/Q and metadata structure.
+2. Perform the D1 Track A qualification/loadability check.
+3. Start the minimum Track A D1 implementation.
+4. Keep ManySig preserved and separate as Track B data.
+5. Continue Oregon State acquisition only as practical; it must not block Track A.
+6. Build the minimum vertical D1–D10 path aggressively.
+7. Record implementation/evaluation evidence continuously.
+8. Add Track B data only when a concrete validation requirement is documented.
