@@ -1,4 +1,4 @@
-# CURRENT HANDOFF — 2026-08-25
+# CURRENT HANDOFF — 2026-08-29
 
 ## Project
 **Physics-Based RF Fingerprinting with Continuous Device Learning**
@@ -6,112 +6,122 @@
 ## Canonical repository
 `SujitSaiY2007/RF-Fingerprinting-Project`
 
-## Authoritative project state
-- Phase: **Phase 1 — Preparation**.
-- Current workstream/gate: **D1 — Raw RF Data / Ingestion**.
-- Dataset Search & Validation / Qualification is complete as the development-substrate selection gate.
-- D1–D10 are **not scientifically completed**.
+## Current position
+- Phase: **Phase 1 — Preparation / accelerated implementation**.
+- Current engineering gate: **D1 — Raw RF Data / Ingestion**.
+- Dataset qualification is complete as a development-substrate selection gate.
+- D1–D10 are not scientifically completed.
 - Team size: 4.
-- All four members remain on the same overall workstream; no permanent technical division exists.
 
-## Repository state — verified
-The earlier `main`/`develop` history anomaly has been resolved without intentional history loss.
+## Fast-track objective
+The project must move quickly from planning to a demonstrable software pipeline.
 
-- Pre-reconciliation `main`: `7770fcb517c5df986b1f5ad4d3e0a07a4995298c`.
-- Pre-reconciliation `develop`: `9634ff446958d9f2af0d41e40625a5b5d5b46702`.
-- Lossless reconciliation commit: `fa88775ac569358cfe93b2f2a12b6d3b70300dd0`.
-- That reconciliation commit has both pre-reconciliation tips as parents.
-- Explicit archive branches preserve both old tips:
-  - `archive/pre-reconciliation-main-2026-08-21`
-  - `archive/pre-reconciliation-develop-2026-08-21`
-- `main` and `develop` were re-compared after reconciliation and reported **identical: 0 ahead / 0 behind**.
-- No force-reset or history deletion was used.
+Execution principle:
 
-## Branch workflow from this point
-Use:
+`Build minimum viable evidence path -> test -> document -> strengthen`
 
-`task/research branch → Pull Request → develop → review/integration → Pull Request → main`
-
-Do not recreate independent `main`/`develop` histories.
+Do not claim scientific completion from code existence.
 
 ## Qualified dataset portfolio
-### KEEP — primary
-1. **WiSig** — scale, receiver variation, multi-day/channel robustness.
-2. **Oregon State WiFi RFFP** — temporal/domain variation and repeated-device observations.
-3. **Oregon State LoRa RFFP** — same-model/environment/location/distance/receiver variation.
-4. **SMoRFFI** — large-scale same-model discrimination.
+### Primary
+1. WiSig — scale, receiver variation, multi-day/channel robustness.
+2. Oregon State WiFi RFFP — temporal/domain variation.
+3. Oregon State LoRa RFFP — same-model/environment/location/distance/receiver variation.
+4. SMoRFFI — large-scale same-model discrimination.
 
-### SECONDARY — supporting
-5. **ORACLE** — controlled transmitter-hardware/distance benchmark.
-6. **Bluetooth smartphone RF database** — optional cross-technology benchmark.
+### Secondary
+5. ORACLE — controlled transmitter-hardware/distance benchmark.
+6. Bluetooth smartphone RF database — optional cross-technology benchmark.
 
-## Q2/Q4 novelty research — 2026-08-25
-A broad literature audit was performed before freezing the novelty direction.
+First implementation pair: **WiSig + Oregon State WiFi RFFP**.
 
-### Weak standalone novelty claims rejected
-The following are established/active research areas and must not be presented as standalone novelty:
-- physics-informed RF representation;
-- learned RF device embeddings;
-- open-set RF fingerprint recognition;
-- incremental/continual RF fingerprint learning;
-- physics-aware temporal/test-time adaptation;
-- generic adversarial robustness;
-- historical device profiling by itself.
+## Novelty status — revised 2026-08-29
+The targeted audit found two especially important boundaries:
 
-Detailed evidence and representative literature are recorded in:
-`docs/04_research/novelty_literature_gap_audit.md`
+### Nagravision WO2023046581A1
+Already combines RF/IQ authentication, anomaly detection, persistent device models and adaptive model updating using new RF observations.
 
-### Current primary novelty hypothesis — provisional
-> **Secure continual RF device-profile evolution through explicit separation of identity recognition from authorization to modify the persistent device profile.**
+### Liu et al. (2024)
+Combines temporal/domain adaptation with continual SEI learning and selectively admits “reliable” new signals into the database before model updating.
 
-Core distinction:
+Therefore neither of the following is sufficient novelty:
 
-`Identification correctness != authorization to update the persistent profile`
+- RF authentication + adaptive model update;
+- reliability/sample admission + continual RF update.
 
-The candidate architecture may allow an observation to be accepted for identity/authentication while rejecting it for persistent profile update when physical, embedding-space, temporal, historical-profile or anomaly evidence is inconsistent.
+### Current candidate contribution
+> **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
 
-### Supporting candidate mechanism
-A **multi-evidence update authorization gate** may combine:
-- identity confidence;
-- embedding consistency;
-- RF-physical consistency;
-- temporal consistency;
-- historical-profile consistency;
-- anomaly/deviation evidence.
+Candidate supporting mechanism:
 
-This is a research hypothesis, not a frozen algorithm.
+> **Multi-evidence update authorization using identity confidence, representation consistency, RF-physical consistency, temporal consistency, historical-profile consistency and anomaly evidence.**
 
-### D8/D9 connection
-The novelty investigation connects D8 Continual Learning / Profile Evolution with D9 Poisoning / Adversarial Protection. D8 establishes chronological profile evolution; D9 evaluates controlled/synthetic poisoning and profile-corruption resistance.
+The policy, score and thresholds remain open research variables.
 
-### Novelty status
-**PROVISIONAL — NOT FINALIZED.**
+### Current uncertainty
+The strongest unresolved question is whether this security-specific separation provides a measurable advantage beyond a strong reliability/admission baseline. If not, the novelty claim must be revised or abandoned.
 
-A targeted forensic Q4 audit is still required before the candidate gap becomes a formal contribution. It must explicitly test whether prior RF/RFFI systems separate identity recognition from permission to modify a persistent device profile.
+Canonical evidence:
+`docs/04_research/targeted_prior_art_matrix.md`
 
 ## D1 objective
-Build a reproducible, provenance-aware, integrity-checked raw-RF ingestion foundation, initially using:
+Build the reproducible raw-RF foundation for WiSig + Oregon State WiFi:
+- provenance/version identity;
+- acquisition/reference instructions;
+- manifests/checksums where feasible;
+- I/Q interpretation;
+- normalized metadata;
+- missing-metadata handling;
+- integrity/loadability tests;
+- reproducible data root;
+- leakage-safe identifiers;
+- raw/normalized/derived/experiment separation.
 
-1. **WiSig**
-2. **Oregon State WiFi RFFP**
+## D1–D10 accelerated execution
+After minimal D1 acceptance, proceed with a vertical implementation path:
 
-D1 must establish authoritative source/version identity, provenance, acquisition instructions, manifests/checksums, raw-I/Q interpretation, common metadata, leakage-safe identifiers, integrity/loadability tests, missing-metadata handling, reproducible local data roots and separation of raw/normalized/derived/experiment data.
+`D1 ingestion -> D2 DSP -> D3 RF evidence -> D4 embedding -> D5 identity -> D6 open-set -> D7 shift -> D8 profile evolution -> D9 poisoning -> D10 integration`
 
-## Important downstream constraints
-- Avoid random sample splits when session/burst leakage is possible.
+D8/D9 must compare:
+
+A. `Identify -> Update`
+
+B. `Identify -> Confidence -> Update`
+
+C. `Identify -> Reliability/Consistency -> Update`
+
+D. `Identify -> Security/Update-Safety -> Authorization -> Update/Reject/Quarantine`
+
+The decisive novelty comparison is C versus D.
+
+## Important experimental constraints
+- Avoid random splits where session/burst leakage is possible.
 - Prefer session/day/device/receiver holdouts appropriate to the claim.
-- D6 requires explicit unseen-identity construction.
-- D8 requires a chronological profile-update protocol with frozen evaluation and rollback protection.
+- Keep frozen evaluation data isolated from profile updates.
 - D9 uses legitimate RF data plus controlled/synthetic poisoning and must be labelled accordingly.
-- D10 is integrated end-to-end validation.
-- Hardware transfer remains later.
+- D10 must demonstrate the complete lifecycle, not only isolated blocks.
 
-## Immediate next actions
-1. Complete the targeted Q4 novelty audit and record the nearest-prior comparison.
-2. Do not implement the candidate novelty mechanism until the differentiator is supported and an experiment can falsify it.
-3. Continue D1: define the ingestion specification and acceptance checklist.
-4. Verify authoritative WiSig and Oregon State WiFi packages/metadata.
-5. Implement and validate the minimal reproducible ingestion layer.
+## Knowledge base
+Use:
+`docs/07_knowledge_base/RF_FINGERPRINTING_KNOWLEDGE_BASE.md`
+
+It contains the theory and practical minimum knowledge needed while implementing D1–D10.
+
+## Next-chat continuation
+Use:
+`docs/08_execution/NEXT_CHAT_FAST_TRACK_PROGRESS_PROMPT.md`
+
+The next session should inspect the repository first, determine which stages have real code/evidence, then start D1 immediately without repeating completed dataset qualification or broad literature searching.
 
 ## Research discipline
-Distinguish source-derived facts, repository-derived facts, project decisions, experimental results, inference, hypothesis and speculation. Do not claim novelty, superiority, publication-worthiness or patentability without evidence.
+Distinguish:
+- source-derived fact;
+- repository-derived fact;
+- implementation;
+- test result;
+- experiment result;
+- inference;
+- hypothesis;
+- speculation.
+
+Do not claim novelty, superiority, publication-worthiness or patentability without evidence.
