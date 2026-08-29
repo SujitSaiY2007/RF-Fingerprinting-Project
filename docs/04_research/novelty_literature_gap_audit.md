@@ -1,245 +1,254 @@
-# Novelty & Literature Gap Audit — Q2/Q4
+# Novelty & Literature Gap Audit — Q2/Q4 + Targeted Forensic Update
 
-**Status:** Preliminary research record; novelty is NOT yet finalized.
-
-**Date:** 2026-08-25
-
-**Purpose:** Record the literature-driven refinement of the project's proposed novelty before downstream representation/continual-learning implementation. This document is the canonical research record for the current novelty hypothesis.
+**Status:** Preliminary-to-targeted research record; novelty is **NOT finalized**.  
+**Initial audit:** 2026-08-25  
+**Targeted update:** 2026-08-29
 
 ## 1. Research question from the progress meeting
 
-The professor's Question 2 is treated as a novelty-design question connected to Question 4:
-
 > What is genuinely different about this project, where will that difference be implemented, and how can the claim be defended against existing solutions?
 
-The initial decomposition is:
+The project must not call a component novel merely because it appears in the pipeline.
 
-1. Representation
-2. Decision making
-3. Security
+## 2. Broad audit conclusion
 
-The project must not call a component novel merely because it is included in the pipeline.
-
-## 2. Literature review conclusion so far
-
-The first broad literature audit shows that several originally suspected novelty claims are already established research areas. Therefore they are treated as **enabling components**, not standalone novelty claims.
+The following are established or active research areas and are treated as enabling components/baselines:
 
 | Candidate idea | Current assessment | Project treatment |
 |---|---|---|
 | RF fingerprinting + deep learning | Established | Baseline/component |
-| Learned RF device embeddings | Established | D4 component |
-| Physics-informed RF representation | Existing research direction | D3/D4 component; not standalone novelty |
-| Open-set RF fingerprint recognition | Established and active | D6 component |
-| Prototype/embedding-based unknown-device decision | Established | D4/D6 component |
-| Incremental/continual RF fingerprint learning | Existing research direction | D8 component |
-| Physics-aware temporal/test-time adaptation | Existing recent work | D7/D8 component; not standalone novelty |
-| Open-set + incremental RF learning | Existing recent work | Baseline to compare against |
-| Generic adversarial robustness of RF fingerprinting | Existing research direction | D9 baseline/security context |
-| Historical device profiling | Existing concept | D8 component |
-| **Separate authorization of profile updates from identity recognition** | **Potential research gap; requires targeted audit** | **Primary novelty candidate** |
-| **Multi-evidence secure update gate for continual RF profile evolution** | **Potential research gap; requires targeted audit and experiments** | **Primary/secondary novelty candidate** |
-| Integrated physics + representation + open-set + continual evolution + update security | Potential system-level contribution, but only if differentiated experimentally | Candidate integrated contribution |
+| Learned RF device embeddings | Established | Representation component |
+| Physics-informed RF representation | Existing research direction | RF-evidence/representation component |
+| Open-set RF fingerprint recognition | Established and active | Open-set component |
+| Prototype/embedding-based unknown-device decision | Established | Open-set baseline |
+| Incremental/continual RF fingerprint learning | Established/active | Profile-evolution component |
+| Physics-aware temporal/test-time adaptation | Existing recent work | Robustness/adaptation component |
+| Adaptive RF model/profile updating | Existing | Baseline capability |
+| Generic adversarial/backdoor robustness | Existing research direction | Security baseline/context |
+| Historical device profiling | Existing concept | Profile component |
+| Reliability/sample selection before learning | Existing in adjacent RF/SEI work | Admission baseline |
+| Security-specific separation of recognition from persistent-state update authorization | Potential gap | Primary candidate; requires proof |
 
-## 3. Evidence that invalidates weaker novelty claims
+## 3. Critical prior-art boundaries discovered in targeted audit
 
-### 3.1 Physics-informed representation is not sufficient novelty
+### 3.1 Nagravision — WO2023046581A1
 
-Recent work already investigates physical-information-aware RF fingerprint representations and temporal adaptation. In particular, RFF-TTA (AAAI 2026) explicitly uses physical impairment information, including CFO-related information, to construct physically informed prototypes for temporally varying RF fingerprinting and performs online test-time adaptation.
+The patent describes RF-device authentication using I/Q-derived RF data, anomaly detection, stored per-device models and updating a stored model with new RF observations to adapt to environmental conditions.
+
+This is a critical boundary because it already covers the broad pattern:
+
+`RF observation -> authentication/anomaly decision -> persistent model -> adaptive update`
+
+**Decision:** Do not claim RF authentication + adaptive model updating as novel.
 
 Source:
-- AAAI 2026, *RFF-TTA: Physical Information-Aware Prototype for Temporally Varying RF Fingerprinting Online Test-Time-Adaptation*:
-  https://ojs.aaai.org/index.php/AAAI/article/view/37034/40996
+https://patents.google.com/patent/WO2023046581A1/en
 
-**Decision:** Do not claim "physics-aware representation" alone as the project's novelty.
+### 3.2 Liu et al. — Specific emitter identification unaffected by time through adversarial domain adaptation and continual learning (2024)
 
-### 3.2 Open-set RF fingerprinting is established
+This work addresses temporal changes in emitter fingerprints using domain adaptation and continual learning. New observations are compared with preserved feature distributions; reliable new signals are identified, labeled, added to the database and used for model updating.
 
-Existing work includes improved prototype learning for open-set RF fingerprint identification, HiNoVa for open-set RF device detection, Siamese/comparison approaches, and newer prototype/reconstruction/open-set methods.
+This is the strongest academic challenge to a simple “we check whether an observation is reliable before updating” claim.
 
-Representative sources:
-- *Open-Set RF Fingerprinting via Improved Prototype Learning* (2023):
-  https://arxiv.org/abs/2306.13895
-- HiNoVa (2023):
-  https://arxiv.org/abs/2305.09594
-- Recent multi-task prototype/open-set RFFI work:
-  https://www.mdpi.com/1424-8220/25/17/5415
+**Decision:** Reliability/sample admission before continual RF updating is not sufficient novelty by itself.
 
-**Decision:** Do not claim unknown-device recognition or prototype-based open-set decision as standalone novelty.
+Source:
+https://doi.org/10.1016/j.engappai.2024.109324
 
-### 3.3 Incremental/continual RF fingerprint learning is established
+### 3.3 Online/adaptive physical-layer authentication
 
-RF fingerprint identification has prior incremental-learning research. More recent work such as Meta-RFF combines few-shot, open-set and incremental/continual RF fingerprint recognition.
+Prior physical-layer authentication research already uses multiple attributes and online learning/adaptation in dynamic environments.
 
 Representative sources:
-- *Incremental Learning for Radio Frequency Fingerprint Identification* (2021):
-  https://www.semanticscholar.org/paper/4c916c37e68d9accd5ade6c24431129f2970554c
-- Meta-RFF:
-  https://www.zhenyu.info/papers/Meta-RFFJ.pdf
+- https://doi.org/10.1177/15501329221107822
+- https://doi.org/10.1109/TNSE.2020.3013232
+- https://www.sciencedirect.com/science/article/pii/S1570870522000634
 
-**Decision:** Do not claim continuous/incremental RF device learning alone as novelty.
+**Decision:** Multi-evidence authentication and online adaptation are not standalone novelty.
 
-### 3.4 Generic adversarial robustness is established
+### 3.4 RF backdoor/security literature
 
-RF fingerprinting systems have been studied under adversarial manipulation, and recent work includes backdoor attacks against RF fingerprinting models.
+RF fingerprinting models have been shown to be vulnerable to backdoor attacks, including model-agnostic and data-free attacks.
 
 Representative sources:
-- RF fingerprinting challenges/opportunities review:
-  https://pure.tue.nl/ws/portalfiles/portal/343587032/Radio_Frequency_Fingerprinting_via_Deep_Learning_Challenges_and_Opportunities.pdf
-- Recent RF fingerprinting backdoor work:
-  https://livrepository.liverpool.ac.uk/3195117/
+- https://doi.org/10.1109/INFOCOM52122.2024.10621289
+- https://doi.org/10.1109/INFOCOM55648.2025.11044704
+- https://doi.org/10.1109/TMC.2025.3628527
 
-**Decision:** Do not claim "security against adversarial attacks" generically as novelty.
+**Decision:** Generic RF model security is not standalone novelty. It provides the threat/security context for the profile-update experiment.
 
-## 4. Potential research gap
+### 3.5 RFF-TTA and recent RF adaptation
 
-The stronger candidate is not merely recognizing a device, adapting a model, or resisting an inference-time attack. The candidate gap is the **security of the continual profile-update pathway itself**.
+RFF-TTA (AAAI 2026) uses physical impairment information and online test-time adaptation for temporally varying RF fingerprint recognition.
 
-### Existing conceptual flow
+Source:
+https://doi.org/10.1609/aaai.v40i1.37034
 
-`Observation -> Identity decision -> Profile update`
+**Decision:** physical RF evidence + temporal adaptation are enabling components, not standalone novelty.
 
-The concern is that a sample can be classified as a known device while still being unsafe to incorporate into that device's persistent profile.
+## 4. Revised candidate research gap
 
-### Proposed research flow
+The stronger candidate is not:
 
-`Observation -> Identity decision -> Independent update-safety assessment -> Update authorization -> Profile evolution`
+- recognizing a device;
+- adapting a model;
+- selecting reliable samples;
+- detecting anomalies;
+- resisting a generic inference-time attack.
 
-The key conceptual separation is:
+The candidate gap is the **security of the continual persistent-profile update pathway**.
 
-> **Identification correctness is not equivalent to authorization to modify the persistent device profile.**
+### Broad existing patterns
 
-An observation could therefore be:
+`Observation -> Identity decision -> Update`
 
-- accepted for identity/authentication;
-- rejected for profile update;
-- flagged for security analysis;
+or, in some prior work:
 
-without treating those outcomes as contradictory.
+`Observation -> Reliability/consistency selection -> Update`
 
-## 5. Candidate secure update gate
+### Candidate project pattern
 
-The project will investigate whether profile-update authorization can use multiple independent evidence sources:
+`Observation -> Identity decision -> Independent security/update-safety assessment -> Update authorization -> Update / Reject / Quarantine`
+
+The key distinction is:
+
+> **A correct identity decision does not automatically authorize persistent learning from that observation.**
+
+The intended system may therefore produce:
+
+`Operational identity = Device A`
+
+while simultaneously producing:
+
+`Profile-update authorization = REJECT`
+
+This explicit two-outcome behaviour is the central thing that must be demonstrated and compared against prior admission strategies.
+
+## 5. Candidate multi-evidence mechanism
+
+The project will investigate whether update authorization can use:
 
 - identity confidence;
 - embedding-space consistency;
-- physics-feature consistency;
+- RF-physical consistency;
 - temporal consistency;
-- historical profile consistency;
+- historical-profile consistency;
 - anomaly/deviation evidence.
 
-A conceptual update score is:
+Conceptually:
 
-`T_update = f(identity confidence, physics consistency, embedding consistency, temporal consistency, profile consistency, anomaly evidence)`
+`UpdateSafety = f(identity, embedding, physical RF, temporal, profile history, anomaly)`
 
-and a conceptual policy is:
+The exact function, weights and thresholds are **not frozen**.
 
-`Update profile iff T_update >= tau_update`
+The correct approach is to compare simple policies first and use ablation to determine whether each evidence source adds value.
 
-This formula is a **research hypothesis**, not a frozen implementation specification.
+## 6. Required proof experiment
 
-## 6. Why this is potentially stronger
+The minimum comparison is:
 
-The proposed mechanism addresses a lifecycle-level question:
-
-> Can a continuously learning RF fingerprinting system evolve device profiles without allowing anomalous or adversarial observations to silently corrupt those profiles?
-
-This connects D8 and D9 rather than treating continual learning and poisoning protection as completely independent capabilities.
-
-## 7. What is NOT being claimed
-
-At this stage the project does **not** claim that:
-
-- no prior paper has used a trust/update gate;
-- the proposed update gate is patentable;
-- the proposed mechanism is publication-novel;
-- the proposed scoring function is new;
-- physics-informed embeddings are new;
-- open-set RF fingerprinting is new;
-- continual RF fingerprint learning is new.
-
-A targeted literature audit is still required before converting the candidate gap into a formal novelty claim.
-
-## 8. Required targeted Q4 audit
-
-The next literature review must focus specifically on whether prior RF/RFFI systems explicitly separate:
-
-1. identity recognition;
-2. confidence/consistency assessment;
-3. authorization to modify a persistent device profile;
-4. protection of that update path against poisoning or anomalous observations.
-
-The review should compare at least:
-
-- RF fingerprinting papers;
-- continual/incremental RF learning papers;
-- RF adversarial/poisoning papers;
-- profile-based RF authentication systems;
-- closely related continual-learning security literature where RF-specific evidence is absent.
-
-For each paper, record:
-
-- representation method;
-- decision method;
-- open-set handling;
-- adaptation/profile mechanism;
-- update acceptance mechanism;
-- poisoning/adversarial model;
-- whether recognition and learning authorization are explicitly separated;
-- exact difference from this project.
-
-## 9. Experimental implication
-
-If the targeted audit supports the gap, the project should eventually construct controlled experiments comparing at least:
-
-### Baseline A — automatic update
+### Baseline A — Naive update
 `Identify -> Update`
 
-### Baseline B — existing confidence-based update
-`Identify -> confidence threshold -> Update`
+### Baseline B — Confidence-only update
+`Identify -> Confidence threshold -> Update`
 
-### Candidate system — secure update gate
-`Identify -> multi-evidence consistency -> update authorization -> Update/Reject`
+### Baseline C — Reliability/consistency admission
+`Identify -> Consistency/Reliability -> Update`
 
-The poisoning experiment should use legitimate RF data plus controlled/synthetic poisoning, consistent with DEC-005. Results must measure both normal adaptation and profile-corruption resistance.
+### Candidate D — Security-gated update
+`Identify -> Independent security/update-safety evaluation -> Authorization -> Update / Reject / Quarantine`
 
-## 10. Relationship to D1-D10
+The decisive comparison is **C versus D**.
 
-- D3: establish the physical RF evidence used by the later update gate.
-- D4: establish the device representation/embedding and its geometry.
-- D5: establish known-device identification baseline.
-- D6: establish unknown-device/open-set baseline.
-- D7: measure behaviour under temporal/receiver/environment/domain shifts.
-- D8: implement and evaluate chronological profile evolution.
-- D9: evaluate controlled/synthetic poisoning and the update-security mechanism.
+### Normal adaptation metrics
+- identification accuracy;
+- open-set rejection;
+- adaptation speed;
+- temporal/domain robustness;
+- profile drift;
+- embedding stability;
+- forgetting;
+- legitimate adaptation.
+
+### Security metrics
+- poisoning/profile-corruption success;
+- malicious observations required;
+- attack success;
+- recovery after rejection/quarantine;
+- recognition degradation;
+- false rejection of legitimate observations.
+
+## 7. Falsification rules
+
+The candidate novelty must be modified or abandoned if:
+
+- a close RF-specific prior system is found with the same security-specific separation;
+- the reliability/admission baseline performs equally well;
+- additional evidence does not materially reduce profile corruption;
+- the gate blocks legitimate adaptation excessively;
+- the claimed separation cannot be measured independently;
+- the result is only a repackaging of an existing trust/admission mechanism.
+
+## 8. What the project is NOT claiming
+
+At this stage the project does not claim:
+
+- no prior paper has used an update/admission gate;
+- no RF system has ever separated recognition from learning;
+- the candidate is patentable;
+- the candidate is definitely publication-novel;
+- the candidate scoring function is new;
+- physics-informed RF features are new;
+- open-set RF recognition is new;
+- continual RF learning is new;
+- adaptive RF model updating is new.
+
+## 9. Targeted prior-art matrix
+
+The detailed 12-system comparison is maintained separately at:
+
+`docs/04_research/targeted_prior_art_matrix.md`
+
+It records representation, identity decision, open-set handling, adaptation/profile mechanism, update admission, security model, classification and exact difference.
+
+## 10. Relationship to D1–D10
+
+- D1: establish trustworthy RF data foundations.
+- D2: establish reproducible preprocessing.
+- D3: establish physical RF evidence.
+- D4: establish learned representation/embedding.
+- D5: establish known-device identity baseline.
+- D6: establish unseen-device/open-set baseline.
+- D7: establish temporal/receiver/environment shift evidence.
+- D8: establish chronological profile evolution and update-policy baselines.
+- D9: evaluate controlled/synthetic poisoning of the profile-update pathway.
 - D10: evaluate the integrated lifecycle.
 
-D1 remains the current engineering gate and must not be declared complete from this research record.
+D1 remains the first engineering implementation gate, but the project is now using an accelerated vertical implementation strategy after the minimum D1 evidence is established.
 
 ## 11. Current novelty position
 
-**Primary candidate:**
+### Primary candidate
+> **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
 
-> **Secure continual RF device-profile evolution through explicit separation of identity recognition from authorization to modify the persistent device profile.**
+### Supporting candidate
+> **A multi-evidence update-authorization policy combining identity confidence, representation, RF-physical, temporal, historical-profile and anomaly consistency before allowing persistent profile modification.**
 
-**Supporting candidate:**
+### System-level candidate
+> **An experimentally evaluated RF fingerprinting lifecycle that integrates recognition, open-set handling, continual profile evolution and security-gated profile updates, with the contribution centered on the security of the persistent update pathway rather than on any individual RF/ML component.**
 
-> **A multi-evidence update authorization mechanism combining representation, RF-physical, temporal and historical-profile consistency before allowing continual profile modification.**
-
-**System-level candidate:**
-
-> **An experimentally validated RF fingerprinting lifecycle that integrates physics-based evidence, learned representations, open-set recognition, continual profile evolution and security-gated updates, with the novelty claim centered on the secure update pathway rather than any individual component.**
-
-These are **working hypotheses**, not final novelty claims.
+These remain working hypotheses.
 
 ## 12. Finalization criterion
 
-The novelty claim may be promoted from "candidate" to "project contribution" only after:
+Promote the candidate from “research hypothesis” to “project contribution” only when:
 
-1. targeted literature audit is completed;
-2. nearest prior systems are explicitly mapped;
-3. a measurable difference is identified;
-4. an experiment is defined that can falsify the claimed advantage;
-5. the selected datasets can support that experiment;
-6. D8/D9 evidence demonstrates the proposed behaviour.
+1. nearest prior systems are mapped;
+2. the exact difference is explicit;
+3. the difference is not already implemented in a close RF-specific system;
+4. a falsifiable experiment exists;
+5. suitable datasets support it;
+6. D8/D9 evidence shows a measurable security–adaptation advantage.
 
-Until then, the repository should describe the secure update pathway as a **research hypothesis / candidate contribution**.
+Until then, describe the contribution as **provisional**.
