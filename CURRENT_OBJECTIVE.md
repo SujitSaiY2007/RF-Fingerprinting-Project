@@ -1,97 +1,135 @@
 # CURRENT OBJECTIVE
 
-## Current gate
+## Immediate project objective
+**Fast-track the project toward a small, reproducible, demonstrable D1–D10 software pipeline while preserving scientific validity.**
+
+The project is not allowed to call a stage complete merely because code exists. Each stage needs an artifact, test/experiment and acceptance evidence appropriate to its claim.
+
+## Current engineering gate
 **D1 — Raw RF Data / Ingestion**
 
-The Dataset Search & Validation / Qualification workstream is complete as a development-substrate selection gate. It is not scientific validation.
+The dataset-search/qualification workstream is complete as a development-substrate selection gate. It is not scientific validation.
 
-## Parallel research-control objective
-A broad Q2/Q4 literature audit has refined the project's novelty direction before downstream ML implementation.
+First implementation pair:
+1. **WiSig**
+2. **Oregon State WiFi RFFP**
 
-The audit rejected several weak standalone novelty claims because they are already active research areas:
-- physics-informed RF representation;
+Large raw RF datasets remain outside Git.
+
+## Current research-control position
+The broad literature audit rejected weak standalone novelty claims including:
+- RF fingerprinting itself;
 - learned RF embeddings;
+- physics-informed RF representation;
 - open-set RF fingerprint recognition;
-- incremental/continual RF fingerprint learning;
-- physics-aware temporal/test-time adaptation;
-- generic adversarial robustness.
+- incremental/continual RF learning;
+- temporal/domain/test-time adaptation;
+- adaptive RF model/profile updating;
+- generic adversarial/backdoor robustness;
+- historical profiling by itself;
+- reliability/sample selection before learning in the broad sense.
 
-The current **provisional novelty hypothesis** is:
+A targeted audit then examined the narrow profile-update question.
 
-> **Secure continual RF device-profile evolution through explicit separation of identity recognition from authorization to modify the persistent device profile.**
+### Critical prior-art findings
+**Nagravision WO2023046581A1** already describes RF/IQ authentication, anomaly detection, stored per-device models and updating a stored model using new RF observations for environmental adaptation.
 
-The central research distinction is:
+**Liu et al. (2024)** describes temporal SEI continual learning in which new observations are compared with preserved feature distributions, “reliable” signals are selected, added to the database and used for model updating.
+
+Therefore the project must not claim either:
+
+`RF authentication + adaptive model update`
+
+or
+
+`reliable sample admission + continual update`
+
+as standalone novelty.
+
+## Revised provisional novelty hypothesis
+> **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
+
+Core distinction:
 
 `Identification correctness != authorization to update the persistent profile`
 
-A candidate multi-evidence update gate may use identity confidence, embedding consistency, RF-physical consistency, temporal consistency, historical-profile consistency and anomaly/deviation evidence before allowing a profile update.
+Supporting candidate mechanism:
 
-This is a hypothesis, not a finalized novelty claim or frozen implementation.
+`identity confidence + embedding consistency + RF-physical consistency + temporal consistency + historical-profile consistency + anomaly evidence -> update authorization`
 
-## Required targeted Q4 audit
-Before implementing the proposed novelty mechanism, perform a forensic literature audit of:
-- continual/incremental RF fingerprint learning;
-- profile-based RF authentication;
-- RF adversarial/poisoning work;
-- secure continual-learning mechanisms;
-- any system that explicitly separates identity recognition from permission to modify a persistent device profile.
+The exact scoring/fusion method and thresholds are not fixed.
 
-For every nearest prior system, record the representation, decision mechanism, profile/update mechanism, security model and exact difference from the project.
+## Novelty proof requirement
+Compare at least:
 
-The detailed research record is:
-`docs/04_research/novelty_literature_gap_audit.md`
+A. `Identify -> Update`
 
-## Immediate D1 objective
-Establish a reproducible, provenance-aware, integrity-checked ingestion layer for the selected RF datasets, beginning with WiSig and Oregon State WiFi RFFP.
+B. `Identify -> Confidence threshold -> Update`
 
-## D1 must establish
-- Dataset/version identity and authoritative source provenance.
-- Acquisition/download instructions without committing large raw RF archives to Git.
-- File/package manifests and cryptographic checksums where feasible.
-- Raw sample representation, file format, dtype, shape and channel interpretation.
-- Metadata extraction into a common internal schema without destroying source-specific information.
-- Device/session/day/receiver/environment/location identifiers needed for later leakage-safe experiments.
-- Basic integrity, loadability and metadata-consistency tests.
-- Explicit representation of missing, ambiguous or unverifiable metadata.
-- Reproducible local data-root configuration so code does not depend on a contributor's machine-specific paths.
-- Clear separation between raw/source data, normalized metadata, derived/intermediate data and experiment outputs.
-- Initial dataset manifests that permit another team member to reproduce the ingestion setup.
+C. `Identify -> Reliability/consistency -> Update`
 
-## D1 implementation boundary
-D1 is an ingestion/data-foundation stage. Do not prematurely build the ML classifier, embedding model, continual-learning mechanism or poisoning defense.
+D. `Identify -> Independent security/update-safety evaluation -> Authorization -> Update / Reject / Quarantine`
 
-The first implementation pair is:
-1. **WiSig** — primary scale/receiver/day substrate.
-2. **Oregon State WiFi RFFP** — primary temporal/domain substrate.
+The decisive comparison is **C versus D**.
 
-Oregon State LoRa and SMoRFFI remain reserved for complementary downstream validation responsibilities unless D1 evidence exposes a specific need to ingest them earlier.
+Research question:
 
-## D1 scientific acceptance principle
-Successful file loading is not D1 scientific validation. D1 is complete only when its defined ingestion experiment, evidence, evaluation protocol and acceptance criteria are satisfied.
+> Does the security-oriented separation reduce profile corruption under controlled poisoning while preserving legitimate adaptation better than ordinary confidence/reliability admission?
 
-At minimum, D1 evidence must establish that:
-- the intended source/version can be identified;
-- the required data can be acquired or deterministically referenced;
-- the package/file integrity can be checked;
-- the raw signal representation is correctly interpreted;
-- required metadata can be extracted or its absence explicitly recorded;
-- the normalized representation is reproducible;
-- later experiment partitioning can be performed without undocumented leakage assumptions.
+If not, revise or abandon the candidate novelty.
 
-## Research discipline
-Do not infer metadata that the source does not provide. Preserve source-specific facts and uncertainty. Do not silently change the dataset qualification decision to accommodate an implementation convenience.
+## D1 immediate objective
+Establish:
+- authoritative source/version provenance;
+- reproducible local data roots;
+- manifests/checksums where feasible;
+- raw I/Q interpretation;
+- common metadata schema;
+- device/session/day/receiver/environment identifiers;
+- integrity/loadability tests;
+- leakage-safe partition foundations;
+- raw/normalized/derived/experiment separation.
 
-Do not claim D1–D10 completion from code existence. Each stage requires its own experiment, evidence and acceptance criteria.
+## Fast-track D1–D10 execution
+After D1 is minimally accepted, implement a vertical path through:
+
+- **D2:** minimal deterministic synchronization/preprocessing;
+- **D3:** small interpretable RF-feature set;
+- **D4:** lightweight learned representation/embedding;
+- **D5:** closed-set identity baseline;
+- **D6:** unseen-device/open-set baseline;
+- **D7:** temporal/receiver/environment/domain-shift test;
+- **D8:** chronological profile evolution with A/B/C/D update policies;
+- **D9:** controlled/synthetic poisoning and profile-corruption evaluation;
+- **D10:** integrated end-to-end demonstration.
+
+Do not over-engineer individual stages before the vertical path works.
+
+## Required project evidence
+Every stage must leave enough evidence to answer:
+- What was implemented?
+- What data were used?
+- What split/protocol was used?
+- What was measured?
+- What failed?
+- What was learned?
+- What decision follows?
 
 ## Repository discipline
-- Large raw RF datasets remain outside Git.
-- Git stores acquisition instructions, manifests, checksums, metadata schemas, scripts, tests, qualification records and appropriate derived results.
-- Material D1 decisions, novelty decisions, limitations, protocol changes and acceptance evidence must be recorded in GitHub.
-- `main` and `develop` are currently structurally aligned. Do not recreate independent histories; use the documented task/research branch → PR → develop → reviewed promotion → main workflow.
+- Large raw datasets remain outside Git.
+- Material decisions/results/limitations belong in GitHub.
+- Use task/research branch -> PR -> develop -> review -> PR -> main.
+- Do not force-reset or recreate independent branch histories.
+
+## Knowledge base
+Use:
+`docs/07_knowledge_base/RF_FINGERPRINTING_KNOWLEDGE_BASE.md`
+
+It defines the theory and practical skills to learn alongside implementation.
 
 ## Next concrete task
-1. Complete the targeted Q4 novelty audit and record the nearest-prior comparison.
-2. Do not implement the proposed novelty mechanism until the differentiator is supported by the audit and an experiment can be defined.
-3. Continue D1 by defining the ingestion specification and acceptance checklist.
-4. Verify the authoritative download/package structure and metadata for WiSig and Oregon State WiFi.
-5. Implement the minimal reproducible ingestion layer and tests.
+1. Start D1 implementation immediately.
+2. Do not restart dataset qualification.
+3. Preserve the targeted prior-art matrix as the current novelty baseline.
+4. Build the minimum vertical D1–D10 path aggressively.
+5. Record implementation/evaluation evidence continuously.
