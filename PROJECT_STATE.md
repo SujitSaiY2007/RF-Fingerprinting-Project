@@ -105,6 +105,19 @@ The targeted audit substantially narrowed the gap but does not prove that no pri
 
 D8 and D9 are the primary experimental stages for proving/falsifying the candidate contribution, but they must use validated upstream artifacts.
 
+## D1 implementation milestone — 2026-08-29
+A first reusable ingestion foundation now exists on `task/d1-ingestion-foundation-2026-08-29`:
+- common RF metadata record;
+- manifest-driven CSV ingestion;
+- WiSig loader;
+- Oregon State WiFi loader;
+- deterministic checksum helper;
+- normalized JSONL output;
+- metadata validation tests;
+- D1 provenance/acceptance specification.
+
+**Boundary:** the large real RF archives are not stored in Git and were not available in the execution environment. Therefore this milestone is **implemented foundation only**, not D1 acceptance or scientific validation. Real-archive inspection, manifest generation, loadability testing and leakage-safe partition construction remain next.
+
 ## Scientific discipline
 - Distinguish implemented, tested and scientifically validated.
 - Do not infer metadata that the source does not provide.
@@ -114,8 +127,10 @@ D8 and D9 are the primary experimental stages for proving/falsifying the candida
 - Do not claim publication novelty, patentability or superiority without evidence.
 
 ## Next action
-1. Use the targeted prior-art matrix as the current novelty baseline.
-2. Begin D1 implementation immediately using WiSig + Oregon State WiFi RFFP.
-3. Build a minimum vertical path through D2–D10 rather than over-engineering one stage.
-4. Maintain A/B/C/D update-policy baselines for the later security experiment.
-5. Record every material implementation result, failure and decision in GitHub.
+1. Inspect real local WiSig and Oregon State WiFi archives when available.
+2. Generate and checksum real manifests.
+3. Run loadability/integrity tests against real data.
+4. Establish leakage-safe identifiers and partition metadata.
+5. Once D1 has minimum acceptance evidence, build the minimum vertical D2–D10 path.
+6. Maintain A/B/C/D update-policy baselines for the later security experiment.
+7. Record every material implementation result, failure and decision in GitHub.

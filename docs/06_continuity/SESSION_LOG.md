@@ -88,3 +88,20 @@ Their active replacements remain:
 - `docs/08_execution/NEXT_CHAT_FAST_TRACK_PROGRESS_PROMPT.md`
 
 A permanent repository rule was added: when a substantial project change is completed and agreed upon by the end of a project chat, `main` and `develop` must be synchronized to exactly the same canonical commit/state unless an explicitly documented review/integration task remains pending. Branch synchronization does not imply scientific validation or stage completion.
+
+## 2026-08-29 — D1 ingestion foundation
+A task branch `task/d1-ingestion-foundation-2026-08-29` was created from the canonical `main` state after confirming `main` and `develop` were identical.
+
+Implemented:
+- manifest-driven common RF metadata ingestion;
+- WiSig metadata loader;
+- Oregon State WiFi RFFP metadata loader;
+- manifest checksum helper;
+- normalized JSONL metadata output;
+- deterministic validation tests;
+- D1 provenance/acceptance specification.
+
+### Boundary
+The repository intentionally does not contain the large raw RF archives, and the current execution environment did not provide local copies. Therefore the real-archive loadability and metadata inspection tests remain pending. This milestone is **implementation foundation only**, not D1 completion.
+
+The next action is to exercise the loaders against real local WiSig/Oregon State WiFi archives, generate real manifests and establish leakage-safe identifiers before accepting D1.
