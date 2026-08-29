@@ -110,7 +110,7 @@ The next action is to exercise the loaders against real local WiSig/Oregon State
 Because large raw RF dataset acquisition became a practical time bottleneck, the project adopted a two-track execution model.
 
 ### Track A — Fast Implementation / Demonstration
-Use an accessible real-data substrate to build the minimum defensible D1–D10 vertical implementation. The user's acquired WiSig ManySig copy is now explicitly preserved separately; Track A will prioritize internet-accessible real RF/IQ datasets that the execution environment can fetch or inspect directly, avoiding user-side large-file transfer wherever practical.
+Use an accessible real-data substrate to build the minimum defensible D1–D10 vertical implementation. The user's acquired WiSig ManySig copy is explicitly preserved separately; Track A prioritizes internet-accessible real RF/IQ datasets that the execution environment can fetch or inspect directly, avoiding user-side large-file transfer wherever practical.
 
 ### Track B — Research Validation / Strengthening
 Retain ManySig for later controlled validation/reproduction/cross-checking, and add larger subsets, additional days/devices and other qualified datasets only when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use these data for stronger validation, ablations, statistical analysis and support/falsification of the research claim.
@@ -126,3 +126,10 @@ The project must distinguish implemented, tested, demonstrated on real data and 
 
 Detailed policy:
 `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
+
+## 2026-08-29 — ORACLE selected for Track A
+The user explicitly approved **ORACLE as the first Track A working dataset** after evaluating the need for a directly accessible real RF/IQ substrate that does not require a large user-side download/upload.
+
+ORACLE is used as the Track A implementation substrate subject to final D1 checks for accessibility, integrity, metadata/provenance and project qualification before scientific claims are made from it.
+
+ManySig remains deliberately separate as a preserved Track B dataset. Oregon State WiFi remains independent of the Track A critical path. The existing qualified dataset portfolio and all prior scientific controls remain unchanged.
