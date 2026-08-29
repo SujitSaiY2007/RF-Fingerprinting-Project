@@ -94,3 +94,12 @@ The decisive research comparison is C versus D.
 
 ## DEC-023 — Knowledge base and next-chat continuity
 The project maintains a dedicated theory/practical knowledge base at `docs/07_knowledge_base/RF_FINGERPRINTING_KNOWLEDGE_BASE.md` and a detailed next-chat execution prompt at `docs/08_execution/NEXT_CHAT_FAST_TRACK_PROGRESS_PROMPT.md`. These are project-control artifacts, not evidence of D1–D10 completion.
+
+## DEC-024 — End-of-chat canonical branch synchronization
+When a substantial project change is completed and agreed upon by the end of a project chat, `develop` and `main` must be brought to **exactly the same canonical commit/state** before the chat is considered complete, unless an explicitly documented review/integration task is intentionally left pending.
+
+New work during a chat may be isolated on a task/research branch or on `develop` through the normal PR workflow. Once the change is agreed as the accepted project state, it must be promoted so that:
+
+`main == develop`
+
+This rule is for repository consistency and does not mean that scientific claims or D-stage validation are complete merely because the branches are synchronized.
