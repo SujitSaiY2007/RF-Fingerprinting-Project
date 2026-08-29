@@ -110,16 +110,16 @@ The next action is to exercise the loaders against real local WiSig/Oregon State
 Because large raw RF dataset acquisition became a practical time bottleneck, the project adopted a two-track execution model.
 
 ### Track A — Fast Implementation / Demonstration
-Use an accessible real-data substrate, beginning with WiSig ManySig already acquired by the user, to build the minimum defensible D1–D10 vertical implementation. Oregon State WiFi remains the first intended second implementation dataset but its download time must not block the vertical path.
+Use an accessible real-data substrate to build the minimum defensible D1–D10 vertical implementation. The user's acquired WiSig ManySig copy is now explicitly preserved separately; Track A will prioritize internet-accessible real RF/IQ datasets that the execution environment can fetch or inspect directly, avoiding user-side large-file transfer wherever practical.
 
 ### Track B — Research Validation / Strengthening
-Add larger subsets, additional days/devices and qualified datasets only when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use these data for stronger validation, ablations, statistical analysis and support/falsification of the research claim.
+Retain ManySig for later controlled validation/reproduction/cross-checking, and add larger subsets, additional days/devices and other qualified datasets only when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use these data for stronger validation, ablations, statistical analysis and support/falsification of the research claim.
 
 ### Preservation
 This decision changes execution order/dependency only. It does not remove the qualified dataset portfolio, prior-art findings, D1–D10 definitions, leakage controls, poisoning controls, novelty caveats, branch workflow, knowledge base or scientific completion standard.
 
-### Dataset reuse
-The project aims to acquire necessary development datasets once, preserve raw copies unchanged and reuse them through D1–D10. Further downloads require a documented need.
+### Dataset access principle
+Track A should minimize user-side downloads and uploads. Candidate internet datasets must still pass the existing qualification gate before being used for scientific claims. No open-ended dataset hunt is permitted.
 
 ### Completion distinction
 The project must distinguish implemented, tested, demonstrated on real data and scientifically validated. Track A accelerates the first three; Track B supplies additional evidence where scientific validation requires it.
