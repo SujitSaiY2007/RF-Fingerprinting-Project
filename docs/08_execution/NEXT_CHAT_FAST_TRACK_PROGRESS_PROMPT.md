@@ -19,19 +19,29 @@ Treat GitHub as the **single canonical source of truth**. Before implementation 
 - `docs/06_continuity/DECISIONS.md`
 - `docs/06_continuity/SESSION_LOG.md`
 - `docs/07_knowledge_base/RF_FINGERPRINTING_KNOWLEDGE_BASE.md`
+- `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
 - this file
 
 Preserve all prior decisions, evidence, limitations and history.
 
-# 1. Fast-track project position
+# 1. Active two-track fast-track position
 
 The immediate objective is to obtain a **small but complete demonstrable implementation covering D1–D10**, without falsely claiming scientific completion.
 
-The principle is:
+The active execution model is:
 
-> **Build the smallest defensible end-to-end system first, then strengthen it.**
+### Track A — Fast Implementation / Demonstration
+Build the minimum defensible real-data D1–D10 vertical path as the immediate critical path. Use an accessible real-data substrate, beginning with **WiSig ManySig** already acquired by the user. Oregon State WiFi remains the first intended second implementation dataset, but its acquisition speed must not block Track A.
 
-Do not over-engineer a stage before the complete path exists.
+### Track B — Research Validation / Strengthening
+In parallel where practical or after Track A, add larger subsets, additional days/devices and qualified datasets when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use Track B for stronger cross-condition/cross-dataset validation, ablations, statistical analysis, failure analysis and support/falsification of the novelty hypothesis.
+
+Detailed policy:
+`docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
+
+This changes execution order and dependency structure only. It does **not** lower the scientific completion standard or remove previous decisions.
+
+## 2. Dataset acquisition and reuse rule
 
 The qualified datasets remain:
 
@@ -45,13 +55,15 @@ The qualified datasets remain:
 5. ORACLE
 6. Bluetooth smartphone RF database
 
-First development pair:
+Large raw datasets stay outside Git.
+
+Acquire necessary development datasets once where practical, preserve raw copies unchanged and reuse them through D1–D10. Do not repeatedly download the same data. Further acquisition is triggered only by a specific experimental, access/licensing, metadata, integrity or reproducibility need. No open-ended dataset hunt.
+
+First development pair remains:
 
 **WiSig + Oregon State WiFi RFFP.**
 
-Large raw datasets stay outside Git.
-
-# 2. Novelty status — revised after targeted audit
+## 3. Novelty status — revised after targeted audit
 
 Do **not** claim that an “update gate” is automatically novel.
 
@@ -81,7 +93,7 @@ Supporting mechanism:
 
 This remains a **candidate contribution**, not a proven novelty claim.
 
-# 3. Required novelty proof
+## 4. Required novelty proof
 
 Compare at least four policies:
 
@@ -105,7 +117,7 @@ Question:
 
 If not, revise or abandon the claim.
 
-# 4. D1–D10 aggressive execution
+## 5. D1–D10 aggressive execution
 
 ## D1 — Raw RF Data / Ingestion
 Build:
@@ -132,6 +144,8 @@ Minimum normalized record, where available:
 - preprocessing status.
 
 Acceptance: another team member can reproduce the ingestion after setting one local data-root configuration.
+
+Track A may establish minimum D1 evidence first on accessible real data. Track B can broaden D1 evidence with additional datasets/conditions when justified.
 
 ## D2 — Synchronization & DSP
 Build a deterministic minimum chain:
@@ -277,7 +291,7 @@ The central demonstration should be:
 
 > **“The system recognizes the device, but does not automatically trust the observation as learning material.”**
 
-# 5. Aggressive implementation rules
+## 6. Aggressive implementation rules
 
 1. Simple baselines before SOTA.
 2. Every stage produces an artifact or measurable result.
@@ -291,8 +305,11 @@ The central demonstration should be:
 10. Preserve meaningful results in GitHub.
 11. Record failures instead of silently replacing methods.
 12. Use the knowledge base as the learning checklist.
+13. Do not let large dataset acquisition block the minimum vertical implementation.
+14. Add further data only when a concrete validation requirement is documented.
+15. Preserve the distinction between implementation/demo evidence and scientific validation.
 
-# 6. Repository outputs expected
+## 7. Repository outputs expected
 
 Maintain as the project grows:
 
@@ -311,7 +328,7 @@ Maintain as the project grows:
 - novelty evidence;
 - limitations/failure records.
 
-# 7. Research-control updates
+## 8. Research-control updates
 
 When evidence changes the scientific position, update:
 
@@ -326,18 +343,20 @@ When evidence changes the scientific position, update:
 
 Use the documented task/research branch -> PR -> develop -> review -> PR -> main workflow. Do not force-reset history.
 
-# 8. First actions in the next chat
+## 9. First actions in the next chat
 
 1. Inspect the canonical repository state.
 2. Confirm current branch comparison.
 3. Read the targeted prior-art matrix.
 4. Read the knowledge base.
-5. Inspect which D1–D10 code/evidence already exists.
-6. Do not restart dataset qualification.
-7. Begin D1 implementation immediately.
-8. After each meaningful stage, update evidence and continuity records.
+5. Read `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`.
+6. Inspect which D1–D10 code/evidence already exists.
+7. Do not restart dataset qualification.
+8. Begin/continue the Track A D1 implementation immediately using the accessible real-data substrate.
+9. Keep Track B acquisition/validation separate so it does not block Track A.
+10. After each meaningful stage, update evidence and continuity records.
 
-# 9. Fast-track success condition
+## 10. Fast-track success condition
 
 The fast-track is successful when the repository contains a reproducible demonstration of:
 

@@ -9,13 +9,25 @@
 
 ## 2. Preparation and fast-track strategy
 
-The project is now executed with an **evidence-first vertical strategy**:
+The project is now executed with an **evidence-first two-track vertical strategy**:
 
-`Minimum implementation -> test -> experiment -> evidence -> strengthen`
+`Accessible real development substrate -> minimum implementation -> test -> evidence -> complete D1–D10 vertical path -> strengthen with additional validation`
 
 The goal is to obtain a complete demonstrable software lifecycle quickly without falsely claiming that unvalidated stages are complete.
 
-The first development pair is WiSig + Oregon State WiFi RFFP.
+### Track A — Fast Implementation / Demonstration
+
+Track A is the immediate critical path. It uses an accessible real-data substrate, beginning with WiSig ManySig already acquired by the user, to build the minimum defensible D1–D10 pipeline quickly.
+
+Oregon State WiFi remains the first intended second implementation dataset when acquisition is practical, but its download time must not block Track A.
+
+### Track B — Research Validation / Strengthening
+
+Track B runs in parallel where practical or after Track A and adds larger subsets, additional days/devices, qualified datasets, cross-condition/cross-dataset validation, statistical analysis, ablation and failure analysis when a concrete requirement justifies them.
+
+This changes execution order and dependency structure only. It does not lower the scientific completion standard.
+
+The first development pair remains WiSig + Oregon State WiFi RFFP.
 
 ## 3. Dataset strategy
 
@@ -23,7 +35,9 @@ The first development pair is WiSig + Oregon State WiFi RFFP.
 - KEEP: WiSig, Oregon State WiFi RFFP, Oregon State LoRa RFFP, SMoRFFI.
 - SECONDARY: ORACLE, Bluetooth smartphone RF database.
 - Large raw archives remain outside Git.
-- Further dataset search is triggered only by a specific experimental, access, licensing, metadata or reproducibility gap.
+- Acquire necessary development datasets once where practical, preserve raw copies unchanged and reuse them through D1–D10.
+- Further acquisition is triggered only by a specific experimental, access/licensing, metadata, integrity or reproducibility gap.
+- No open-ended dataset hunt is permitted.
 
 ## 4. Novelty strategy — revised 2026-08-29
 
@@ -129,6 +143,8 @@ For every research claim:
 8. Never commit large raw datasets.
 9. Record seeds/configuration/results.
 10. Preserve failed experiments and limitations.
+11. Do not let large dataset acquisition block the minimum vertical implementation.
+12. Add further data only when a concrete validation need is documented.
 
 ## 10. Team workflow
 
@@ -150,3 +166,14 @@ A novelty claim is complete only when:
 5. experimental evidence demonstrates the claimed contribution.
 
 The decisive novelty comparison is **reliability/admission baseline versus security-oriented update authorization**.
+
+## 12. Two-track operating rule
+
+Track A may establish an implementation/demo using a smaller accessible real-data subset before every qualified dataset is available.
+
+Track B is responsible for strengthening claims that require broader data diversity or stronger experimental support.
+
+The distinction between **implemented**, **tested**, **demonstrated** and **scientifically validated** must be preserved in all project records and professor-facing material.
+
+The detailed operating policy is:
+`docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`

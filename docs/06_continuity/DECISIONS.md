@@ -103,3 +103,29 @@ New work during a chat may be isolated on a task/research branch or on `develop`
 `main == develop`
 
 This rule is for repository consistency and does not mean that scientific claims or D-stage validation are complete merely because the branches are synchronized.
+
+## DEC-025 — Two-track accelerated execution
+Because large RF dataset acquisition can become a material time bottleneck, the project adopts a two-track execution model without lowering its scientific standards.
+
+### Track A — Fast Implementation / Demonstration
+Build the smallest defensible real-data D1–D10 vertical path as the immediate critical path. WiSig ManySig is the immediate accessible development substrate. Oregon State WiFi remains the first intended second implementation dataset when acquisition is practical, but its download time must not block the vertical implementation.
+
+### Track B — Research Validation / Strengthening
+In parallel or after Track A, add larger subsets, additional days/devices and qualified datasets only when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use these data for stronger cross-condition/cross-dataset validation, ablations, statistical analysis and falsification/support of the research claim.
+
+### Preservation rule
+This decision changes **execution order and dependency structure only**. It does not replace or weaken the existing dataset qualification gate, primary/secondary dataset portfolio, D1–D10 definitions, leakage controls, poisoning controls, novelty caveats, branch workflow, knowledge base or scientific completion standard.
+
+### Dataset reuse rule
+The project aims to acquire necessary development datasets once, preserve raw copies unchanged and reuse them throughout D1–D10. Repeated downloads of the same dataset are not expected. Additional acquisition requires a documented need.
+
+### Completion-level rule
+Always distinguish:
+1. implemented;
+2. tested;
+3. demonstrated on real data;
+4. scientifically validated.
+
+Track A accelerates the first three levels; Track B supplies additional evidence where level four requires it.
+
+The strategy is documented in `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`.

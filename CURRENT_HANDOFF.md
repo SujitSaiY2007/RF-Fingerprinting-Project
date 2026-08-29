@@ -22,6 +22,19 @@ Execution principle:
 
 Do not claim scientific completion from code existence.
 
+## Active two-track execution model
+
+### Track A — Fast Implementation / Demonstration
+Use an accessible real-data development substrate to build the minimum defensible D1–D10 vertical path as the immediate critical path. **WiSig ManySig** is the current accessible substrate because it has already been acquired by the user.
+
+**Oregon State WiFi RFFP remains the first intended second implementation dataset, but its acquisition speed must not block Track A.**
+
+### Track B — Research Validation / Strengthening
+In parallel where practical or after Track A, add larger subsets, additional days/devices and qualified datasets when a concrete experimental requirement justifies them. Use Track B for stronger cross-condition/cross-dataset validation, ablations, statistical analysis, failure analysis and support/falsification of the novelty hypothesis.
+
+Detailed policy:
+`docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
+
 ## Qualified dataset portfolio
 ### Primary
 1. WiSig — scale, receiver variation, multi-day/channel robustness.
@@ -34,6 +47,11 @@ Do not claim scientific completion from code existence.
 6. Bluetooth smartphone RF database — optional cross-technology benchmark.
 
 First implementation pair: **WiSig + Oregon State WiFi RFFP**.
+
+## Dataset acquisition policy
+Acquire necessary development datasets once where practical, preserve raw copies unchanged and reuse them throughout D1–D10. Do not repeatedly download the same data. Additional acquisition is allowed only for a documented experimental, access/licensing, metadata, integrity or reproducibility need. No open-ended dataset hunt.
+
+Large raw datasets remain outside Git.
 
 ## Novelty status — revised 2026-08-29
 The targeted audit found two especially important boundaries:
@@ -77,6 +95,8 @@ Build the reproducible raw-RF foundation for WiSig + Oregon State WiFi:
 - leakage-safe identifiers;
 - raw/normalized/derived/experiment separation.
 
+The minimum Track A D1 evidence may be established first on accessible real data; broader dataset coverage can be added under Track B.
+
 ## D1–D10 accelerated execution
 After minimal D1 acceptance, proceed with a vertical implementation path:
 
@@ -93,6 +113,16 @@ C. `Identify -> Reliability/Consistency -> Update`
 D. `Identify -> Security/Update-Safety -> Authorization -> Update/Reject/Quarantine`
 
 The decisive novelty comparison is C versus D.
+
+## Completion-level discipline
+Always distinguish:
+
+1. **Implemented** — code/artifact exists.
+2. **Tested** — engineering tests or reproducible checks pass.
+3. **Demonstrated** — integrated path operates on real data.
+4. **Scientifically validated** — stage-specific acceptance evidence supports the claim.
+
+Track A accelerates the first three levels. Track B supplies additional evidence where level four requires broader data or stronger experiments.
 
 ## Important experimental constraints
 - Avoid random splits where session/burst leakage is possible.
@@ -111,7 +141,7 @@ It contains the theory and practical minimum knowledge needed while implementing
 Use:
 `docs/08_execution/NEXT_CHAT_FAST_TRACK_PROGRESS_PROMPT.md`
 
-The next session should inspect the repository first, determine which stages have real code/evidence, then start D1 immediately without repeating completed dataset qualification or broad literature searching.
+The next session should inspect the repository first, determine which stages have real code/evidence, then execute the two-track strategy without repeating completed dataset qualification or broad literature searching.
 
 ## Research discipline
 Distinguish:
