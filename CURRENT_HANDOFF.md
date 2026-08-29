@@ -155,3 +155,12 @@ Distinguish:
 - speculation.
 
 Do not claim novelty, superiority, publication-worthiness or patentability without evidence.
+
+## SUPERSEDING TRACK-A HANDOFF — 2026-08-29
+DEC-028 supersedes the earlier ORACLE Track A selection. **SMoRFFI is now the Track A working dataset.**
+
+The next implementation action is to verify the actual SMoRFFI package/access path and perform the D1 loadability/metadata/integrity checks. The existing ORACLE work is retained and is not deleted; it is no longer the Track A dependency.
+
+SMoRFFI's existing qualification assigns its strongest defined responsibility to D3–D6 and D10, with D7/D8 contingent on package-level metadata verification. Do not claim broader stage coverage until verified. If D7/D8 requires data SMoRFFI does not provide, use a qualified Track B dataset for that specific requirement.
+
+ManySig remains preserved separately as Track B validation/reproduction/cross-checking data. Oregon State acquisition remains independent of Track A.
