@@ -32,3 +32,10 @@ The actual ORACLE binary archive has not yet been executed through the loader in
 6. Freeze the D1 Track-A data contract.
 
 After that, move immediately into D2 while retaining the D1 evidence artifact.
+
+## SUPERSEDING TRACK-A UPDATE — 2026-08-29
+DEC-028 supersedes the ORACLE Track A selection. **SMoRFFI is now the Track A working dataset.** The ORACLE-specific D1 implementation above is retained as reusable secondary work and is not deleted, but it is no longer the immediate Track A dependency.
+
+The next D1 action is therefore to inspect the actual SMoRFFI package/access path, verify metadata and loadability/integrity, and establish the Track-A manifest/data contract from real files. Do not claim D1 completion until those checks are performed.
+
+SMoRFFI's existing qualification defines D3–D6 and D10 as its strongest responsibilities and makes D7/D8 contingent on package-level metadata verification. Do not infer unsupported temporal/receiver/environment variation; use a qualified Track B dataset for a specific missing D7/D8 requirement if necessary.
