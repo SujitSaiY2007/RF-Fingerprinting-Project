@@ -34,6 +34,38 @@ The execution principle is:
 
 > **Build the smallest defensible end-to-end system first, then strengthen individual stages.**
 
+### Two-track execution model — ACTIVE
+The project now separates execution into two connected tracks:
+
+**Track A — Fast Implementation / Demonstration**
+- Build the minimum defensible D1–D10 vertical path quickly.
+- Use an accessible real-data development substrate, beginning with WiSig ManySig already acquired by the user.
+- Keep Oregon State WiFi RFFP as the first intended second implementation dataset when acquisition is practical.
+- Produce a real-data end-to-end demonstration before waiting for every large archive.
+
+**Track B — Research Validation / Strengthening**
+- Add larger subsets, additional days/devices and other qualified datasets only when required.
+- Strengthen cross-condition/cross-dataset validation, ablations, statistical analysis and failure analysis.
+- Use Track B to support or falsify research claims rather than to manufacture positive evidence.
+
+This changes execution priority and dependency structure; it does **not** lower the scientific completion standard or delete prior decisions.
+
+## Dataset acquisition policy under the two-track model
+The project aims to acquire necessary development datasets once, preserve raw copies unchanged and reuse them throughout D1–D10. Repeated downloads of the same dataset are not expected.
+
+Additional acquisition is permitted only for a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement. No open-ended dataset hunt is allowed.
+
+Large raw RF datasets remain outside Git.
+
+## Completion-level discipline
+Distinguish:
+1. **Implemented** — code/artifact exists.
+2. **Tested** — engineering tests or reproducible checks pass.
+3. **Demonstrated** — integrated path operates on real data.
+4. **Scientifically validated** — stage-specific acceptance evidence supports the claim.
+
+Track A accelerates implementation/testing/demonstration. Track B supplies additional evidence where scientific validation requires it.
+
 D-stage completion still requires evidence and acceptance criteria. Code existence alone is not completion.
 
 The first implementation pair remains **WiSig + Oregon State WiFi RFFP**.
@@ -116,21 +148,12 @@ A first reusable ingestion foundation now exists on `task/d1-ingestion-foundatio
 - metadata validation tests;
 - D1 provenance/acceptance specification.
 
-**Boundary:** the large real RF archives are not stored in Git and were not available in the execution environment. Therefore this milestone is **implemented foundation only**, not D1 acceptance or scientific validation. Real-archive inspection, manifest generation, loadability testing and leakage-safe partition construction remain next.
-
-## Scientific discipline
-- Distinguish implemented, tested and scientifically validated.
-- Do not infer metadata that the source does not provide.
-- Do not use random splits when session/burst leakage is possible.
-- Keep frozen evaluation data isolated from profile updates.
-- Clearly label controlled/synthetic poisoning.
-- Do not claim publication novelty, patentability or superiority without evidence.
+**Boundary:** the large real RF archives are not stored in Git. Real-archive inspection, manifest generation, loadability testing and leakage-safe partition construction remain the D1 acceptance work.
 
 ## Next action
-1. Inspect real local WiSig and Oregon State WiFi archives when available.
-2. Generate and checksum real manifests.
-3. Run loadability/integrity tests against real data.
-4. Establish leakage-safe identifiers and partition metadata.
-5. Once D1 has minimum acceptance evidence, build the minimum vertical D2–D10 path.
-6. Maintain A/B/C/D update-policy baselines for the later security experiment.
-7. Record every material implementation result, failure and decision in GitHub.
+1. Use the accessible WiSig ManySig data as the immediate Track A substrate and complete the minimum D1 evidence needed for implementation.
+2. Continue Oregon State WiFi acquisition in parallel only as practical; do not let its download speed block Track A.
+3. Build the minimum vertical D2–D10 path aggressively.
+4. Add Track B datasets/conditions when a specific validation requirement justifies them.
+5. Maintain A/B/C/D update-policy baselines for the later security experiment.
+6. Record every material implementation result, failure and decision in GitHub.
