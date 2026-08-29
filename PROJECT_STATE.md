@@ -1,23 +1,21 @@
 # PROJECT STATE
 
-**Last updated:** 2026-08-25
+**Last updated:** 2026-08-29
 
 ## Authoritative status
 - Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
 - Stable branch: `main`
 - Integration branch: `develop`
-- Phase: **Phase 1 — Preparation**
-- Current gate: **D1 — Raw RF Data / Ingestion**
-- Implementation status: D1 not yet implemented
+- Phase: **Phase 1 — Preparation / accelerated implementation**
+- Current engineering gate: **D1 — Raw RF Data / Ingestion**
+- D1–D10 scientific validation: **not yet complete**
 - Team size: 4
-
-## Team model
-All four members currently work on the same overall project workstream. No permanent technical division exists.
+- All four members remain on the same overall workstream.
 
 ## Dataset qualification milestone
 The dataset-search/qualification gate is complete for development-substrate selection.
 
-### KEEP
+### KEEP — primary
 - WiSig — scale, receiver variation, multi-day robustness.
 - Oregon State WiFi RFFP — temporal/domain variation.
 - Oregon State LoRa RFFP — same-model/environment/location/distance/receiver variation.
@@ -29,42 +27,56 @@ The dataset-search/qualification gate is complete for development-substrate sele
 
 This does not constitute scientific validation of D1–D10.
 
-## D1 entry conditions
-- Portfolio selected.
-- Large raw datasets remain outside Git.
-- D1 must establish common ingestion, provenance, metadata, integrity/checksum and leakage-safe partition foundations.
-- Initial implementation pair: WiSig + Oregon State WiFi.
+## Accelerated execution decision
+The project is now being fast-tracked toward a demonstrable D1–D10 software pipeline.
 
-## Novelty research status — 2026-08-25
-A broad Q2/Q4 literature audit was performed before freezing the project's novelty direction.
+The execution principle is:
+
+> **Build the smallest defensible end-to-end system first, then strengthen individual stages.**
+
+D-stage completion still requires evidence and acceptance criteria. Code existence alone is not completion.
+
+The first implementation pair remains **WiSig + Oregon State WiFi RFFP**.
+
+## Novelty research status — 2026-08-29
+A broad literature audit was followed by a targeted forensic audit of RF/RFFI systems involving profile/model updating, sample admission, continual learning and RF security.
 
 ### Weak standalone novelty claims rejected
-The following are established or active research areas and are therefore **not** treated as standalone project novelty:
+The following are established or active research areas and are not treated as standalone project novelty:
+- RF fingerprinting;
+- learned RF embeddings;
 - physics-informed RF representation;
-- learned RF device embeddings;
 - open-set RF fingerprint recognition;
 - prototype/embedding-based unknown-device decision;
 - incremental/continual RF fingerprint learning;
-- physics-aware temporal/test-time adaptation;
-- generic adversarial robustness of RF fingerprinting;
-- historical device profiling by itself.
+- temporal/domain/test-time adaptation;
+- adaptive RF model/profile updating;
+- generic adversarial/backdoor robustness;
+- historical device profiling by itself;
+- reliability/sample selection before learning, in the broad sense.
 
-Detailed evidence and representative literature are recorded in:
-`docs/04_research/novelty_literature_gap_audit.md`
+### Important prior-art findings
+1. **Nagravision WO2023046581A1** already combines RF/IQ authentication, anomaly detection, persistent device models and model updating with new RF observations for environmental adaptation.
+2. **Liu et al. (2024)** combines temporal adaptation, continual learning and selective admission of “reliable” new signals before database/model update.
+3. Other RF/PHY authentication work uses online adaptation and multiple physical attributes.
+4. RF backdoor research establishes that learned RF identity models are security-sensitive.
 
-### Current primary novelty hypothesis
+The canonical comparison is:
+`docs/04_research/targeted_prior_art_matrix.md`
+
+## Revised primary novelty hypothesis
 The project will investigate:
 
-> **Secure continual RF device-profile evolution through explicit separation of identity recognition from authorization to modify the persistent device profile.**
+> **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
 
 Core distinction:
 
 `Identification correctness != authorization to update the persistent profile`
 
-The candidate system may accept an observation for identity/authentication while rejecting it for profile update when physical, embedding-space, temporal, historical-profile or anomaly evidence is inconsistent.
+A candidate system may therefore accept an observation for operational identity while rejecting/quarantining it for persistent profile modification.
 
 ### Supporting candidate mechanism
-A **multi-evidence update authorization gate** may combine:
+A multi-evidence update-authorization policy may use:
 - identity confidence;
 - embedding consistency;
 - RF-physical consistency;
@@ -72,42 +84,38 @@ A **multi-evidence update authorization gate** may combine:
 - historical-profile consistency;
 - anomaly/deviation evidence.
 
-This mechanism is a research hypothesis, not a frozen algorithm or novelty claim.
+The exact policy and thresholds are not frozen.
 
-### D8/D9 connection
-The novelty investigation connects:
-- **D8 — Continual Learning / Profile Evolution**: chronological profile evolution with frozen evaluation and update acceptance;
-- **D9 — Poisoning / Adversarial Protection**: controlled/synthetic poisoning and evaluation of profile-corruption resistance.
-
-The central security question is whether a continuously learning RF fingerprinting system can evolve legitimate device profiles without allowing anomalous or adversarial observations to silently corrupt them.
-
-### Novelty claim status
+### Novelty status
 **PROVISIONAL — NOT FINALIZED.**
 
-The team must perform a targeted forensic literature audit before promoting the candidate gap to a formal contribution. The audit must explicitly search whether existing RF/RFFI systems separate identity recognition from authorization to modify a persistent device profile.
+The targeted audit substantially narrowed the gap but does not prove that no prior system has the same architecture. The strongest remaining uncertainty is whether a security-specific separation provides measurable value beyond a well-designed reliability/admission baseline.
 
-## Remaining scientific gates
-D6 requires explicit unseen-identity holdouts; D8 requires a chronological profile-update protocol with frozen evaluation, profile acceptance and rollback; D9 requires controlled/synthetic poisoning; D10 requires integrated end-to-end validation; hardware transfer remains later.
+## D1–D10 fast-track relationship
+- D1: reproducible raw-data foundation.
+- D2: minimal deterministic synchronization/preprocessing.
+- D3: interpretable RF evidence.
+- D4: simple learned representation/embedding.
+- D5: closed-set identity baseline.
+- D6: explicit unseen-device/open-set baseline.
+- D7: temporal/receiver/environment/domain-shift evidence.
+- D8: chronological profile evolution and update-policy comparison.
+- D9: controlled/synthetic poisoning and profile-corruption evaluation.
+- D10: integrated end-to-end demonstration.
 
-## Repository consistency — RESOLVED
-The previous `main`/`develop` history divergence has been reconciled without discarding either history.
+D8 and D9 are the primary experimental stages for proving/falsifying the candidate contribution, but they must use validated upstream artifacts.
 
-- Pre-reconciliation `main`: `7770fcb517c5df986b1f5ad4d3e0a07a4995298c`
-- Pre-reconciliation `develop`: `9634ff446958d9f2af0d41e40625a5b5d5b46702`
-- Reconciliation merge commit: `fa88775ac569358cfe93b2f2a12b6d3b70300dd0`
-- Both `main` and `develop` now point to the subsequent common canonical state after the continuity update.
-- The reconciliation commit has both pre-reconciliation tips as parents, preserving both histories in the reachable commit graph.
-- Archive branches `archive/pre-reconciliation-main-2026-08-21` and `archive/pre-reconciliation-develop-2026-08-21` preserve the two branch tips independently as explicit recovery references.
-- The canonical working tree is the stable `main` tree, with the `develop` history preserved as the second parent.
-- GitHub comparison reports `main` and `develop` as **identical**: 0 commits ahead, 0 behind.
-
-No force-reset or history deletion was used.
+## Scientific discipline
+- Distinguish implemented, tested and scientifically validated.
+- Do not infer metadata that the source does not provide.
+- Do not use random splits when session/burst leakage is possible.
+- Keep frozen evaluation data isolated from profile updates.
+- Clearly label controlled/synthetic poisoning.
+- Do not claim publication novelty, patentability or superiority without evidence.
 
 ## Next action
-Do **not** abandon the D1 gate. The novelty research has been recorded as a project-control update, not as permission to prematurely implement D4/D8/D9.
-
-Immediate sequence:
-1. Complete the targeted Q4 novelty audit around secure profile-update authorization.
-2. Preserve the resulting evidence and nearest-prior comparison in GitHub.
-3. Then continue the D1 Raw RF Data / Ingestion work using WiSig + Oregon State WiFi.
-4. Do not implement the final novelty mechanism until the targeted audit and experiment design establish the exact differentiator.
+1. Use the targeted prior-art matrix as the current novelty baseline.
+2. Begin D1 implementation immediately using WiSig + Oregon State WiFi RFFP.
+3. Build a minimum vertical path through D2–D10 rather than over-engineering one stage.
+4. Maintain A/B/C/D update-policy baselines for the later security experiment.
+5. Record every material implementation result, failure and decision in GitHub.
