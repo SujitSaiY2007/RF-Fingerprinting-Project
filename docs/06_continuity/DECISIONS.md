@@ -129,3 +129,10 @@ Always distinguish:
 Track A accelerates the first three levels; Track B supplies additional evidence where level four requires it.
 
 The strategy is documented in `docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`.
+
+## DEC-026 — ManySig separated from the rapid internet-data implementation track
+The user-provided WiSig ManySig archive is preserved as a **separate acquired dataset** and is not the default Track A working substrate. It will be retained for later controlled validation, reproduction and/or cross-checking.
+
+Track A will instead prioritize **internet-accessible real RF/IQ datasets that the execution environment can fetch or inspect directly**, avoiding user-side large-file transfer wherever practical. Candidate datasets must still pass the existing qualification gate before being used for scientific claims.
+
+This is an execution optimization only. It does not downgrade ManySig, change its qualified status, delete it from the project portfolio, or alter the D1–D10 scientific acceptance criteria.
