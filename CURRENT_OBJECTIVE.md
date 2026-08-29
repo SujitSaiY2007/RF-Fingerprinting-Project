@@ -5,6 +5,22 @@
 
 The project is not allowed to call a stage complete merely because code exists. Each stage needs an artifact, test/experiment and acceptance evidence appropriate to its claim.
 
+## Active execution model — two tracks
+
+The project now uses two connected tracks so large dataset acquisition does not become the critical path.
+
+### Track A — Fast Implementation / Demonstration
+Build the minimum defensible D1–D10 vertical path using an accessible real-data development substrate. **WiSig ManySig** is the immediate substrate already acquired by the user. Oregon State WiFi remains the first intended second implementation dataset when acquisition is practical, but its download speed must not block Track A.
+
+### Track B — Research Validation / Strengthening
+Add larger subsets, additional days/devices and qualified datasets when a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement justifies them. Use Track B for stronger cross-condition/cross-dataset validation, statistical analysis, ablations, failure analysis and support/falsification of the research claim.
+
+Detailed policy:
+`docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
+
+## Dataset acquisition policy
+Acquire necessary development datasets once where practical, preserve raw copies unchanged and reuse them throughout D1–D10. Repeated downloads are not expected. Additional acquisition requires a documented need. Large raw datasets remain outside Git.
+
 ## Current engineering gate
 **D1 — Raw RF Data / Ingestion**
 
@@ -13,8 +29,6 @@ The dataset-search/qualification workstream is complete as a development-substra
 First implementation pair:
 1. **WiSig**
 2. **Oregon State WiFi RFFP**
-
-Large raw RF datasets remain outside Git.
 
 ## Current research-control position
 The broad literature audit rejected weak standalone novelty claims including:
@@ -115,11 +129,21 @@ Every stage must leave enough evidence to answer:
 - What was learned?
 - What decision follows?
 
+## Completion-level distinction
+Preserve four levels:
+1. **Implemented** — code/artifact exists.
+2. **Tested** — engineering tests/reproducible checks pass.
+3. **Demonstrated** — integrated path operates on real data.
+4. **Scientifically validated** — stage-specific acceptance evidence supports the claim.
+
+Track A primarily accelerates levels 1–3. Track B supplies additional evidence where level 4 requires it.
+
 ## Repository discipline
 - Large raw datasets remain outside Git.
 - Material decisions/results/limitations belong in GitHub.
 - Use task/research branch -> PR -> develop -> review -> PR -> main.
 - Do not force-reset or recreate independent branch histories.
+- When a substantial project change is agreed at the end of a chat, synchronize `main == develop` unless an explicitly documented review/integration task remains pending.
 
 ## Knowledge base
 Use:
@@ -128,8 +152,9 @@ Use:
 It defines the theory and practical skills to learn alongside implementation.
 
 ## Next concrete task
-1. Start D1 implementation immediately.
+1. Start/continue D1 implementation using the accessible WiSig ManySig substrate.
 2. Do not restart dataset qualification.
-3. Preserve the targeted prior-art matrix as the current novelty baseline.
+3. Continue Oregon State WiFi acquisition only as practical and do not let it block Track A.
 4. Build the minimum vertical D1–D10 path aggressively.
 5. Record implementation/evaluation evidence continuously.
+6. Add Track B data only when a concrete validation requirement is documented.
