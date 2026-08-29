@@ -1,22 +1,55 @@
 # Physics-Based RF Fingerprinting with Continuous Device Learning
 
-## Project Master Repository
+## Project Overview
 
-This repository is the persistent source of truth for the project: research direction, architecture, dataset strategy, experiments, software implementation, validation, team workflow, and continuity between ChatGPT sessions.
+This repository is the persistent source of truth for the project's research direction, system design, datasets, implementation, experiments, validation and continuity between work sessions.
 
-## Current Project State
+The project studies how wireless transmitters can be identified from characteristics present in their received RF signals, while also investigating how a continuously learning system can adapt its device profiles without blindly trusting every new observation.
 
-**Current phase:** Preparation
+## Core Research Question
 
-**Current workstream:** Dataset Search & Qualification
+A conventional continual RF fingerprinting system may follow:
 
-The project has evolved from the initial IDP into a software-first research and engineering framework. Public/existing RF datasets are intended to support the majority of development and validation before hardware-in-the-loop work.
+`RF Observation → Identify Device → Update Device Profile`
 
-## Core Idea
+Our project investigates a stricter separation:
 
-The project combines conventional RF signal processing with machine learning to identify known transmitters, detect previously unseen transmitters, remain robust to acquisition/environment changes, and continuously update device profiles while rejecting inconsistent observations.
+`RF Observation → Identify Device → Check Whether the Observation Is Safe to Learn From → Update / Reject / Quarantine`
 
-## Project Validation Framework
+The central research hypothesis is:
+
+> **Correctly recognizing a device does not automatically mean that the observation should be authorized to modify the persistent device profile.**
+
+The candidate security mechanism may use several kinds of evidence, such as identity confidence, learned-representation consistency, RF characteristics, temporal behaviour, historical profile consistency and anomaly evidence.
+
+This is a **provisional research hypothesis**, not a finalized claim of novelty.
+
+## What We Are Not Claiming as Novel
+
+The project deliberately does not treat these as standalone novelty claims because they are established research areas:
+
+- RF fingerprinting
+- learned RF embeddings
+- physical-information-aware RF representation
+- open-set recognition
+- incremental/continual RF learning
+- temporal/domain/test-time adaptation
+- adaptive RF model/profile updating
+- generic adversarial or backdoor robustness
+- historical device profiling by itself
+- reliability/sample selection before learning in the broad sense
+
+## Current Novelty Direction
+
+The targeted prior-art investigation identified important close and adjacent systems, including RF authentication with adaptive model updating and continual SEI systems that admit reliable observations before updating.
+
+The remaining candidate contribution is narrower:
+
+> **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile poisoning while preserving legitimate adaptation.**
+
+The decisive comparison will be against both ordinary updating and reliability/confidence-based admission methods.
+
+## Validation Framework
 
 | Stage | Focus |
 |---|---|
@@ -31,30 +64,78 @@ The project combines conventional RF signal processing with machine learning to 
 | D9 | Poisoning / Adversarial Protection |
 | D10 | End-to-End Validation |
 
-Hardware transfer is treated as a later validation domain rather than a prerequisite for every software stage.
+D-stage completion requires implementation, testing and scientific evidence. Code existence alone does not constitute validation.
+
+## Dataset Strategy
+
+### Primary development/validation datasets
+- **WiSig** — scale, receiver variation and multi-day robustness.
+- **Oregon State WiFi RFFP** — temporal/domain variation and repeated-device observations.
+- **Oregon State LoRa RFFP** — same-model/environment/location/distance/receiver variation.
+- **SMoRFFI** — large-scale same-model discrimination.
+
+### Secondary datasets
+- **ORACLE** — controlled transmitter-hardware/distance benchmark.
+- **Bluetooth smartphone RF database** — optional cross-technology benchmark.
+
+The first implementation pair is **WiSig + Oregon State WiFi RFFP**. Large raw datasets remain outside Git.
+
+## Current Execution Strategy
+
+The project is being fast-tracked toward a demonstrable end-to-end software pipeline.
+
+The rule is:
+
+> **Build the smallest defensible end-to-end system first, then strengthen individual stages.**
+
+The intended path is:
+
+`Raw RF → Preprocessing → RF Evidence → Embedding → Device Identification → Open-Set Decision → Domain/Temporal Evaluation → Profile Evolution → Poisoning Test → Update Authorization → End-to-End Demonstration`
+
+## Research and Engineering Discipline
+
+For every meaningful claim or component:
+
+`Requirement → Design → Implementation → Test → Experiment → Result → Interpretation → Decision`
+
+Important safeguards:
+
+- Avoid random splits when session/burst leakage is possible.
+- Keep evaluation data isolated from profile updates.
+- Clearly label controlled/synthetic poisoning experiments.
+- Do not infer metadata that the source does not provide.
+- Distinguish implemented, tested and scientifically validated.
+- Do not claim novelty, superiority, publication-worthiness or patentability without evidence.
 
 ## Repository Navigation
 
-- `PROJECT_STATE.md` — authoritative current state and next action.
-- `PROJECT_MASTER_PLAN.md` — complete lifecycle and phase structure.
-- `CURRENT_OBJECTIVE.md` — the exact task currently being executed.
-- `docs/` — canonical project documentation and research records.
-- `datasets/` — dataset registry, qualification records, metadata and manifests; not raw large datasets.
+- `PROJECT_STATE.md` — current authoritative state and next action.
+- `PROJECT_MASTER_PLAN.md` — complete lifecycle and validation framework.
+- `CURRENT_OBJECTIVE.md` — current execution objective.
+- `CURRENT_HANDOFF.md` — current human-readable handoff.
+- `docs/04_research/` — literature and prior-art records.
+- `docs/06_continuity/` — decisions and session history.
+- `docs/07_knowledge_base/` — theory and practical learning guide.
+- `docs/08_execution/` — fast-track execution and next-chat instructions.
+- `datasets/` — dataset registry, qualification records, metadata and manifests; not raw archives.
 - `experiments/` — reproducible experiment definitions and records.
 - `src/` — implementation.
 - `tests/` — validation and regression tests.
-- `results/` — generated figures/tables/logs where appropriate.
-- `hardware/` — eventual ESP32/SDR and edge validation material.
-- `.github/` — team workflow templates and automation.
 
-## Continuity Rule
+## Continuity
 
-At the end of every substantial project session, update the project state, current objective, decisions, unresolved questions, and session log. The next ChatGPT session should read those files before proposing new work.
+At the end of every substantial project session, update the relevant project state, decisions, unresolved questions, session log and next-chat handoff. GitHub remains the canonical project source of truth.
 
-## Research Method
+## Branch Workflow
 
-Do not select datasets merely because they are interesting. The project follows:
+- `main` — stable reviewed state.
+- `develop` — integration/development state.
+- `task/*` or `research/*` — isolated implementation/research work.
+- Use Pull Requests for integration.
+- Keep `main` and `develop` identical when no integration work is pending.
 
-`Project Claim -> What Must Be Proven -> Experiment -> Required Data -> Dataset Search -> Dataset Qualification -> Validation`
+## Research Status
 
-This repository records that chain explicitly.
+The current repository records a **provisional** novelty direction. The strongest uncertainty is whether the proposed security-specific separation provides measurable benefit beyond a well-designed reliability/admission baseline.
+
+The project should change or abandon the novelty claim if the evidence does not support it.
