@@ -67,3 +67,30 @@ D8 Continual Learning / Profile Evolution and D9 Poisoning / Adversarial Protect
 
 ## DEC-020 — Novelty remains provisional until targeted audit
 The secure profile-update pathway is currently a candidate research gap, not a finalized novelty claim. Before promotion to a formal contribution, the team must perform a targeted audit of RF/RFFI continual learning, profile-based RF authentication, poisoning/adversarial RF work and closely related continual-learning security literature, explicitly checking whether prior systems separate identity recognition from permission to modify a persistent device profile.
+
+## DEC-021 — Targeted audit narrows the novelty claim
+The 2026-08-29 targeted audit established two critical boundaries:
+
+1. Nagravision WO2023046581A1 already combines RF/IQ authentication, anomaly detection, persistent device models and adaptive model updating.
+2. Liu et al. (2024) already uses reliability-based admission of new signals before continual SEI database/model updating.
+
+Therefore the project must not claim generic update gating, reliable-sample admission, or adaptive RF model updating as novelty.
+
+The remaining candidate is narrower: **security-oriented separation of operational identity recognition from permission to modify persistent identity state, evaluated against controlled profile poisoning and legitimate adaptation.**
+
+The canonical matrix is `docs/04_research/targeted_prior_art_matrix.md`.
+
+## DEC-022 — Fast-track D1–D10 execution
+The project will use an evidence-first vertical implementation strategy: build the smallest defensible version of D1–D10, test it, document it, then strengthen individual components. This accelerates demonstration without changing the scientific completion standard.
+
+D8/D9 must compare:
+
+A. naive update;
+B. confidence-only update;
+C. reliability/consistency admission;
+D. security/update-safety authorization.
+
+The decisive research comparison is C versus D.
+
+## DEC-023 — Knowledge base and next-chat continuity
+The project maintains a dedicated theory/practical knowledge base at `docs/07_knowledge_base/RF_FINGERPRINTING_KNOWLEDGE_BASE.md` and a detailed next-chat execution prompt at `docs/08_execution/NEXT_CHAT_FAST_TRACK_PROGRESS_PROMPT.md`. These are project-control artifacts, not evidence of D1–D10 completion.
