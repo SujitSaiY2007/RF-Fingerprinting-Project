@@ -7,7 +7,8 @@
 - Stable branch: `main`
 - Integration branch: `develop`
 - Phase: **Phase 1 — Preparation / accelerated implementation**
-- Current engineering gate: **D1 — Raw RF Data / Ingestion**
+- Current engineering gate: **D2 — Minimal deterministic synchronization / preprocessing**
+- D1: **COMPLETE at source/schema/ingestion-foundation level**
 - D1–D10 scientific validation: **not yet complete**
 - Team size: 4
 - All four members remain on the same overall workstream.
@@ -39,8 +40,8 @@ The project now separates execution into two connected tracks:
 
 **Track A — Fast Implementation / Demonstration**
 - Build the minimum defensible D1–D10 vertical path quickly.
-- Use an accessible real-data development substrate, beginning with WiSig ManySig already acquired by the user.
-- Keep Oregon State WiFi RFFP as the first intended second implementation dataset when acquisition is practical.
+- Current Track A substrate: SMoRFFI.
+- Keep Oregon State WiFi RFFP as a later intended second implementation dataset when acquisition is practical.
 - Produce a real-data end-to-end demonstration before waiting for every large archive.
 
 **Track B — Research Validation / Strengthening**
@@ -68,7 +69,7 @@ Track A accelerates implementation/testing/demonstration. Track B supplies addit
 
 D-stage completion still requires evidence and acceptance criteria. Code existence alone is not completion.
 
-The first implementation pair remains **WiSig + Oregon State WiFi RFFP**.
+The first implementation pair remains **SMoRFFI + Oregon State WiFi RFFP** for the accelerated path, with WiSig ManySig preserved as Track B.
 
 ## Novelty research status — 2026-08-29
 A broad literature audit was followed by a targeted forensic audit of RF/RFFI systems involving profile/model updating, sample admission, continual learning and RF security.
@@ -123,7 +124,7 @@ The exact policy and thresholds are not frozen.
 The targeted audit substantially narrowed the gap but does not prove that no prior system has the same architecture. The strongest remaining uncertainty is whether a security-specific separation provides measurable value beyond a well-designed reliability/admission baseline.
 
 ## D1–D10 fast-track relationship
-- D1: reproducible raw-data foundation.
+- D1: reproducible raw-data foundation. **COMPLETE for Track-A SMoRFFI source/schema/ingestion foundation.**
 - D2: minimal deterministic synchronization/preprocessing.
 - D3: interpretable RF evidence.
 - D4: simple learned representation/embedding.
@@ -136,42 +137,29 @@ The targeted audit substantially narrowed the gap but does not prove that no pri
 
 D8 and D9 are the primary experimental stages for proving/falsifying the candidate contribution, but they must use validated upstream artifacts.
 
-## D1 implementation milestone — 2026-08-29
-A first reusable ingestion foundation now exists on `task/d1-ingestion-foundation-2026-08-29`:
-- common RF metadata record;
-- manifest-driven CSV ingestion;
-- WiSig loader;
-- Oregon State WiFi loader;
-- deterministic checksum helper;
-- normalized JSONL output;
-- metadata validation tests;
-- D1 provenance/acceptance specification.
+## D1 completion milestone — 2026-08-29
+SMoRFFI D1 is now recorded as complete at the **source/schema/ingestion-foundation** level.
 
-**Boundary:** the large real RF archives are not stored in Git. Real-archive inspection, manifest generation, loadability testing and leakage-safe partition construction remain the D1 acceptance work.
+Completed artifacts:
+- `src/smorffi_d1.py` — metadata-first SMoRFFI CSV ingestion.
+- `tests/test_smorffi_d1.py` — deterministic IQ/feature/invalid-identity tests.
+- `datasets/SMORFFI_D1_EVIDENCE.md` — source structure, acquisition evidence, schema decisions, integrity boundary and scientific limits.
+- `datasets/dataset_registry.csv` — SMoRFFI D1 status and published acquisition metadata.
 
-## Next action
-1. Use the accessible WiSig ManySig data as the immediate Track A substrate and complete the minimum D1 evidence needed for implementation.
-2. Continue Oregon State WiFi acquisition in parallel only as practical; do not let its download speed block Track A.
-3. Build the minimum vertical D2–D10 path aggressively.
-4. Add Track B datasets/conditions when a specific validation requirement justifies them.
-5. Maintain A/B/C/D update-policy baselines for the later security experiment.
-6. Record every material implementation result, failure and decision in GitHub.
+Published source evidence establishes 123 CSV files per release, 1,000 records per device, MAC/device identifiers, raw preamble data and RF-feature variants. The published acquisition is one USRP B210, 123 same-model M5Stack Core2 devices, 20 MS/s, IEEE 802.11g, Channel 6, 20 MHz bandwidth, fixed 25 cm separation, controlled indoor single-day collection.
 
-## SUPERSEDING STATE UPDATE — 2026-08-29
-The above historical state is superseded for the **current Track A execution substrate** by DEC-028 and DEC-029 in `docs/06_continuity/DECISIONS.md`.
+The implementation deliberately does not infer chronology, session, receiver, environment or multi-day metadata that the source does not provide. Large RF archives remain outside Git.
 
-### Current Track A
-**SMoRFFI** is now the selected Track A working dataset. It is already a qualified **KEEP — primary same-model dataset** and is selected because it better satisfies the project's combined scientific-fit and rapid-access objective than the ORACLE distribution.
+**Integrity boundary:** a byte-level checksum of the full downloaded Kaggle archive has not been independently reproduced in this environment. The repository records the deterministic SHA-256 helper and the exact evidence required for a future local acquisition record. Therefore this D1 completion must not be represented as proof of local archive acquisition.
 
-### Current Track B
-- **WiSig ManySig:** preserved separately for validation/reproduction/cross-checking.
-- **ORACLE:** retained as a qualified secondary controlled benchmark; prior ORACLE ingestion work is preserved and may be reused later.
-- **Oregon State WiFi/LoRa:** unchanged; acquisition remains independent of Track A.
+## Current next action
+1. Begin D2 on the validated SMoRFFI ingestion output.
+2. Establish deterministic synchronization/preprocessing without leaking device identity into preprocessing decisions.
+3. Preserve raw/source rows and provenance; derived artifacts remain reproducible from D1 inputs.
+4. Keep D7/D8 claims blocked until a dataset with the required temporal/receiver/environment metadata is selected.
+5. Maintain the Track-A/Track-B separation and branch synchronization rules.
 
-### D1 boundary after the switch
-The Track A D1 work must now verify the actual SMoRFFI package, metadata, access path and loadability before scientific claims. The existing ORACLE-specific implementation is **not deleted**; it is no longer the Track A dependency.
+## Continuity rule
+When a significant progress milestone is completed and agreed at the end of a chat, the canonical project state must be synchronized so that `main` and `develop` contain the same agreed project state. Work-in-progress task branches and open PRs may remain ahead during implementation, but they must not silently alter `main`.
 
-### SMoRFFI stage responsibility caveat
-The existing qualification record assigns SMoRFFI primarily to **D3–D6 and D10** and leaves D7/D8 contingent on package-level metadata verification. Therefore Track A must not assume SMoRFFI alone supplies all evidence needed for D7/D8. If a concrete D7/D8 requirement is not covered, a qualified Track B dataset may be used for that stage.
-
-All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls, branch rules and scientific completion standards remain unchanged.
+All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls, branch rules and scientific completion standards remain unchanged unless explicitly superseded by a recorded decision.
