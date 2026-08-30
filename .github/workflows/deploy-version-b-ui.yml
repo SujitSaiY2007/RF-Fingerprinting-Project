@@ -22,10 +22,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
+      - name: Prepare site with /ui/ path
+        run: |
+          rm -rf site
+          mkdir -p site/ui
+          cp -R ui/. site/ui/
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./ui
+          path: ./site
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
