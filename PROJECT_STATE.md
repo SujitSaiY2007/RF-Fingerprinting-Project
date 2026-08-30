@@ -7,7 +7,7 @@
 - Stable branch: `main`
 - Integration branch: `develop`
 - Phase: **Phase 1 — Accelerated implementation / demonstrator construction**
-- Current engineering gate: **D6 — open-set rejection baseline complete; D7 next**
+- Current engineering gate: **D7 — Track-A synthetic stress complete; Track-B real-shift validation requires data verification**
 - D1: **COMPLETE at source/schema/ingestion-foundation level**
 - D2.1: **COMPLETE — sample representation contract**
 - D2.2: **OBSERVED / IMPLEMENTED / TESTED on a 20-file SMoRFFI inspection subset**
@@ -17,8 +17,10 @@
 - D3: **IMPLEMENTED / exploratory demonstrated on real SMoRFFI data; scientific validation not complete**
 - D4: **IMPLEMENTED / TESTED / DEMONSTRATED with reproducible 33-device Track-A baseline; historical ~91.1% result remains unreproducible**
 - D5: **IMPLEMENTED / TESTED / DEMONSTRATED — learned-embedding and classical RF-feature closed-set baselines complete**
-- D6: **IMPLEMENTED / TESTED / DEMONSTRATED — unknown-device rejection baseline**
-- D7+: **NOT STARTED**
+- D6: **IMPLEMENTED / TESTED / DEMONSTRATED — learned-embedding and RF open-set baselines complete**
+- D7 Track A: **IMPLEMENTED / TESTED / DEMONSTRATED — controlled gain and AWGN stress**
+- D7 Track B: **PLANNED / DATA REQUIRED — real temporal/domain/receiver shift not yet demonstrated**
+- D8+: **NOT STARTED**
 - D3–D10 scientific validation: **not yet complete**
 - Team size: 4
 
@@ -125,15 +127,54 @@ See `docs/04_research/D5_CLOSED_SET_IDENTITY.md`, `docs/04_research/D5_RANDOM_FO
 ## D6 current state
 Known devices are 1–33; unknown devices are 34–123. Unknown data are not used to fit D4 or known-device centroids.
 
-Rejection score: nearest known-device centroid squared Euclidean distance in frozen D4 embedding.
-
-Threshold is selected only from known-device validation data at the **95th percentile**, yielding `T = 21.2566452`.
+### Learned-embedding centroid gate
+Rejection score: nearest known-device centroid squared Euclidean distance in frozen D4 embedding. Threshold is selected only from known-device validation data at the **95th percentile**, yielding `T = 21.2566452`.
 
 On the frozen known test set, known acceptance is **95.42%**. On the deterministic test partition of 90 unknown devices (13,329 observations), unknown rejection is only **10.99%**.
 
-This is a deliberately simple open-set baseline and a **negative/limiting result**: the current embedding does not separate most unknown devices from the known gallery. The threshold was not tuned against unknown test data.
+### RF confidence gate
+The frozen D5 RF classifier is also evaluated as an open-set baseline using maximum predicted class probability. Threshold is selected only from known-device validation data at the 5th percentile: `T = 0.30`.
 
-See `docs/04_research/D6_OPEN_SET_UNKNOWN_REJECTION.md` and `experiments/track_a/d6_metrics.json`.
+Results:
+- known-test acceptance: **94.90%**
+- unknown-test rejection: **29.49%**
+
+The RF gate is materially stronger than the D4 centroid gate but still weak for novelty rejection. Closed-set accuracy therefore must not be treated as equivalent to open-set security.
+
+See `docs/04_research/D6_OPEN_SET_UNKNOWN_REJECTION.md`, `docs/04_research/D6_RF_OPEN_SET_BASELINE.md`, `configs/track_a_d6_rf_open_set.json`, `experiments/track_a/d6_metrics.json`, and `experiments/track_a/d6_rf_metrics.json`.
+
+## D7 current state
+### Track-A controlled stress
+The frozen D5 RF model was evaluated without retraining or test-set tuning under deterministic synthetic gain and AWGN perturbations.
+
+Gain results:
+- baseline: **87.39%**
+- -6 dB: **38.07%**
+- -3 dB: **27.30%**
+- +3 dB: **20.06%**
+- +6 dB: **15.93%**
+
+AWGN results:
+- 20 dB: **82.29%**
+- 10 dB: **53.34%**
+- 5 dB: **20.44%**
+- 0 dB: **6.73%**
+
+Interpretation: the strong closed-set RF result is highly sensitive to tested acquisition perturbations. These are controlled engineering stress tests, not claims about real temporal/receiver/environment variation.
+
+### Track-B real-shift requirement
+The current SMoRFFI schema does not expose trustworthy day/session/receiver/environment boundaries, so D7 real-world robustness cannot be established from SMoRFFI alone.
+
+**Required Track-B datasets:**
+1. **Oregon State WiFi RFFP** — first priority for real day and indoor/outdoor domain shift. Repository records 50 Pycom devices, five consecutive days, indoor/outdoor scenarios, repeated observations and one B210 receiver.
+2. **WiSig / ManySig** — second priority for receiver/day/channel shift. WiSig provides 174 transmitters, 41 USRP receivers and four captures spanning a month; the project already preserves ManySig as Track-B material.
+
+D7.1–D7.4 are defined in `docs/04_research/D7_TRACK_B_REAL_SHIFT_PLAN.md`.
+
+Do **not** reopen unrestricted dataset search. Oregon State WiFi and WiSig are already qualified for the specific gaps. Do not re-upload the SMoRFFI archive for D7.
+
+## D8 dependency boundary
+D8 profile evolution should not be scientifically claimed until D7 provides at least one real sequential/condition boundary suitable for chronological updates. D8 requires ordered observations, frozen evaluation, profile acceptance rules, monitoring and rollback protection. The project must distinguish identity recognition from permission to modify persistent identity state.
 
 ## Important experimental constraints
 - Avoid identity leakage: MAC/device identifiers are never model features.
@@ -143,10 +184,11 @@ See `docs/04_research/D6_OPEN_SET_UNKNOWN_REJECTION.md` and `experiments/track_a
 - D10 must demonstrate the lifecycle rather than isolated blocks.
 - Never convert an exploratory runtime result into a formal benchmark without a reproducible dataset manifest, code/configuration and test evidence.
 - The historical ~60-feature RF experiment must not be reconstructed by inventing features or silently changing the frozen test protocol.
+- Do not claim robustness to a condition unless the dataset exposes that condition or the experiment is explicitly labelled synthetic stress testing.
 
 ## Continuity / branch rule
 When a significant milestone is explicitly agreed at the end of a chat, synchronize `main` and `develop` to the same **content state** without deleting or silently reverting prior information. Merge commits may make histories differ even when file contents are identical; content equivalence is the operative synchronization requirement.
 
-**Current branch state:** D4–D6 plus the D5 RF-baseline extension are committed on `develop`; `main` has intentionally not been synchronized yet because explicit milestone agreement is still required.
+**Current branch state:** D4–D6 plus D5 RF, D6 RF and Track-A D7 stress artifacts are committed on `develop`; `main` has intentionally not been synchronized yet because explicit milestone agreement is still required.
 
 All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls and scientific completion standards remain unchanged unless explicitly superseded by a recorded decision.
