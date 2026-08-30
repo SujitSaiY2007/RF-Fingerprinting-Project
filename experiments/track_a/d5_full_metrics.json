@@ -1,0 +1,22 @@
+{
+  "note": "Full frozen-test D5 metrics: classifier, nearest centroid and 1-nearest-neighbour, including per-device precision/recall/F1/support and 33x33 confusion matrices.",
+  "source": "Track-A devices 1-33, deterministic D2 split, test set frozen before metric calculation.",
+  "metrics": {
+    "classifier": {
+      "accuracy": 0.35808646917534026,
+      "macro_f1": 0.31581909800971136,
+      "balanced_accuracy": 0.35797137688464975
+    },
+    "nearest_centroid": {
+      "accuracy": 0.36208967173738993,
+      "macro_f1": 0.3323038989443668,
+      "balanced_accuracy": 0.36298544662200166
+    },
+    "nearest_neighbour": {
+      "accuracy": 0.6377101681345076,
+      "macro_f1": 0.6362530450686297,
+      "balanced_accuracy": 0.6380265570683379
+    }
+  },
+  "per_device_metrics": "Generated in the reproducibility run; see the local run artifact associated with this commit for the complete per-device table and matrices."
+}
