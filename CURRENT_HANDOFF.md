@@ -9,13 +9,49 @@
 - Integration branch: `develop`
 - Phase: **Phase 1 — Accelerated implementation / demonstrator construction**
 - D2 learning gate: **PASSED**
-- Current execution point: **D7 complete at Track-A synthetic-stress scope; remaining Track-A critical path is D8 -> D9 -> D10**
+- Current execution point: **Version-B benchmark B0 complete; B1–B2 candidate evaluation remains the active execution gate before backbone selection**
 
 ## Do not restart
 Do **not** redo D1/D2, re-derive the SMoRFFI schema, or replace the D2 contract. The frozen Track-A representation is:
 `serialized preamble -> complex[288] -> float32[2,288] I/Q`
 
 Baseline preprocessing: no per-observation normalization, clipping, filtering, resampling or arbitrary interpolation. Device number and MAC remain labels/provenance only. Track-A engineering split: deterministic SHA-256 over `(device_id, source_row_index)` with 70/15/15; explicitly **not** a temporal/session split.
+
+## Version-B benchmark status
+### B0 — REPRODUCIBILITY CONTROL: COMPLETE / DEMONSTRATED
+The supplied SMoRFFI archive was used as the real source substrate. The frozen Version-A RF control was reproduced exactly under the repository configuration:
+
+- known devices: 1–33
+- rows: 33,000
+- train/validation/test: 23,030 / 4,974 / 4,996
+- 16 deterministic RF evidence features
+- Random Forest: 100 trees, `random_state=20260830`, `max_features=sqrt`, no tuning
+- test accuracy: **87.3899%**
+- macro-F1: **87.3226%**
+- balanced accuracy: **87.4117%**
+
+Frozen D6 open-set reference remains:
+- threshold `0.30`
+- known acceptance approximately **94.90%**
+- unknown rejection **29.49%**
+
+The complete B0 record is `experiments/track_a/version_b_b0_results.json`; the frozen benchmark contract is `configs/version_b_b0_b2_benchmark.json`.
+
+### B1 — CLOSED-SET CANDIDATE BENCHMARK: NEXT
+Candidates remain:
+1. M0 Version-A RF control;
+2. M1 compact 1-D CNN on frozen I/Q;
+3. M2 I/Q encoder + metric/prototype head;
+4. M3 I/Q encoder + supervised contrastive objective + prototype/open-set head.
+
+Required metrics: accuracy, macro-F1, balanced accuracy, per-device metrics, confusion matrix and seed variance.
+
+### B2 — OPEN-SET CANDIDATE BENCHMARK: NEXT
+The same candidates must be evaluated under one frozen open-set protocol. Thresholds are selected from known validation only. Unknown test observations are never used for model or threshold selection.
+
+Required metrics: known acceptance, unknown rejection, false acceptance, AUROC, AUPR and OSCR/equivalent open-set curve where applicable.
+
+**No Version-B backbone is selected before B1/B2 candidate evidence is available.**
 
 ## Dataset and evidence policy
 Complete supplied SMoRFFI archive: 123 CSV files, 122,511 rows, 123 devices; archive SHA-256 `1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037`. Track-A known snapshot: devices 1–33, 33 files, 33,000 rows; 23,030/4,974/4,996 split.
@@ -89,29 +125,13 @@ D10 is an integrated Track-A demonstration, not automatic scientific validation.
 ## Scientific status discipline
 Use exactly: **Implemented / Tested / Demonstrated / Scientifically Validated**.
 
-D4–D7 Track-A results are **Demonstrated**, not Scientifically Validated. D8–D10 start at Implemented and advance only when evidence supports the higher status.
+D4–D7 Track-A results are **Demonstrated**, not Scientifically Validated. B0 is now **Demonstrated**. B1/B2 remain incomplete until candidate runs finish under the frozen protocol.
 
 ## Historical-result discipline
-Preserve, but do not certify, the historical values: approximately 91.12% D4, approximately 90.9% earlier RF result, approximately 60 historical RF features. Never invent the missing 10,186-row selection, feature list or configuration.
+Preserve, but do not certify, the historical values: approximately 91.12% D4, approximately 90.9% earlier RF result, approximately 60 historical RF features. Never invent or modify the missing 10,186-row selection, feature list or configuration.
 
 ## Canonical detailed direction
-`docs/04_research/D7_D10_TRACK_A_NEXT_DIRECTION.md` is the authoritative D7–D10 work breakdown and must be read before starting new work.
-
-## Required next-chat reading
-- `PROJECT_STATE.md`
-- `CURRENT_HANDOFF.md`
-- `docs/04_research/D7_D10_TRACK_A_NEXT_DIRECTION.md`
-- `docs/04_research/D4_LEARNED_REPRESENTATION_BASELINE.md`
-- `docs/04_research/D5_CLOSED_SET_IDENTITY.md`
-- `docs/04_research/D5_RANDOM_FOREST_CLASSICAL_BASELINE.md`
-- `docs/04_research/D6_OPEN_SET_UNKNOWN_REJECTION.md`
-- `docs/04_research/D6_RF_OPEN_SET_BASELINE.md`
-- `docs/04_research/D7_RF_DISTRIBUTION_SHIFT.md`
-- related configs and metrics under `configs/` and `experiments/track_a/`
-
-## Exact next-chat continuation prompt
-
-> Continue the RF Fingerprinting Project from the canonical GitHub state of `SujitSaiY2007/RF-Fingerprinting-Project`. Read `PROJECT_STATE.md`, `CURRENT_HANDOFF.md`, and `docs/04_research/D7_D10_TRACK_A_NEXT_DIRECTION.md` first, then inspect the existing D4–D7 evidence/configuration before modifying anything. D2 learning gate is PASSED; the frozen D2 input is `serialized preamble -> complex[288] -> float32[2,288] I/Q`; do not redo D1/D2 or assume a new schema. Historical ~91.1% remains historical/unreconstructed. Current frozen Track-A RF baseline is 87.39% closed-set on devices 1–33; D6 RF unknown rejection is 29.49% at ~94.90% known acceptance; D7 synthetic gain/AWGN tests show strong acquisition sensitivity. Track A is explicitly allowed to complete D8–D10 using real SMoRFFI, controlled/derived synthetic scenarios, and published-paper evidence. Additional multi-gigabyte datasets are not required to unblock Track-A. Synthetic/derived datasets must be explicitly labelled and never represented as source-dataset measurements. Track B remains for real temporal/session/environment/receiver/cross-dataset validation. Proceed directly with D8 profile evolution: persistent profiles, recognition vs update authorization, ACCEPT/HOLD/REJECT, chronological update streams, frozen evaluation, and the baseline ladder frozen/no-update, always-update, confidence-only, multi-evidence. Then perform D9 controlled/synthetic poisoning and D10 the complete auditable lifecycle. Preserve provenance, leakage controls, frozen evaluation, novelty boundaries and Implemented/Tested/Demonstrated/Scientifically Validated discipline. Do not silently delete or overwrite existing project information. Develop on `develop`; synchronize `main` after an explicitly agreed milestone.`
+`docs/04_research/D7_D10_TRACK_A_NEXT_DIRECTION.md` remains the authoritative D7–D10 work breakdown. `docs/04_research/VERSION_B_RESEARCH_SPECIFICATION.md` is the authoritative Version-B research/evaluation specification, including the added UI/application architecture.
 
 ## Branch state
-`main` and `develop` are intended to remain content-equivalent at agreed milestones. For this milestone the content has been synchronized using a two-parent merge so both histories are preserved. Develop remains the working branch for the next milestone.
+Develop is the active working branch. The current Version-B benchmark additions are on `develop`. `main` is not synchronized for this milestone because the agreed rule is to synchronize only after an explicitly agreed milestone.

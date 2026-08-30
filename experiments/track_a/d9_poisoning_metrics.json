@@ -1,0 +1,29 @@
+{
+  "stage": "D9",
+  "track": "A",
+  "source_archive_sha256": "1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037",
+  "results": {
+    "always_update": {
+      "unknown_contamination_acceptance": 1.0,
+      "replay_acceptance": 1.0,
+      "replay_hold": 0.0,
+      "gain_drift_acceptance": 1.0
+    },
+    "confidence_only": {
+      "unknown_contamination_acceptance": 1.0,
+      "replay_acceptance": 1.0,
+      "replay_hold": 0.0,
+      "gain_drift_acceptance": 0.9468085106382979
+    },
+    "multi_evidence": {
+      "unknown_contamination_acceptance": 1.0,
+      "replay_acceptance": 0.01,
+      "replay_hold": 0.99,
+      "gain_drift_acceptance": 0.9468085106382979
+    }
+  },
+  "unknown_target_profile_displacement_vs_clean": 0.6327367614749045,
+  "label_contamination_false_claimed_label_used_as_update_identity": 0,
+  "status": "implemented_tested_demonstrated",
+  "interpretation": "Replay is controlled effectively after the first occurrence, but target-like unknown contamination still defeats the current multi-evidence policy."
+}

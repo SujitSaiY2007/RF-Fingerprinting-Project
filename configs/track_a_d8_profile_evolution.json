@@ -1,0 +1,16 @@
+{
+  "stage": "D8",
+  "track": "A",
+  "dataset": "SMoRFFI",
+  "source_archive_sha256": "1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037",
+  "known_devices": "1-33",
+  "enrollment_per_device": 50,
+  "update_stream_per_device": 150,
+  "stream_order": "source_row_index ascending within device; engineering chronology only",
+  "frozen_evaluation": true,
+  "scaler_fit": "enrollment only",
+  "confidence_threshold": 0.30,
+  "consistency_threshold_selection": "95th percentile of known validation profile distances",
+  "policies": ["frozen_no_update", "always_update", "confidence_only", "multi_evidence"],
+  "synthetic": false
+}

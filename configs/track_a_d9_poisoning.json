@@ -1,0 +1,20 @@
+{
+  "stage": "D9",
+  "track": "A",
+  "dataset": "SMoRFFI-derived controlled scenarios",
+  "source_archive_sha256": "1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037",
+  "frozen_test_protected": true,
+  "attacks": [
+    "unknown_device_contamination",
+    "label_contamination",
+    "gradual_gain_drift",
+    "replay_repetition"
+  ],
+  "unknown_attack_source_devices": "34-40",
+  "unknown_candidate_selection": "frozen recognizer predicts identity 1 and confidence >= 0.30",
+  "gain_range_db": [0.0, 3.0],
+  "replay_count": 100,
+  "synthetic_label": "All attack observations are controlled/derived and are not source-dataset attack measurements.",
+  "policies": ["always_update", "confidence_only", "multi_evidence"],
+  "replay_guard": "enabled for multi_evidence"
+}
