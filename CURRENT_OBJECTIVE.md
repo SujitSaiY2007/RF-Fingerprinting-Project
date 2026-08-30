@@ -1,180 +1,47 @@
 # CURRENT OBJECTIVE
 
-## Immediate project objective
-**Fast-track the project toward a small, reproducible, demonstrable D1–D10 software pipeline while preserving scientific validity.**
+## Current milestone — Version-B security core complete
+Version-B security-core is now frozen for presentation/UI work. The proven Version-A Random Forest (M0) remains the immutable recognition backbone. Version-B adds the security-oriented separation between recognition and authorization to modify persistent RF profiles, with demonstrated adaptive profile evolution, replay quarantine, controlled gain-drift handling and full lifecycle/audit behaviour.
 
-The project is not allowed to call a stage complete merely because code exists. Each stage needs an artifact, test/experiment and acceptance evidence appropriate to its claim.
+The final frozen comparison is recorded in:
+- `experiments/track_a/version_b_final_results.json`
+- `docs/08_execution/VERSION_B_COMPLETION.md`
 
-## Active execution model — two tracks
+## Frozen V-A vs V-B evidence
+- Closed-set RF accuracy: 87.3899% vs 87.3899% (same recognizer; no unsupported model gain claimed).
+- Known acceptance: 94.90% vs 94.90%.
+- Unknown rejection: 29.49% vs 29.49%.
+- Profile test accuracy after adaptation: 28.6629% frozen vs 37.9704% multi-evidence (+9.3075 pp).
+- Replay acceptance: 100% always-update vs 1% multi-evidence (-99 pp).
+- Replay hold: 0% vs 99% (+99 pp).
+- Gain-drift acceptance: 100% vs 94.6809% (-5.3191 pp).
+- Target-like unknown contamination: 100% vs 100% — unresolved falsifying boundary condition.
 
-The project now uses two connected tracks so large dataset acquisition does not become the critical path.
+These values are frozen evidence, not projections. Controlled/derived attack scenarios are explicitly labelled as such.
 
-### Track A — Fast Implementation / Demonstration
-Build the minimum defensible D1–D10 vertical path using an internet-accessible real RF/IQ development substrate that the execution environment can fetch or inspect directly. **ORACLE is now the first Track A working dataset**, subject to final D1 accessibility, integrity, metadata/provenance and project-qualification checks before scientific claims are made from it.
+## B1/B2 model-selection boundary
+The repository's original B0-B2 benchmark contract defines M0–M3 candidate models. B0 is numerically reproduced. Candidate-model B1/B2 training/evaluation is not certified in the current repository. No CNN/metric-learning/contrastive result is fabricated. For the completed Version-B security-core milestone, M0 is intentionally retained as the recognition backbone so the research conclusion rests on measured D8-D10 security behaviour rather than an unverified model substitution. A future B1/B2 model-selection study is a separate experiment and must not rewrite these frozen numbers.
 
-The user-provided **WiSig ManySig archive is deliberately kept separate from Track A**. It is preserved for Track B validation/reproduction/cross-checking. Oregon State WiFi acquisition likewise remains independent and must not block Track A.
+## D8-D10 status
+- D8: Demonstrated — chronological engineering stream, frozen test protection, four update policies, profile evolution evidence.
+- D9: Demonstrated — controlled/derived poisoning evaluation; replay protection strong, target-like unknown contamination remains unresolved.
+- D10: Demonstrated — integrated lifecycle, unknown rejection, profile evolution, replay quarantine and audit events.
 
-### Track B — Research Validation / Strengthening
-Use ManySig and the broader qualified dataset portfolio when a concrete requirement justifies stronger validation: larger subsets, additional days/devices, cross-condition/cross-dataset validation, statistical analysis, ablations, failure analysis and support/falsification of the research claim.
+## Version-B UI / website is now the only active development direction
+From this milestone onward, research numbers and security logic are frozen unless a new dated experiment is intentionally opened. Work should focus on:
+1. authoritative backend/API integration;
+2. UI/UX refinement;
+3. V-A vs V-B comparison dashboards;
+4. D8/D9/D10 visualizations;
+5. provenance and REAL_SOURCE_DATA vs DERIVED_CONTROLLED_DATA presentation;
+6. methodology/limitations pages;
+7. attack-lab demonstrations;
+8. responsive design and accessibility;
+9. GitHub Pages/deployment verification;
+10. final project presentation and documentation.
 
-Detailed policy:
-`docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
-
-## Dataset acquisition policy
-Track A should minimize user-side downloads and uploads by preferring stable public data that the execution environment can access directly. Once a dataset is accepted for a track, preserve raw data unchanged where practical and reuse it through the relevant D1–D10 work. Additional acquisition requires a documented need. Large raw datasets remain outside Git.
-
-## Current engineering gate
-**D1 — Raw RF Data / Ingestion**
-
-The dataset-search/qualification workstream is complete as a development-substrate selection gate. It is not scientific validation.
-
-Track A working dataset:
-1. **ORACLE** — subject to final D1 checks
-
-Preserved Track B dataset:
-1. **WiSig ManySig** — acquired by user
-2. **Oregon State WiFi RFFP** — acquisition independent of Track A
-
-## Current research-control position
-The broad literature audit rejected weak standalone novelty claims including:
-- RF fingerprinting itself;
-- learned RF embeddings;
-- physics-informed RF representation;
-- open-set RF fingerprint recognition;
-- incremental/continual RF learning;
-- temporal/domain/test-time adaptation;
-- adaptive RF model/profile updating;
-- generic adversarial/backdoor robustness;
-- historical profiling by itself;
-- reliability/sample selection before learning in the broad sense.
-
-A targeted audit then examined the narrow profile-update question.
-
-### Critical prior-art findings
-**Nagravision WO2023046581A1** already describes RF/IQ authentication, anomaly detection, stored per-device models and updating a stored model using new RF observations for environmental adaptation.
-
-**Liu et al. (2024)** describes temporal SEI continual learning in which new observations are compared with preserved feature distributions, “reliable” signals are selected, added to the database and used for model updating.
-
-Therefore the project must not claim either:
-
-`RF authentication + adaptive model update`
-
-or
-
-`reliable sample admission + continual update`
-
-as standalone novelty.
-
-## Revised provisional novelty hypothesis
-> **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
-
-Core distinction:
-
-`Identification correctness != authorization to update the persistent profile`
-
-Supporting candidate mechanism:
-
-`identity confidence + embedding consistency + RF-physical consistency + temporal consistency + historical-profile consistency + anomaly evidence -> update authorization`
-
-The exact scoring/fusion method and thresholds are not fixed.
-
-## Novelty proof requirement
-Compare at least:
-
-A. `Identify -> Update`
-
-B. `Identify -> Confidence threshold -> Update`
-
-C. `Identify -> Reliability/consistency -> Update`
-
-D. `Identify -> Independent security/update-safety evaluation -> Authorization -> Update / Reject / Quarantine`
-
-The decisive comparison is **C versus D**.
-
-Research question:
-
-> Does the security-oriented separation reduce profile corruption under controlled poisoning while preserving legitimate adaptation better than ordinary confidence/reliability admission?
-
-If not, revise or abandon the candidate novelty.
-
-## D1 immediate objective
-Establish:
-- authoritative source/version provenance;
-- reproducible local data roots;
-- manifests/checksums where feasible;
-- raw I/Q interpretation;
-- common metadata schema;
-- device/session/day/receiver/environment identifiers;
-- integrity/loadability tests;
-- leakage-safe partition foundations;
-- raw/normalized/derived/experiment separation.
-
-## Fast-track D1–D10 execution
-After D1 is minimally accepted, implement a vertical path through:
-
-- **D2:** minimal deterministic synchronization/preprocessing;
-- **D3:** small interpretable RF-feature set;
-- **D4:** lightweight learned representation/embedding;
-- **D5:** closed-set identity baseline;
-- **D6:** unseen-device/open-set baseline;
-- **D7:** temporal/receiver/environment/domain-shift test;
-- **D8:** chronological profile evolution with A/B/C/D update policies;
-- **D9:** controlled/synthetic poisoning and profile-corruption evaluation;
-- **D10:** integrated end-to-end demonstration.
-
-Do not over-engineer individual stages before the vertical path works.
-
-## Required project evidence
-Every stage must leave enough evidence to answer:
-- What was implemented?
-- What data were used?
-- What split/protocol was used?
-- What was measured?
-- What failed?
-- What was learned?
-- What decision follows?
-
-## Completion-level distinction
-Preserve four levels:
-1. **Implemented** — code/artifact exists.
-2. **Tested** — engineering tests/reproducible checks pass.
-3. **Demonstrated** — integrated path operates on real data.
-4. **Scientifically validated** — stage-specific acceptance evidence supports the claim.
-
-Track A primarily accelerates levels 1–3. Track B supplies additional evidence where level 4 requires it.
+## Scientific guardrail
+Do not claim that Version B is universally superior. The defensible conclusion is narrower: Version B materially improves measured adaptive-security behaviour over an always-update profile manager, especially replay handling and profile evolution, while retaining the Version-A recognizer; target-like unknown contamination remains a known weakness. Any stronger conclusion requires a new experiment.
 
 ## Repository discipline
-- Large raw datasets remain outside Git.
-- Material decisions/results/limitations belong in GitHub.
-- Use task/research branch -> PR -> develop -> review -> PR -> main.
-- Do not force-reset or recreate independent branch histories.
-- When a substantial project change is agreed at the end of a chat, synchronize `main == develop` unless an explicitly documented review/integration task remains pending.
-
-## Knowledge base
-Use:
-`docs/07_knowledge_base/RF_FINGERPRINTING_KNOWLEDGE_BASE.md`
-
-It defines the theory and practical skills to learn alongside implementation.
-
-## Next concrete task
-1. Verify ORACLE direct accessibility and inspect its actual raw-I/Q and metadata structure.
-2. Perform the D1 Track A qualification/loadability check.
-3. Start the minimum Track A D1 implementation.
-4. Keep ManySig preserved and separate as Track B data.
-5. Continue Oregon State acquisition only as practical; it must not block Track A.
-6. Build the minimum vertical D1–D10 path aggressively.
-7. Record implementation/evaluation evidence continuously.
-8. Add Track B data only when a concrete validation requirement is documented.
-
-## SUPERSEDING TRACK-A DECISION — 2026-08-29
-DEC-028 supersedes the ORACLE Track A selection above. **SMoRFFI is now the Track A working dataset.**
-
-SMoRFFI was selected because it is already a qualified real RF fingerprinting dataset with a large same-model device population and is a better fit for the rapid implementation objective than the official ORACLE distribution's large archive download requirement.
-
-Current Track A rule:
-- verify actual SMoRFFI package accessibility, metadata and loadability first;
-- use SMoRFFI for the minimum D1–D6/D10 implementation path supported by its verified data;
-- do not assume SMoRFFI provides sufficient D7/D8 metadata until package inspection confirms it;
-- use a qualified Track B dataset for a specific D7/D8 requirement if necessary, without making that dependency block the vertical path.
-
-ManySig, ORACLE and Oregon State datasets retain their previous qualified roles and are not deleted or downgraded.
+Large raw datasets remain outside Git. Material decisions/results/limitations belong in GitHub. `main` and `develop` should be synchronized at the end of an agreed significant milestone; future UI work should proceed through the established development/PR discipline.
