@@ -1,0 +1,69 @@
+{
+  "milestone": "Version-B B1-B2 candidate benchmark",
+  "status": "COMPLETE AS MODEL-SELECTION SCREENING; NOT SCIENTIFICALLY VALIDATED",
+  "dataset": "SMoRFFI supplied archive",
+  "input_contract": "float32[2,288] I/Q",
+  "known_devices": "1-33",
+  "unknown_devices": "34-123",
+  "split": "existing deterministic 70/15/15 split",
+  "control_M0": {
+    "model": "Version-A fixed RF",
+    "accuracy": 0.8738991192954364,
+    "macro_f1": 0.873226212187689,
+    "balanced_accuracy": 0.8741169358225561,
+    "open_set_threshold": 0.30,
+    "known_acceptance": 0.9490,
+    "unknown_rejection": 0.2949
+  },
+  "candidate_results": {
+    "M1_compact_IQ_CNN": {
+      "training": "15 epochs, compact 1-D CNN, raw frozen I/Q",
+      "accuracy": 0.07065652522017614,
+      "macro_f1": 0.02950693211298755,
+      "balanced_accuracy": 0.07047518610254733,
+      "open_set": {
+        "threshold": 0.034978341311216354,
+        "known_acceptance": 0.9415532425940752,
+        "unknown_rejection": 0.027383899767424412,
+        "AUROC": 0.4582336286915345,
+        "AUPR": 0.2420235551004143
+      },
+      "decision": "REJECT AS VERSION-B REPLACEMENT"
+    },
+    "M2_IQ_metric_prototype": {
+      "training": "15 epochs, compact I/Q encoder with learned prototype head",
+      "accuracy": 0.08827061649319455,
+      "macro_f1": 0.020543872017286864,
+      "balanced_accuracy": 0.08532613369929812,
+      "open_set": {
+        "threshold": 0.0015341680264100432,
+        "known_acceptance": 0.9459567654123299,
+        "unknown_rejection": 0.06272038412484057,
+        "AUROC": 0.5718478826875741,
+        "AUPR": 0.7711226351589924
+      },
+      "decision": "REJECT AS VERSION-B REPLACEMENT"
+    },
+    "M3_supervised_contrastive_prototype": {
+      "training": "3 completed CPU epochs; screening run only because longer SupCon run exceeded available execution budget",
+      "accuracy": 0.5728582866293035,
+      "macro_f1": 0.5576521381179218,
+      "balanced_accuracy": 0.5701130942414395,
+      "open_set": {
+        "threshold": 0.1752495914697647,
+        "known_acceptance": 0.9525620496397118,
+        "unknown_rejection": 0.09910720984319904,
+        "AUROC": 0.6365622995808305,
+        "AUPR": 0.8047148399904869
+      },
+      "decision": "REJECT AS BACKBONE REPLACEMENT IN THIS BENCHMARK; retain as literature-informed future candidate, not a certified winner"
+    }
+  },
+  "selection_decision": {
+    "selected_version_b_backbone": "M0 Version-A RF recognition backbone plus new open-set/profile-security mechanisms",
+    "reason": "No learned I/Q candidate demonstrated a credible improvement over the frozen RF control under the executed benchmark. M1 and M2 were decisively weaker; M3 screening was materially better than M1/M2 but remained below the RF baseline and was not fully trained.",
+    "important_boundary": "This does not prove RF is globally optimal. It establishes that replacing the current RF recognition mechanism is not justified by the executed Track-A evidence. Version B therefore concentrates novelty and engineering effort on open-set security, protected adaptive profiles and poisoning resistance while retaining RF as the control recognition backbone.",
+    "next": "Proceed directly to D8 profile evolution with strengthened open-set security, then D9 poisoning and D10 lifecycle integration."
+  },
+  "scientific_status": "Demonstrated model-selection screening; not Scientifically Validated. M3 longer-training and broader architecture sweeps may be revisited only if a concrete research question requires them, but they are not required to unblock Track-A D8-D10."
+}
