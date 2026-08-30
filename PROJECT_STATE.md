@@ -1,18 +1,22 @@
 # PROJECT STATE
 
-**Last updated:** 2026-08-29
+**Last updated:** 2026-08-30
 
 ## Authoritative status
 - Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
 - Stable branch: `main`
 - Integration branch: `develop`
 - Phase: **Phase 1 — Preparation / accelerated implementation**
-- Current engineering gate: **D2 — Minimal deterministic synchronization / preprocessing**
-- Current substage: **D2.1 — Sample representation — COMPLETE**
+- Current engineering gate: **D3 — Interpretable RF evidence**
 - D1: **COMPLETE at source/schema/ingestion-foundation level**
-- D1–D10 scientific validation: **not yet complete**
+- D2.1: **COMPLETE — sample representation contract**
+- D2.2: **OBSERVED / IMPLEMENTED / TESTED on a 20-file SMoRFFI inspection subset**
+- D2.3: **DEFINED / IMPLEMENTED / TESTED on the same subset**
+- D2.4: **DEFINED / IMPLEMENTED / TESTED as a Track-A engineering split**
+- D2.5: **ENGINEERING ACCEPTED on the 20-file subset**
+- D3: **IMPLEMENTATION STARTED — interpretable RF evidence extraction**
+- D3–D10 scientific validation: **not yet complete**
 - Team size: 4
-- All four members remain on the same overall workstream.
 
 ## Dataset qualification milestone
 The dataset-search/qualification gate is complete for development-substrate selection.
@@ -30,15 +34,13 @@ The dataset-search/qualification gate is complete for development-substrate sele
 This does not constitute scientific validation of D1–D10.
 
 ## Accelerated execution decision
-The project is now being fast-tracked toward a demonstrable D1–D10 software pipeline.
+The project is being fast-tracked toward a demonstrable D1–D10 software pipeline.
 
-The execution principle is:
+Execution principle:
 
 > **Build the smallest defensible end-to-end system first, then strengthen individual stages.**
 
 ### Two-track execution model — ACTIVE
-The project now separates execution into two connected tracks:
-
 **Track A — Fast Implementation / Demonstration**
 - Build the minimum defensible D1–D10 vertical path quickly.
 - Current Track A substrate: SMoRFFI.
@@ -48,16 +50,9 @@ The project now separates execution into two connected tracks:
 **Track B — Research Validation / Strengthening**
 - Add larger subsets, additional days/devices and other qualified datasets only when required.
 - Strengthen cross-condition/cross-dataset validation, ablations, statistical analysis and failure analysis.
-- Use Track B to support or falsify research claims rather than to manufacture positive evidence.
+- Use Track B to support or falsify research claims rather than manufacture positive evidence.
 
-This changes execution priority and dependency structure; it does **not** lower the scientific completion standard or delete prior decisions.
-
-## Dataset acquisition policy under the two-track model
-The project aims to acquire necessary development datasets once, preserve raw copies unchanged and reuse them throughout D1–D10. Repeated downloads of the same dataset are not expected.
-
-Additional acquisition is permitted only for a concrete experimental, metadata, access/licensing, integrity or reproducibility requirement. No open-ended dataset hunt is allowed.
-
-Large raw RF datasets remain outside Git.
+This changes execution priority and dependency structure; it does not lower the scientific completion standard.
 
 ## Completion-level discipline
 Distinguish:
@@ -66,122 +61,70 @@ Distinguish:
 3. **Demonstrated** — integrated path operates on real data.
 4. **Scientifically validated** — stage-specific acceptance evidence supports the claim.
 
-Track A accelerates implementation/testing/demonstration. Track B supplies additional evidence where scientific validation requires it.
+Track A accelerates implementation/testing/demonstration. Track B supplies evidence where scientific validation requires broader data.
 
-D-stage completion still requires evidence and acceptance criteria. Code existence alone is not completion.
-
-The first implementation pair remains **SMoRFFI + Oregon State WiFi RFFP** for the accelerated path, with WiSig ManySig preserved as Track B.
-
-## Novelty research status — 2026-08-29
-A broad literature audit was followed by a targeted forensic audit of RF/RFFI systems involving profile/model updating, sample admission, continual learning and RF security.
-
-### Weak standalone novelty claims rejected
-The following are established or active research areas and are not treated as standalone project novelty:
-- RF fingerprinting;
-- learned RF embeddings;
-- physics-informed RF representation;
-- open-set RF fingerprint recognition;
-- prototype/embedding-based unknown-device decision;
-- incremental/continual RF fingerprint learning;
-- temporal/domain/test-time adaptation;
-- adaptive RF model/profile updating;
-- generic adversarial/backdoor robustness;
-- historical device profiling by itself;
-- reliability/sample selection before learning, in the broad sense.
-
-### Important prior-art findings
-1. **Nagravision WO2023046581A1** already combines RF/IQ authentication, anomaly detection, persistent device models and model updating with new RF observations for environmental adaptation.
-2. **Liu et al. (2024)** combines temporal adaptation, continual learning and selective admission of “reliable” new signals before database/model update.
-3. Other RF/PHY authentication work uses online adaptation and multiple physical attributes.
-4. RF backdoor research establishes that learned RF identity models are security-sensitive.
-
-The canonical comparison is:
-`docs/04_research/targeted_prior_art_matrix.md`
-
-## Revised primary novelty hypothesis
-The project will investigate:
+## Novelty status
+The candidate contribution remains provisional:
 
 > **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
 
-Core distinction:
-`Identification correctness != authorization to update the persistent profile`
-
-A candidate system may therefore accept an observation for operational identity while rejecting/quarantining it for persistent profile modification.
-
-### Supporting candidate mechanism
-A multi-evidence update-authorization policy may use:
-- identity confidence;
-- embedding consistency;
-- RF-physical consistency;
-- temporal consistency;
-- historical-profile consistency;
-- anomaly/deviation evidence.
-
-The exact policy and thresholds are not frozen.
-
-### Novelty status
-**PROVISIONAL — NOT FINALIZED.**
-
-The targeted audit substantially narrowed the gap but does not prove that no prior system has the same architecture. The strongest remaining uncertainty is whether a security-specific separation provides measurable value beyond a well-designed reliability/admission baseline.
+The project must still compare this against strong reliability/admission baselines before claiming novelty.
 
 ## D1–D10 fast-track relationship
-- D1: reproducible raw-data foundation. **COMPLETE for Track-A SMoRFFI source/schema/ingestion foundation.**
-- D2: minimal deterministic synchronization/preprocessing.
-  - **D2.1: sample representation — COMPLETE.**
-  - D2.2: actual package/schema inspection and signal-field confirmation.
-  - D2.3: deterministic preprocessing transformation definition.
-  - D2.4: leakage-safe split strategy.
-  - D2.5+: implementation, tests, evidence and acceptance.
-- D3: interpretable RF evidence.
-- D4: simple learned representation/embedding.
-- D5: closed-set identity baseline.
-- D6: explicit unseen-device/open-set baseline.
-- D7: temporal/receiver/environment/domain-shift evidence.
-- D8: chronological profile evolution and update-policy comparison.
-- D9: controlled/synthetic poisoning and profile-corruption evaluation.
-- D10: integrated end-to-end demonstration.
+`D1 ingestion -> D2 DSP -> D3 RF evidence -> D4 embedding -> D5 identity -> D6 open-set -> D7 shift -> D8 profile evolution -> D9 poisoning -> D10 integration`
 
-D8 and D9 are the primary experimental stages for proving/falsifying the candidate contribution, but they must use validated upstream artifacts.
+D8/D9 remain the primary experimental stages for supporting/falsifying the novelty hypothesis and must use validated upstream artifacts.
 
-## D1 completion milestone — 2026-08-29
-SMoRFFI D1 is now recorded as complete at the **source/schema/ingestion-foundation** level.
+## D2 current state
+### D2.1 — COMPLETE
+One source CSV row is one atomic source observation. Signal-derived information is the model-input boundary; identity and source identifiers remain labels/provenance. Exact parser/shape/scaling/windowing were deferred until package inspection.
 
-Completed artifacts:
-- `src/smorffi_d1.py` — metadata-first SMoRFFI CSV ingestion.
-- `tests/test_smorffi_d1.py` — deterministic IQ/feature/invalid-identity tests.
-- `datasets/SMORFFI_D1_EVIDENCE.md` — source structure, acquisition evidence, schema decisions, integrity boundary and scientific limits.
-- `datasets/dataset_registry.csv` — SMoRFFI D1 status and published acquisition metadata.
+### D2.2 — OBSERVED / IMPLEMENTED / TESTED
+A 20-file local subset of the IQ-only SMoRFFI release was inspected: **19,513 rows** total.
 
-Published source evidence establishes 123 CSV files per release, 1,000 records per device, MAC/device identifiers, raw preamble data and RF-feature variants. The published acquisition is one USRP B210, 123 same-model M5Stack Core2 devices, 20 MS/s, IEEE 802.11g, Channel 6, 20 MHz bandwidth, fixed 25 cm separation, controlled indoor single-day collection.
+Observed:
+- columns: `Device Number`, `MAC_address`, `preamble`;
+- `preamble` is a serialized complex-sample sequence;
+- all inspected rows parse successfully;
+- stored sequence length is **288–579** complex samples;
+- 5,783 rows are exactly 288 and 13,730 are longer;
+- one uploaded device-109 file contains 513 rows rather than the published 1,000 and is retained as an explicit anomaly.
 
-The implementation deliberately does not infer chronology, session, receiver, environment or multi-day metadata that the source does not provide. Large RF archives remain outside Git.
+The published SMoRFFI paper defines the canonical preamble as **288 complex samples** and reports 20 MS/s acquisition. Therefore the Track-A baseline selects the first 288 parsed complex samples while retaining original length and excluded-tail count as provenance. This is documented in `docs/04_research/D2_2_SMORFFI_SCHEMA_EVIDENCE.md`.
 
-**Integrity boundary:** a byte-level checksum of the full downloaded Kaggle archive has not been independently reproduced in this environment. The repository records the deterministic SHA-256 helper and the exact evidence required for a future local acquisition record. Therefore this D1 completion must not be represented as proof of local archive acquisition.
+### D2.3 — DEFINED / IMPLEMENTED / TESTED
+Baseline transformation:
+`serialized preamble -> complex[288] -> real[2,288] (I,Q)`.
 
-## D2.1 completion milestone — 2026-08-29
-The D2.1 sample representation contract is recorded in `docs/04_research/D2_1_SAMPLE_REPRESENTATION.md`.
+No per-observation normalization, clipping, resampling or filtering is applied in the baseline. Normalization remains an explicit future ablation because amplitude may carry RF-discriminative information. See `docs/04_research/D2_3_PREPROCESSING_CONTRACT.md` and `src/smorffi_d2.py`.
 
-Established:
-- one source CSV row is one atomic source observation / candidate sample;
-- signal-derived information is the model-input boundary;
-- device identity and source identifiers are labels/provenance, not predictive inputs;
-- source file, row index, device ID/MAC and original source row are retained for provenance;
-- unavailable metadata is not inferred;
-- exact numeric signal shape, parser, scaling, windowing/padding and normalization are deliberately deferred to D2.2/D2.3 until the actual package schema is inspected;
-- no device identity shortcut may enter the baseline model input;
-- later transformations must remain traceable to their source observation.
+### D2.4 — DEFINED / IMPLEMENTED / TESTED
+A deterministic 70/15/15 engineering split is assigned from `(device_id, source_row_index)` using SHA-256. This is **not** claimed to be a temporal/session holdout because the inspected SMoRFFI files do not expose those boundaries. See `docs/04_research/D2_4_LEAKAGE_SAFE_SPLIT.md`.
 
-This substage does not claim optimal preprocessing, model performance or scientific validation.
+### D2.5 — ENGINEERING ACCEPTED
+Integrated D2 checks pass on the 20-file local subset. See `docs/04_research/D2_5_INTEGRATED_ACCEPTANCE.md`.
 
-## Current next action
-1. Begin D2.2 by inspecting the actual SMoRFFI package/schema available for execution.
-2. Confirm the exact signal field(s), parsing representation and numeric sample shape from observed data rather than assumption.
-3. Define deterministic preprocessing and leakage-safe splitting after schema confirmation.
-4. Preserve raw/source rows and provenance; derived artifacts remain reproducible from D1 inputs.
-5. Keep D7/D8 claims blocked until a dataset with the required temporal/receiver/environment metadata is selected.
-6. Maintain the Track-A/Track-B separation and branch synchronization rules.
+## D3 current state
+### D3 — IMPLEMENTATION STARTED
+`src/smorffi_d3.py` now defines deterministic, label-free interpretable RF evidence features from the canonical 288-sample complex preamble:
+- I/Q moments and variance ratio;
+- amplitude mean/std, RMS and crest factor;
+- mean power;
+- I/Q correlation;
+- local phase-step statistics;
+- FFT spectral centroid and spectral spread;
+- spectral entropy.
 
-## Continuity rule
-When a significant progress milestone is completed and agreed at the end of a chat, the canonical project state must be synchronized so that `main` and `develop` contain the same agreed project state. Work-in-progress task branches and open PRs may remain ahead during implementation, but they must not silently alter `main`.
+The implementation deliberately does **not** call phase slope a calibrated CFO estimate. RF/channel/receiver effects can contribute to these descriptors, so D3 treats them as evidence features rather than unique transmitter fingerprints.
 
-All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls, branch rules and scientific completion standards remain unchanged unless explicitly superseded by a recorded decision.
+## Important experimental constraints
+- Avoid identity leakage: MAC/device identifiers are never model features.
+- Do not fit preprocessing statistics on validation/test data.
+- Preserve frozen evaluation data during profile-update experiments.
+- D9 uses legitimate RF data plus controlled/synthetic poisoning and labels the threat source explicitly.
+- D10 must demonstrate the lifecycle rather than isolated blocks.
+
+## Continuity / branch rule
+When a significant milestone is agreed at the end of a chat, synchronize `main` and `develop` to the same agreed state. Until that explicit synchronization point, the current D2.2–D3 work is **develop-only** and `main` remains unchanged.
+
+All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls and scientific completion standards remain unchanged unless explicitly superseded by a recorded decision.
