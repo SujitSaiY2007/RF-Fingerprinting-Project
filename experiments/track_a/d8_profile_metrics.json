@@ -1,0 +1,16 @@
+{
+  "stage": "D8",
+  "track": "A",
+  "source_archive_sha256": "1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037",
+  "consistency_threshold_95pct_validation": 1.357946538332526,
+  "results": {
+    "frozen_no_update": {"before": 0.2866293034427542, "after": 0.2866293034427542, "updates": 0, "holds": 4950},
+    "always_update": {"before": 0.2866293034427542, "after": 0.38170536429143315, "updates": 4950, "holds": 0},
+    "confidence_only": {"before": 0.2866293034427542, "after": 0.38170536429143315, "updates": 4950, "holds": 0},
+    "multi_evidence": {"before": 0.2866293034427542, "after": 0.3797037630104083, "updates": 4799, "holds": 151}
+  },
+  "local_rf_recognition_accuracy": 0.8566853482786229,
+  "canonical_d5_accuracy_unchanged": 0.8738991192954364,
+  "status": "implemented_tested_demonstrated",
+  "interpretation": "Profile evolution is demonstrable, but the profile-only centroid is not a replacement for the D5 RF recognizer. The local RF reproduction discrepancy is preserved and not tuned away."
+}

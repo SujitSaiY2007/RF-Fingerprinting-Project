@@ -1,0 +1,17 @@
+{
+  "stage": "D10",
+  "track": "A",
+  "source_archive_sha256": "1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037",
+  "lifecycle": {
+    "known_legitimate": {"identity": 1, "confidence": 0.88, "decision": "ACCEPT_UPDATE"},
+    "legitimate_profile_evolution": {"identity": 1, "confidence": 1.0, "decision": "ACCEPT_UPDATE"},
+    "unknown_open_set": {"source_device": 34, "confidence": 0.23, "decision": "REJECT_UNKNOWN"},
+    "suspicious_replay_first": {"recognized_identity": 1, "confidence": 0.34, "decision": "ACCEPT_UPDATE"},
+    "suspicious_replay_repeat": {"recognized_identity": 1, "confidence": 0.34, "decision": "HOLD_QUARANTINE", "reason": "replay_detected"}
+  },
+  "audit_event_count": 4,
+  "profile_version_device_1": 4,
+  "frozen_test_protected": true,
+  "status": "implemented_tested_demonstrated",
+  "security_boundary": "The first target-like suspicious observation may pass; the replay guard blocks its repeated occurrence."
+}

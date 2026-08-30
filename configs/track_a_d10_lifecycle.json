@@ -1,0 +1,9 @@
+{
+  "stage": "D10",
+  "track": "A",
+  "lifecycle": ["D2_representation", "D3_rf_evidence", "D4_embedding_interface", "D5_identity", "D6_open_set", "D8_profile", "D9_poisoning_controls", "audit_final_decision"],
+  "frozen_test_protected": true,
+  "security_policy": "multi_evidence_with_replay_guard",
+  "synthetic_attacks": true,
+  "scientific_validation": false
+}
