@@ -1,0 +1,16 @@
+{
+  "stage":"D7","track":"A","baseline":"D5 frozen Random Forest","test_set":"known devices 1-33, frozen 4,996 observations","retraining":false,"test_tuning":false,
+  "shift_design":"controlled synthetic perturbations applied only to the frozen known-device test I/Q samples; deterministic seed 20260830",
+  "metrics":{
+    "baseline":{"accuracy":0.8738991192954364,"macro_f1":0.873226212187689,"balanced_accuracy":0.8741169358225561},
+    "gain_-6dB":{"accuracy":0.38070456365092076,"macro_f1":0.3956187276383553,"balanced_accuracy":0.3811691562550246},
+    "gain_-3dB":{"accuracy":0.27301841473178545,"macro_f1":0.2592683673280043,"balanced_accuracy":0.2724306074910817},
+    "gain_+3dB":{"accuracy":0.20056044835868694,"macro_f1":0.19276478474782133,"balanced_accuracy":0.2030878613018273},
+    "gain_+6dB":{"accuracy":0.15932746196957567,"macro_f1":0.149599388896573,"balanced_accuracy":0.1623467788931686},
+    "awgn_20dB":{"accuracy":0.8228582866293035,"macro_f1":0.8207459608571274,"balanced_accuracy":0.8221062274125327},
+    "awgn_10dB":{"accuracy":0.5334267413931145,"macro_f1":0.5241970190183497,"balanced_accuracy":0.5315586603245982},
+    "awgn_5dB":{"accuracy":0.2043634907926341,"macro_f1":0.18549035203736353,"balanced_accuracy":0.20183188042280326},
+    "awgn_0dB":{"accuracy":0.06725380304243395,"macro_f1":0.0375604137314101,"balanced_accuracy":0.06636134539848357}
+  },
+  "interpretation":"The RF closed-set baseline is highly sensitive to synthetic amplitude gain and degrades progressively under additive noise. This demonstrates a Track-A robustness limitation, not a real temporal/receiver/environment result. The supplied SMoRFFI metadata does not expose such domain boundaries, so these axes are not claimed as observed real-world shifts."
+}
