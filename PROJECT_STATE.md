@@ -230,23 +230,24 @@ Demonstrate at minimum:
 - known legitimate sample identified and accepted;
 - unknown sample rejected/quarantined;
 - legitimate new observations can evolve a profile;
-- suspicious/poisoned observations are blocked/quarantined;
-- profile history is auditable;
+- suspicious/poisoned observations blocked/quarantined;
+- profile history auditable;
 - frozen evaluation remains untouched by updates.
 
 D10 is an integrated demonstrator, not a claim of scientific validation.
 
-## Files for current milestone
+## Files for this milestone
 - D4: `docs/04_research/D4_LEARNED_REPRESENTATION_BASELINE.md`, `configs/track_a_d4_baseline.json`, `experiments/track_a/d4_manifest.json`
 - D5: `docs/04_research/D5_CLOSED_SET_IDENTITY.md`, `docs/04_research/D5_RANDOM_FOREST_CLASSICAL_BASELINE.md`, RF config/metrics and per-device/confusion artifacts
 - D6: `docs/04_research/D6_OPEN_SET_UNKNOWN_REJECTION.md`, `docs/04_research/D6_RF_OPEN_SET_BASELINE.md`, RF/embedding metrics/config artifacts
 - D7: `docs/04_research/D7_RF_DISTRIBUTION_SHIFT.md`, `experiments/track_a/d7_rf_shift_metrics.json`
-- Next-direction master: `docs/04_research/D7_D10_TRACK_A_NEXT_DIRECTION.md`
+- Canonical continuation: `docs/04_research/D7_D10_TRACK_A_NEXT_DIRECTION.md`
 
-## Branch / synchronization rule
-Significant implementation happens on `develop` first. At the end of a milestone, `main` and `develop` must be synchronized to the same **content state** without deletion or silent rollback. Merge histories may differ; content equivalence is what matters. Never force-push protected `main`.
+## Branch / synchronization state
+`main` and `develop` are now synchronized to the same **content state** for this milestone. Their commit histories remain non-linear because the synchronization was performed with a two-parent merge commit, preserving both prior histories.
 
-## Current milestone
-The D4–D7 Track-A milestone is **consolidated and explicitly requested for synchronization**. `develop` contains the canonical state and the new D7–D10 direction document. `main` still contains the older D4-only state and must be reconciled losslessly.
+- `develop`: `8da86a20f6b4bbb0a3925e4dc9fba3c6727ee6a9` plus the synchronization-state update that follows this record.
+- `main`: merge commit `a7d1797ecae20ce1461253f0bc91476308431147` plus the synchronization-state update that follows this record.
+- Content equivalence is authoritative; do not force-push or recreate independent histories.
 
-All earlier project decisions, dataset qualifications, novelty boundaries, leakage controls, learning gates, D1–D2 evidence and historical records remain valid unless explicitly superseded above.
+All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls, learning gates and scientific completion standards remain unchanged unless explicitly superseded by a later recorded decision.
