@@ -6,248 +6,139 @@
 - Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
 - Stable branch: `main`
 - Integration branch: `develop`
-- Phase: **Phase 1 — Accelerated implementation / demonstrator construction**
-- Current engineering gate: **D7 — Track-A synthetic stress complete; real-shift evidence is Track-B and not required to block Track-A D8–D10 implementation**
-- D1: **COMPLETE at source/schema/ingestion-foundation level**
-- D2.1: **COMPLETE — sample representation contract**
-- D2.2: **OBSERVED / IMPLEMENTED / TESTED on a 20-file SMoRFFI inspection subset**
-- D2.3: **DEFINED / IMPLEMENTED / TESTED on the same subset**
-- D2.4: **DEFINED / IMPLEMENTED / TESTED as a Track-A engineering split**
-- D2.5: **ENGINEERING ACCEPTED on the 20-file subset**
-- D3: **IMPLEMENTED / exploratory demonstrated on real SMoRFFI data; scientific validation not complete**
-- D4: **IMPLEMENTED / TESTED / DEMONSTRATED with reproducible 33-device Track-A baseline; historical ~91.1% result remains unreproducible**
-- D5: **IMPLEMENTED / TESTED / DEMONSTRATED — learned-embedding and classical RF-feature closed-set baselines complete**
-- D6: **IMPLEMENTED / TESTED / DEMONSTRATED — learned-embedding and RF open-set baselines complete**
-- D7 Track A: **IMPLEMENTED / TESTED / DEMONSTRATED — controlled gain and AWGN stress**
-- D7 Track B: **PLANNED / optional — real temporal/domain/receiver shift requires an external dataset with verified condition metadata**
-- D8–D10 Track A implementation: **NEXT**
+- Phase: **Version B — security-first improvement / demonstrator construction**
+- D2 learning gate: **PASSED**
+- D7 Track A: **COMPLETE / DEMONSTRATED**
+- B0: **COMPLETE / DEMONSTRATED — Version-A control reproduced**
+- B1-B2: **COMPLETE AS MODEL-SELECTION SCREENING / DEMONSTRATED — no learned candidate justified replacing the RF control**
+- Current engineering gate: **D8 profile evolution / protected update authorization**
 - D3–D10 scientific validation: **not yet complete**
-- Team size: 4
 
-## Dataset qualification milestone
-The dataset-search/qualification gate is complete. The project uses a portfolio rather than forcing one dataset to answer every research question.
+## Frozen D2 contract
+`serialized preamble -> complex[288] -> float32[2,288] I/Q`
 
-### Primary
-- WiSig — scale, receiver variation, multi-day robustness.
-- Oregon State WiFi RFFP — temporal/domain variation.
-- Oregon State LoRa RFFP — same-model/environment/location/distance/receiver variation.
-- SMoRFFI — large-scale same-model discrimination.
+Do not restart D1/D2 or silently change the input schema. Baseline preprocessing remains without per-observation normalization, clipping, filtering, resampling or arbitrary interpolation. Device number/MAC is label/provenance only.
 
-### Secondary
-- ORACLE — controlled hardware/distance benchmark.
-- Bluetooth smartphone RF database — optional cross-technology benchmark.
+## Version-A frozen reference
+SMoRFFI known devices 1–33; deterministic 70/15/15 engineering split; 16 deterministic RF evidence features; fixed Random Forest: 100 trees, `random_state=20260830`, `max_features=sqrt`, no tuning.
 
-The portfolio is qualified but dataset acquisition is now demand-driven. No unrestricted dataset hunt is permitted.
+- Accuracy: **87.3899%**
+- Macro-F1: **87.3226%**
+- Balanced accuracy: **87.4117%**
+- D6 RF confidence threshold: **0.30**
+- Known acceptance: **94.90%**
+- Unknown rejection: **29.49%**
 
-## Accelerated execution decision — final form
-The project is fast-tracked toward a demonstrable D1–D10 software pipeline.
+Historical ~91.1% remains historical/unreconstructed and is not a certified result.
 
-Execution principle:
-> **Build the smallest defensible end-to-end system first, then strengthen individual stages.**
+## Version-B B0-B2 result
+The frozen benchmark contract is `configs/version_b_b0_b2_benchmark.json`.
 
-Track A may use three data/evidence sources:
-1. real SMoRFFI observations already supplied;
-2. controlled/derived synthetic datasets constructed from those observations;
-3. published-paper evidence used to justify the choice of shift mechanisms, parameter ranges and attack scenarios.
+B0 reproduced the RF control on 33,000 known-device observations: 23,030 train / 4,974 validation / 4,996 test.
 
-A constructed dataset is **not** a substitute for a real-world measurement and must never be reported as if it came from the cited paper/dataset.
+B1-B2 candidate screening used the same real SMoRFFI source substrate and frozen I/Q contract. Full recorded results are in `experiments/track_a/version_b_b1_b2_results.json`.
 
-Track B uses independently collected external datasets when a scientific claim requires metadata or condition boundaries unavailable in Track A.
+### M0 — Version-A RF control
+Retained as the strongest demonstrated Track-A recognition mechanism: 87.39% closed-set accuracy and 29.49% unknown rejection at the frozen 0.30 confidence threshold.
 
-## Two-track execution model — ACTIVE
-### Track A — Fast Implementation / Demonstration
-- Current real substrate: SMoRFFI.
-- Complete the remaining D7–D10 software path without waiting for multi-gigabyte external datasets.
-- Use controlled/derived scenarios where the mechanism itself is the object of the experiment.
-- Keep all constructed scenarios explicitly labelled and reproducible.
+### M1 — compact I/Q CNN
+15 epochs on raw frozen I/Q:
+- 7.07% accuracy
+- 2.95% macro-F1
+- 7.05% balanced accuracy
+- open-set AUROC 0.4582
+- unknown rejection 2.74% at validation-calibrated confidence threshold
 
-### Track B — Research Validation / Strengthening
-- Use Oregon State WiFi RFFP for real day/environment variation.
-- Use WiSig / ManySig for real receiver/day/channel variation.
-- Add another qualified dataset only when a concrete metadata, reproducibility or scientific-validity gap is demonstrated.
-- Track-B results must never be silently merged into Track-A evidence.
+**Decision: rejected as Version-B replacement.**
 
-## Completion-level discipline
-1. **Implemented** — code/artifact exists.
-2. **Tested** — engineering tests or reproducible checks pass.
-3. **Demonstrated** — integrated path operates on real or explicitly controlled data.
-4. **Scientifically validated** — stage-specific external/independent evidence supports the claim.
+### M2 — I/Q metric/prototype head
+15 epochs:
+- 8.83% accuracy
+- 2.05% macro-F1
+- 8.53% balanced accuracy
+- open-set AUROC 0.5718
+- unknown rejection 6.27% at validation-calibrated prototype-distance threshold
 
-Track A accelerates implementation/testing/demonstration. Track B supplies evidence where scientific validation requires broader or independently collected data.
+**Decision: rejected as Version-B replacement.**
 
-## Novelty status
-The candidate contribution remains provisional:
-> **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
+### M3 — supervised-contrastive prototype screening
+3 completed CPU epochs:
+- 57.29% accuracy
+- 55.77% macro-F1
+- 57.01% balanced accuracy
+- open-set AUROC 0.6366
+- unknown rejection 9.91% at validation-calibrated prototype-distance threshold
 
-D8/D9 remain the primary stages for supporting/falsifying this hypothesis and must use a baseline ladder rather than assuming the proposed policy is superior.
+The longer SupCon run could not be completed within the available execution budget. Therefore M3 is **not a certified winner** and must not be represented as fully optimized. It remains a literature-informed future candidate rather than a reason to block Track-A D8-D10.
 
-## D1–D10 relationship
-`D1 ingestion -> D2 DSP -> D3 RF evidence -> D4 embedding -> D5 identity -> D6 open-set -> D7 shift -> D8 profile evolution -> D9 poisoning -> D10 integration`
+### B1-B2 selection decision
+**Do not replace the RF recognition backbone.** The executed Track-A evidence does not justify a learned I/Q replacement. M1/M2 were decisively weaker; M3 screening was promising relative to M1/M2 but still materially below the RF control and incompletely trained.
 
-## D4 reproducibility closure
-The complete user-supplied archive was inspected:
-- 123 CSV files
-- 122,511 observations
-- 123 devices
-- archive SHA-256: `1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037`
+This does **not** prove RF is globally optimal. It establishes only that a replacement is not justified by the executed benchmark. Version B therefore concentrates its improvement effort on the identified weaknesses: **open-set security, fingerprint-purity diagnostics, protected adaptive profiles and poisoning resistance**, while retaining the RF mechanism as the recognition control/backbone.
 
-Track-A D4 known snapshot: devices **1–33**, 33 files, 33,000 observations, with 23,030/4,974/4,996 train/validation/test under the existing D2 deterministic split.
+This is a legitimate negative model-selection result and must remain in the audit trail.
 
-Source anomalies retained: device 67 has 999 rows; device 87 has 999; device 109 has 513. No anomaly was silently corrected.
+## Version-B architecture decision
+Working Track-A architecture:
 
-Historical D4: approximately **10,186 usable observations across 33 devices**, approximately **91.12% test accuracy**. Exact historical row selection and configuration are unrecoverable. Therefore 91.12% remains historical/exploratory and is not certified.
+`SMoRFFI observation -> D2 -> D3 RF evidence / RF recognition -> open-set novelty decision -> D8 update authorization -> persistent profile -> D9 poisoning defense -> audit/final decision`
 
-Frozen minimal D4 baseline: **35.8086% test accuracy**, embedding dimension 32, input 2x288 I/Q, no accuracy tuning.
+The RF recognition mechanism is retained for Version B. Novelty/security mechanisms are allowed to evolve aggressively.
 
-## D5 current state
-### Learned embedding
-- D4 classifier: 35.81% accuracy, 31.58% macro-F1, 35.80% balanced accuracy.
-- nearest centroid: 36.21%, 33.23%, 36.30%.
-- 1-NN: **63.77%**, **63.63%**, **63.80%**.
+The final deliverable remains a research-demonstrator web application separated from the RF engine. Planned UI surfaces: Dashboard, Identification, Device Profiles, Open-Set Security, Security/Attack Lab, Audit Trail and Evaluation/Research. UI architecture is documented in `docs/04_research/VERSION_B_RESEARCH_SPECIFICATION.md`.
 
-### Classical RF feature baseline
-The current repository D3 implementation contains **16** deterministic RF evidence features. Fixed RF: 100 trees, `random_state=20260830`, `max_features=sqrt`, no tuning.
+## Immediate next execution: D8
+Build chronological persistent profiles using real SMoRFFI observations plus explicitly labelled controlled/derived scenarios.
 
-- **87.39% accuracy**
-- **87.32% macro-F1**
-- **87.41% balanced accuracy**
-
-This is substantially stronger than the learned-embedding readouts and is retained as the primary Track-A classical identity baseline.
-
-The historical ~91.1% result used an approximately 60-feature list, but the exact list, exact 10,186-row selection and historical configuration remain unavailable. Do not invent or silently reconstruct them.
-
-## D6 current state
-Known devices: **1–33**. Unknown devices: **34–123**.
-
-### Learned embedding centroid gate
-- threshold: `21.2566452`, selected only from known validation distances at the 95th percentile.
-- known-test acceptance: **95.42%**.
-- unknown-test rejection: **10.99%** over 13,329 observations from 90 unknown devices.
-
-### RF confidence gate
-- frozen D5 RF maximum-class-probability threshold: `0.30`, selected only from known validation at the 5th percentile.
-- known-test acceptance: **94.90%**.
-- unknown-test rejection: **29.49%**.
-
-Conclusion: the RF closed-set classifier is strong, but open-set rejection remains weak. Closed-set recognition and novelty rejection must remain separate decisions.
-
-## D7 current state
-### Track-A synthetic stress — COMPLETE
-The frozen D5 RF classifier was evaluated without retraining/test tuning under deterministic synthetic perturbations.
-
-Gain:
-- baseline 87.39%
-- -6 dB 38.07%
-- -3 dB 27.30%
-- +3 dB 20.06%
-- +6 dB 15.93%
-
-AWGN:
-- 20 dB 82.29%
-- 10 dB 53.34%
-- 5 dB 20.44%
-- 0 dB 6.73%
-
-Interpretation: the current RF-feature baseline is highly acquisition-sensitive. These are controlled engineering stress results, not real temporal/receiver/environment measurements.
-
-### Track-B real-shift requirement — OPTIONAL FOR TRACK-A, REQUIRED FOR REAL-WORLD CLAIMS
-SMoRFFI metadata does not expose trustworthy temporal/session/receiver/environment boundaries. Therefore those claims require external data.
-
-First priority: **Oregon State WiFi RFFP** for real day/environment variation.  
-Second priority: **WiSig / ManySig** for real receiver/day/channel variation.  
-SmartHomePrivacy is a useful smaller cross-day option if acquisition is practical.
-
-No additional large download is required merely to continue Track A.
-
-## D7–D10 paper-grounded constructed-data policy
-Published papers may be used to establish that particular shift mechanisms, open-set conditions and attack scenarios are realistic research questions and to motivate controlled parameter ranges. Their empirical numbers remain external literature evidence.
-
-Track-A constructed datasets shall record:
-- source observation IDs
-- transformation family
-- parameters/ranges
-- random seed
-- intended physical interpretation
-- whether the transformation is a stress test or a mechanism simulation
-- explicit statement that it is synthetic/derived.
-
-This is the selected practical solution to the 512 MB upload constraint. It does not lower the scientific-validation standard.
-
-## D8 exact direction
-Build a chronological profile manager using SMoRFFI real observations plus explicitly constructed condition/shift streams.
-
-The minimum state per profile is:
-- device identity
-- representation centroid/statistics
-- RF-feature profile statistics
+Profile state:
+- identity
+- RF-feature statistics
+- representation/statistics where available
 - observation count
+- dispersion/consistency
 - profile version
-- dispersion/consistency statistics
 - update audit history
 
 Separate:
-`OBSERVATION -> IDENTITY RECOGNITION -> UPDATE AUTHORIZATION -> PROFILE UPDATE`
+`OBSERVATION -> RECOGNITION -> UPDATE AUTHORIZATION -> PROFILE UPDATE`
 
 Required decisions:
 - ACCEPT / UPDATE
 - HOLD / QUARANTINE
 - REJECT
 
-Baseline ladder:
+Required baseline ladder:
 1. frozen/no-update;
-2. always-update after recognition;
-3. confidence-only admission;
-4. proposed multi-evidence authorization.
+2. always-update;
+3. confidence-only;
+4. multi-evidence authorization.
 
-The evaluation partition is frozen before the chronological update stream begins. Future evaluation observations cannot be used to update the profile before they are evaluated.
+Freeze the evaluation set before chronological update streams. Never let future evaluation observations update a profile before evaluation.
 
-## D9 exact direction
-Use legitimate RF observations plus controlled/synthetic poisoning. Attack classes:
-- label contamination;
-- unknown-device contamination into a known profile;
-- gradual representation drift;
-- replay/repetition of suspicious observations.
+## D9 next
+Controlled/synthetic poisoning against the same D8 ladder:
+- unknown-device contamination;
+- wrong-label contamination;
+- gradual target-like drift;
+- replay/repetition.
 
-Compare the same admission-policy ladder used in D8.
+Measure attack acceptance, profile displacement, identity degradation, false acceptance, legitimate acceptance, rollback/recovery and legitimate adaptation retained.
 
-Measure:
-- attack acceptance rate;
-- profile displacement/drift;
-- legitimate-sample acceptance after attack;
-- post-attack identity accuracy;
-- unknown false acceptance;
-- rollback/recovery success;
-- legitimate adaptation preserved.
+## D10 next
+Integrate:
+`observation -> D2 -> RF recognition -> open set -> profile -> authorization -> poisoning defense -> audit`
 
-The experiment must support or falsify the novelty hypothesis; it must not be designed to guarantee a positive result.
+Demonstrate known acceptance, unknown rejection/quarantine, legitimate adaptation, suspicious-update blocking and auditable profile versions/decisions.
 
-## D10 exact direction
-Build one auditable Track-A lifecycle:
+D10 remains demonstration, not automatic scientific validation.
 
-`SMoRFFI observation -> D2 -> D3 RF evidence + D4 embedding -> D5 identity -> D6 known/unknown -> D8 profile lookup -> update authorization -> D9 poisoning defense -> audit/final decision`
+## Data/evidence policy
+Track A may use real SMoRFFI, controlled/derived synthetic scenarios and published-paper evidence. Synthetic/derived observations must never be represented as source-dataset measurements.
 
-Demonstrate at minimum:
-- known legitimate sample identified and accepted;
-- unknown sample rejected/quarantined;
-- legitimate new observations can evolve a profile;
-- suspicious/poisoned observations blocked/quarantined;
-- profile history auditable;
-- frozen evaluation remains untouched by updates.
+Track B remains responsible for real temporal/session/environment/receiver/cross-dataset validation. No additional multi-gigabyte dataset is required to unblock Track-A D8-D10.
 
-D10 is an integrated demonstrator, not a claim of scientific validation.
+## Completion discipline
+Use exactly: **Implemented / Tested / Demonstrated / Scientifically Validated**. Do not upgrade evidence level silently.
 
-## Files for this milestone
-- D4: `docs/04_research/D4_LEARNED_REPRESENTATION_BASELINE.md`, `configs/track_a_d4_baseline.json`, `experiments/track_a/d4_manifest.json`
-- D5: `docs/04_research/D5_CLOSED_SET_IDENTITY.md`, `docs/04_research/D5_RANDOM_FOREST_CLASSICAL_BASELINE.md`, RF config/metrics and per-device/confusion artifacts
-- D6: `docs/04_research/D6_OPEN_SET_UNKNOWN_REJECTION.md`, `docs/04_research/D6_RF_OPEN_SET_BASELINE.md`, RF/embedding metrics/config artifacts
-- D7: `docs/04_research/D7_RF_DISTRIBUTION_SHIFT.md`, `experiments/track_a/d7_rf_shift_metrics.json`
-- Canonical continuation: `docs/04_research/D7_D10_TRACK_A_NEXT_DIRECTION.md`
-
-## Branch / synchronization state
-`main` and `develop` are now synchronized to the same **content state** for this milestone. Their commit histories remain non-linear because the synchronization was performed with a two-parent merge commit, preserving both prior histories.
-
-- `develop`: `8da86a20f6b4bbb0a3925e4dc9fba3c6727ee6a9` plus the synchronization-state update that follows this record.
-- `main`: merge commit `a7d1797ecae20ce1461253f0bc91476308431147` plus the synchronization-state update that follows this record.
-- Content equivalence is authoritative; do not force-push or recreate independent histories.
-
-All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls, learning gates and scientific completion standards remain unchanged unless explicitly superseded by a later recorded decision.
+## Branch rule
+`develop` is the active implementation branch. `main` must only be synchronized after an explicitly agreed milestone. No force-push or destructive history rewrite.
