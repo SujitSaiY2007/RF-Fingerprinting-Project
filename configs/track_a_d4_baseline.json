@@ -1,0 +1,16 @@
+{
+  "track": "A",
+  "dataset": "SMoRFFI",
+  "input_shape": [2, 288],
+  "embedding_dim": 32,
+  "seed": 20260830,
+  "epochs": 12,
+  "batch_size": 128,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "split": "sha256(device_id|source_row_index): 70/15/15",
+  "normalization": "none",
+  "architecture": "Conv1d(2,16,k7)->ReLU->MaxPool2->Conv1d(16,32,k5)->ReLU->AdaptiveAvgPool1->Linear(32,32)->classifier",
+  "accuracy_tuning": false,
+  "status": "implementation committed; dataset-run pending"
+}

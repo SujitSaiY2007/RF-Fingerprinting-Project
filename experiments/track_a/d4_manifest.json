@@ -1,0 +1,11 @@
+{
+  "dataset": "SMoRFFI",
+  "track": "A",
+  "snapshot_status": "not-present-in-canonical-repository",
+  "verified_runtime_snapshot_from_prior_handoff": {"usable_observations": 10186, "devices": 33},
+  "d2_inspection_subset": {"files": 20, "rows": 19513},
+  "formal_run_eligible": false,
+  "reason": "Raw CSV snapshot and per-file SHA-256 manifest are not committed or otherwise available through the canonical repository state inspected on 2026-08-30.",
+  "exploratory_result": {"reported_test_accuracy": 0.911, "status": "exploratory-unreproducible-from-current-canonical-state"},
+  "required_next_action": "Provide or mount the exact SMoRFFI CSV snapshot used for the exploratory run, generate the manifest with scripts/make_smorffi_manifest.py, then execute the fixed D4 runner without tuning."
+}
