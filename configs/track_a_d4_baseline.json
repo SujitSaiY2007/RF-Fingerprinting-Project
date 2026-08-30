@@ -1,6 +1,7 @@
 {
   "track": "A",
   "dataset": "SMoRFFI",
+  "snapshot": "devices 1-33 from user-supplied archive",
   "input_shape": [2, 288],
   "embedding_dim": 32,
   "seed": 20260830,
@@ -12,5 +13,7 @@
   "normalization": "none",
   "architecture": "Conv1d(2,16,k7)->ReLU->MaxPool2->Conv1d(16,32,k5)->ReLU->AdaptiveAvgPool1->Linear(32,32)->classifier",
   "accuracy_tuning": false,
-  "status": "implementation committed; dataset-run pending"
+  "historical_91_1_reproduction": "not_reproducible; historical 10186-row selection/configuration unavailable",
+  "current_result": {"rows": 33000, "devices": 33, "test_accuracy": 0.35808646917534026},
+  "status": "frozen-reproducible-track-a-baseline"
 }
