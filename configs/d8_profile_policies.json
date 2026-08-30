@@ -1,0 +1,34 @@
+{
+  "stage": "D8",
+  "status": "Implemented",
+  "policies": [
+    {"id": "frozen", "description": "Recognize against persistent initial profile; never update."},
+    {"id": "always_update", "description": "Update after recognition without additional authorization; insecure control."},
+    {"id": "confidence_only", "description": "Authorize update using recognition confidence only."},
+    {"id": "multi_evidence", "description": "Authorize only when confidence, novelty and profile-consistency evidence agree."}
+  ],
+  "decisions": ["ACCEPT_UPDATE", "HOLD", "REJECT"],
+  "defaults": {
+    "confidence_threshold": 0.90,
+    "novelty_threshold": 0.30,
+    "consistency_threshold": 0.70,
+    "max_update_step": 0.20
+  },
+  "chronological_rules": {
+    "profile_updates_must_increase_observation_index": true,
+    "frozen_evaluation_before_update": true,
+    "evaluation_observations_may_not_update_profile_before_evaluation": true
+  },
+  "required_metrics": [
+    "recognition_accuracy_before_update",
+    "recognition_accuracy_after_update",
+    "known_acceptance",
+    "unknown_rejection",
+    "update_acceptance_rate",
+    "hold_rate",
+    "reject_rate",
+    "profile_displacement",
+    "profile_version_count",
+    "legitimate_adaptation_retained"
+  ]
+}
