@@ -1,0 +1,12 @@
+{
+  "known_devices": "1-33",
+  "unknown_devices": "34-123",
+  "threshold_rule": "95th percentile of known-device validation nearest-centroid squared Euclidean distance",
+  "threshold": 21.25664520263672,
+  "known_test_n": 4996,
+  "known_test_acceptance": 0.9541633306645316,
+  "unknown_test_n": 13329,
+  "unknown_device_count": 90,
+  "unknown_test_rejection": 0.1099107209843199,
+  "interpretation": "Weak open-set separation for the current minimal embedding. Threshold was selected without using unknown-device test observations."
+}
