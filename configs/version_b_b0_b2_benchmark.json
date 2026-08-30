@@ -1,0 +1,54 @@
+{
+  "milestone": "Version-B B0-B2 benchmark",
+  "branch": "develop",
+  "dataset": "SMoRFFI",
+  "d2_input": "serialized preamble -> complex[288] -> float32[2,288] I/Q",
+  "known_devices": "1-33",
+  "unknown_devices": "34-123",
+  "split": "sha256(device_id|source_row_index): 70/15/15",
+  "seed": 20260830,
+  "baseline_control": {
+    "model": "RandomForestClassifier",
+    "n_estimators": 100,
+    "max_features": "sqrt",
+    "class_weight": null,
+    "tuning": false,
+    "known_test_accuracy": 0.8738991192954364,
+    "known_test_macro_f1": 0.873226212187689,
+    "known_test_balanced_accuracy": 0.8741169358225561,
+    "open_set_threshold": 0.30,
+    "known_acceptance": 0.9490,
+    "unknown_rejection": 0.2949
+  },
+  "candidates": {
+    "M0": "Version-A RF baseline (immutable control)",
+    "M1": "compact 1-D CNN on frozen I/Q",
+    "M2": "I/Q encoder + metric/prototype head",
+    "M3": "I/Q encoder + supervised contrastive objective + prototype/open-set head"
+  },
+  "b0": {
+    "status": "completed",
+    "acceptance": "exact repository RF control reproduced on supplied SMoRFFI archive",
+    "rows": 33000,
+    "train": 23030,
+    "validation": 4974,
+    "test": 4996
+  },
+  "b1": {
+    "status": "benchmark implementation defined; candidate training/evaluation not yet certified",
+    "metrics": ["accuracy", "macro_f1", "balanced_accuracy", "per_device_metrics", "confusion_matrix", "seed_variance"]
+  },
+  "b2": {
+    "status": "benchmark implementation defined; candidate open-set results not yet certified",
+    "threshold_rule": "validation-only calibration",
+    "metrics": ["known_acceptance", "unknown_rejection", "false_acceptance", "AUROC", "AUPR", "OSCR_or_equivalent"]
+  },
+  "leakage_controls": [
+    "thresholds selected only from known validation",
+    "unknown test observations never used for model/threshold selection",
+    "frozen test partition not used for profile updates",
+    "MAC/device identifiers are labels/provenance only"
+  ],
+  "data_provenance": "real SMoRFFI source observations; no synthetic data used for B0",
+  "note": "B0 is numerically reproduced. B1-B2 candidate results must not be marked complete until the full candidate runs finish under this frozen protocol."
+}
