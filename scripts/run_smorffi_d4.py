@@ -13,8 +13,8 @@ from pathlib import Path
 
 import numpy as np
 
-from smorffi_d2 import parse_canonical_preamble, deterministic_split
-from smorffi_d4 import D4Config, build_model, set_seed, iq_to_tensor
+from src.smorffi_d2 import parse_canonical_preamble, deterministic_split
+from src.smorffi_d4 import D4Config, build_model, set_seed, iq_to_tensor
 
 
 def load_rows(root: Path):
@@ -58,7 +58,7 @@ def train(root: Path, output: Path, config: D4Config):
             loss.backward(); opt.step(); total += float(loss)
         model.eval()
         with torch.no_grad():
-            zv, lv = model(torch.from_numpy(X[val_mask]))
+            _, lv = model(torch.from_numpy(X[val_mask]))
             val_acc = float((lv.argmax(1).numpy() == y[val_mask]).mean())
         history.append({"epoch": epoch + 1, "train_loss": total / max(1, len(loader)), "validation_accuracy": val_acc})
     model.eval()
