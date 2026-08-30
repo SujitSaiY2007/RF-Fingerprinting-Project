@@ -1,0 +1,20 @@
+{
+  "dataset": {"devices":"1-33","rows":33000,"train":23030,"validation":4974,"test":4996},
+  "feature_set": {"count":16,"source":"src/smorffi_d3.py"},
+  "model": {"type":"RandomForestClassifier","n_estimators":100,"random_state":20260830,"max_features":"sqrt","class_weight":null,"tuning":false},
+  "metrics": {"accuracy":0.8738991192954364,"macro_f1":0.873226212187689,"balanced_accuracy":0.8741169358225561},
+  "top_feature_importance": [
+    ["spectral_centroid_hz",0.15701734843288137],
+    ["std_phase_step_rad",0.11035079299213407],
+    ["spectral_spread_hz",0.10633213946199473],
+    ["mean_phase_step_rad",0.07296000874560539],
+    ["rms_amplitude",0.06677264068390323],
+    ["mean_power",0.06613425536588644],
+    ["amplitude_std",0.05847601495725696],
+    ["i_std",0.05625870262705567],
+    ["q_std",0.053225635664829844],
+    ["crest_factor",0.05137864749173773]
+  ],
+  "historical_comparison": {"reported_accuracy":0.9112,"reported_feature_count":"~60","current_feature_count":16,"status":"historical result not exactly reproduced"},
+  "interpretation":"The current repository D3 feature subset plus a fixed Random Forest produces 87.39% closed-set test accuracy, materially stronger than the frozen 32-D D4 classifier and centroid baselines and above the 63.77% D4 1-NN result. It is still not an exact reproduction of the historical ~91.1% experiment because the historical ~60-feature list, exact 10186-row selection and historical RF configuration are unavailable."
+}
