@@ -1,0 +1,33 @@
+{
+  "milestone": "B0",
+  "status": "Demonstrated",
+  "dataset": "SMoRFFI",
+  "archive_sha256": "1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037",
+  "known_devices": "1-33",
+  "rows": 33000,
+  "split": {
+    "method": "sha256(device_id|source_row_index)",
+    "train": 23030,
+    "validation": 4974,
+    "test": 4996,
+    "fractions": "70/15/15"
+  },
+  "control": {
+    "model": "RandomForestClassifier",
+    "n_estimators": 100,
+    "random_state": 20260830,
+    "max_features": "sqrt",
+    "class_weight": null,
+    "tuning": false,
+    "accuracy": 0.8738991192954364,
+    "macro_f1": 0.873226212187689,
+    "balanced_accuracy": 0.8741169358225561
+  },
+  "open_set_reference": {
+    "threshold": 0.30,
+    "known_acceptance": 0.9490,
+    "unknown_rejection": 0.2949,
+    "source": "frozen D6 RF confidence gate"
+  },
+  "interpretation": "B0 confirms the Version-A control is reproducible on the supplied SMoRFFI archive. It does not constitute an improvement and does not certify B1/B2 candidate models."
+}
