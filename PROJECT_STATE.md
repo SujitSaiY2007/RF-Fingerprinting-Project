@@ -7,14 +7,15 @@
 - Stable branch: `main`
 - Integration branch: `develop`
 - Phase: **Phase 1 — Preparation / accelerated implementation**
-- Current engineering gate: **D2 — Minimal deterministic synchronization / preprocessing**
+- Current engineering gate: **D3 — Interpretable RF evidence**
 - D1: **COMPLETE at source/schema/ingestion-foundation level**
 - D2.1: **COMPLETE — sample representation contract**
 - D2.2: **OBSERVED / IMPLEMENTED / TESTED on a 20-file SMoRFFI inspection subset**
 - D2.3: **DEFINED / IMPLEMENTED / TESTED on the same subset**
 - D2.4: **DEFINED / IMPLEMENTED / TESTED as a Track-A engineering split**
-- D2.5+: **NEXT — integrated acceptance and minimum demonstrable DSP path**
-- D1–D10 scientific validation: **not yet complete**
+- D2.5: **ENGINEERING ACCEPTED on the 20-file subset**
+- D3: **IMPLEMENTATION STARTED — interpretable RF evidence extraction**
+- D3–D10 scientific validation: **not yet complete**
 - Team size: 4
 
 ## Dataset qualification milestone
@@ -86,7 +87,7 @@ Observed:
 - `preamble` is a serialized complex-sample sequence;
 - all inspected rows parse successfully;
 - stored sequence length is **288–579** complex samples;
-- 5,783 rows are exactly 288 samples and 13,730 are longer;
+- 5,783 rows are exactly 288 and 13,730 are longer;
 - one uploaded device-109 file contains 513 rows rather than the published 1,000 and is retained as an explicit anomaly.
 
 The published SMoRFFI paper defines the canonical preamble as **288 complex samples** and reports 20 MS/s acquisition. Therefore the Track-A baseline selects the first 288 parsed complex samples while retaining original length and excluded-tail count as provenance. This is documented in `docs/04_research/D2_2_SMORFFI_SCHEMA_EVIDENCE.md`.
@@ -100,14 +101,21 @@ No per-observation normalization, clipping, resampling or filtering is applied i
 ### D2.4 — DEFINED / IMPLEMENTED / TESTED
 A deterministic 70/15/15 engineering split is assigned from `(device_id, source_row_index)` using SHA-256. This is **not** claimed to be a temporal/session holdout because the inspected SMoRFFI files do not expose those boundaries. See `docs/04_research/D2_4_LEAKAGE_SAFE_SPLIT.md`.
 
-### D2.5+ — NEXT
-Run integrated D2 acceptance checks on the local subset, then immediately build the minimum D3–D6 vertical path for professor demonstration:
-- D3: interpretable RF evidence;
-- D4: simple learned representation/embedding;
-- D5: closed-set identity baseline;
-- D6: unseen-device/open-set baseline.
+### D2.5 — ENGINEERING ACCEPTED
+Integrated D2 checks pass on the 20-file local subset. See `docs/04_research/D2_5_INTEGRATED_ACCEPTANCE.md`.
 
-Do not block the demonstrable D3–D6 path on Track-B datasets. Do not claim D7/D8 robustness from SMoRFFI because temporal/receiver/environment metadata is insufficient for those claims.
+## D3 current state
+### D3 — IMPLEMENTATION STARTED
+`src/smorffi_d3.py` now defines deterministic, label-free interpretable RF evidence features from the canonical 288-sample complex preamble:
+- I/Q moments and variance ratio;
+- amplitude mean/std, RMS and crest factor;
+- mean power;
+- I/Q correlation;
+- local phase-step statistics;
+- FFT spectral centroid and spectral spread;
+- spectral entropy.
+
+The implementation deliberately does **not** call phase slope a calibrated CFO estimate. RF/channel/receiver effects can contribute to these descriptors, so D3 treats them as evidence features rather than unique transmitter fingerprints.
 
 ## Important experimental constraints
 - Avoid identity leakage: MAC/device identifiers are never model features.
@@ -117,6 +125,6 @@ Do not block the demonstrable D3–D6 path on Track-B datasets. Do not claim D7/
 - D10 must demonstrate the lifecycle rather than isolated blocks.
 
 ## Continuity / branch rule
-When a significant milestone is agreed at the end of a chat, synchronize `main` and `develop` to the same agreed state. Until that explicit synchronization point, the current D2.2–D2.4 work is **develop-only** and `main` remains unchanged.
+When a significant milestone is agreed at the end of a chat, synchronize `main` and `develop` to the same agreed state. Until that explicit synchronization point, the current D2.2–D3 work is **develop-only** and `main` remains unchanged.
 
 All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls and scientific completion standards remain unchanged unless explicitly superseded by a recorded decision.
