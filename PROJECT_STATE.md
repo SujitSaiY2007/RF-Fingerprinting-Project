@@ -16,7 +16,7 @@
 - D2.5: **ENGINEERING ACCEPTED on the 20-file subset**
 - D3: **IMPLEMENTED / exploratory demonstrated on real SMoRFFI data; scientific validation not complete**
 - D4: **IMPLEMENTED / TESTED / DEMONSTRATED with reproducible 33-device Track-A baseline; historical ~91.1% result remains unreproducible**
-- D5: **IMPLEMENTED / TESTED / DEMONSTRATED — closed-set identity using frozen D4 embedding**
+- D5: **IMPLEMENTED / TESTED / DEMONSTRATED — learned-embedding and classical RF-feature closed-set baselines complete**
 - D6: **IMPLEMENTED / TESTED / DEMONSTRATED — unknown-device rejection baseline**
 - D7+: **NOT STARTED**
 - D3–D10 scientific validation: **not yet complete**
@@ -91,20 +91,36 @@ The frozen minimal repository D4 model was run on the explicit 33-device snapsho
 - embedding dimension: **32**
 - input: **2 x 288 I/Q**
 
-This is the formal reproducible Track-A baseline for the committed implementation. The lower result does not prove the historical result false; it proves only that the historical result cannot be reproduced from the recoverable evidence and that the current minimal baseline does not match it.
+This is the formal reproducible Track-A baseline for the committed implementation. The lower result does not prove the historical result false; it proves only that the historical run cannot be reproduced from the recoverable evidence and that the current minimal baseline does not match it.
 
 See `docs/04_research/D4_LEARNED_REPRESENTATION_BASELINE.md`, `configs/track_a_d4_baseline.json`, and `experiments/track_a/d4_manifest.json`.
 
 ## D5 current state
-D5 uses the frozen D4 embedding and frozen test set. Results:
+D5 now has two deliberately separate closed-set baselines on the same frozen 33-device protocol.
 
+### Learned representation baseline
 | Method | Accuracy | Macro-F1 | Balanced accuracy |
 |---|---:|---:|---:|
 | D4 classifier | 35.81% | 31.58% | 35.80% |
 | Nearest centroid | 36.21% | 33.23% | 36.30% |
-| **1-nearest neighbour** | **63.77%** | **63.63%** | **63.80%** |
+| 1-nearest neighbour | **63.77%** | **63.63%** | **63.80%** |
 
-The 1-NN result indicates useful local identity structure in the embedding despite weak classifier/centroid generalization. Per-device metrics and the 33x33 1-NN confusion matrix are retained under `experiments/track_a/`.
+### Classical RF-feature baseline
+The current repository D3 implementation contains **16** deterministic RF evidence features. A fixed Random Forest (100 trees, `random_state=20260830`, `max_features=sqrt`, no hyperparameter tuning) was trained on the same 23,030 training observations and evaluated on the same 4,996 frozen test observations.
+
+| Metric | Random Forest |
+|---|---:|
+| Accuracy | **87.39%** |
+| Macro-F1 | **87.32%** |
+| Balanced accuracy | **87.41%** |
+
+This is substantially stronger than the current learned-embedding readouts. It supports retaining engineered RF features + Random Forest as the classical D5 baseline.
+
+The result is also close to the historical **~91.12%** result, but is **not an exact reproduction**. The historical ~60-feature list, exact 10,186-row selection and historical RF configuration are unavailable. Therefore the historical result remains unreconstructed rather than being relabelled as reproduced.
+
+Top current RF feature importances are led by spectral centroid, phase-step variability, spectral spread, mean phase step, RMS amplitude and mean power. These are model-dependent importance measures and are not causal evidence of transmitter-intrinsic behavior.
+
+See `docs/04_research/D5_CLOSED_SET_IDENTITY.md`, `docs/04_research/D5_RANDOM_FOREST_CLASSICAL_BASELINE.md`, `configs/track_a_d5_rf_baseline.json`, `experiments/track_a/d5_rf_metrics.json`, and `scripts/run_smorffi_d5_rf.py`.
 
 ## D6 current state
 Known devices are 1–33; unknown devices are 34–123. Unknown data are not used to fit D4 or known-device centroids.
@@ -113,7 +129,7 @@ Rejection score: nearest known-device centroid squared Euclidean distance in fro
 
 Threshold is selected only from known-device validation data at the **95th percentile**, yielding `T = 21.2566452`.
 
-On the frozen known test set, acceptance is **95.42%**. On the deterministic test partition of 90 unknown devices (13,329 observations), rejection is only **10.99%**.
+On the frozen known test set, known acceptance is **95.42%**. On the deterministic test partition of 90 unknown devices (13,329 observations), unknown rejection is only **10.99%**.
 
 This is a deliberately simple open-set baseline and a **negative/limiting result**: the current embedding does not separate most unknown devices from the known gallery. The threshold was not tuned against unknown test data.
 
@@ -126,10 +142,11 @@ See `docs/04_research/D6_OPEN_SET_UNKNOWN_REJECTION.md` and `experiments/track_a
 - D9 uses legitimate RF data plus controlled/synthetic poisoning and labels the threat source explicitly.
 - D10 must demonstrate the lifecycle rather than isolated blocks.
 - Never convert an exploratory runtime result into a formal benchmark without a reproducible dataset manifest, code/configuration and test evidence.
+- The historical ~60-feature RF experiment must not be reconstructed by inventing features or silently changing the frozen test protocol.
 
 ## Continuity / branch rule
 When a significant milestone is explicitly agreed at the end of a chat, synchronize `main` and `develop` to the same **content state** without deleting or silently reverting prior information. Merge commits may make histories differ even when file contents are identical; content equivalence is the operative synchronization requirement.
 
-**Current branch state:** the D4–D6 milestone is committed on `develop`; `main` has intentionally not been synchronized yet because explicit milestone agreement is still required.
+**Current branch state:** D4–D6 plus the D5 RF-baseline extension are committed on `develop`; `main` has intentionally not been synchronized yet because explicit milestone agreement is still required.
 
 All prior dataset qualifications, novelty findings, D1–D10 definitions, leakage controls, poisoning controls and scientific completion standards remain unchanged unless explicitly superseded by a recorded decision.
