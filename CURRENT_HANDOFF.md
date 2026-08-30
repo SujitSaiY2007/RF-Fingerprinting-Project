@@ -1,4 +1,4 @@
-# CURRENT HANDOFF — 2026-08-29
+# CURRENT HANDOFF — 2026-08-30
 
 ## Project
 **Physics-Based RF Fingerprinting with Continuous Device Learning**
@@ -8,13 +8,19 @@
 
 ## Current position
 - Phase: **Phase 1 — Preparation / accelerated implementation**.
-- Current engineering gate: **D1 — Raw RF Data / Ingestion**.
-- Dataset qualification is complete as a development-substrate selection gate.
-- D1–D10 are not scientifically completed.
-- Team size: 4.
+- Stable branch: `main`.
+- Integration branch: `develop`.
+- Current engineering gate: **D2 — Minimal deterministic synchronization / preprocessing**.
+- D1: **COMPLETE at source/schema/ingestion-foundation level**.
+- D2.1: **COMPLETE**.
+- D2.2: **OBSERVED / IMPLEMENTED / TESTED on a 20-file SMoRFFI subset**.
+- D2.3: **DEFINED / IMPLEMENTED / TESTED**.
+- D2.4: **DEFINED / IMPLEMENTED / TESTED as an engineering split**.
+- D2.5+: **NEXT — integrated acceptance and minimum D3–D6 vertical demonstration path**.
+- D1–D10 scientific validation: **not yet complete**.
 
 ## Fast-track objective
-The project must move quickly from planning to a demonstrable software pipeline.
+Move rapidly from the validated minimum data representation to a demonstrable D1–D10 software lifecycle while keeping the distinction between implementation, testing, demonstration and scientific validation.
 
 Execution principle:
 
@@ -25,142 +31,88 @@ Do not claim scientific completion from code existence.
 ## Active two-track execution model
 
 ### Track A — Fast Implementation / Demonstration
-Use an accessible real-data development substrate to build the minimum defensible D1–D10 vertical path as the immediate critical path. **WiSig ManySig** is the current accessible substrate because it has already been acquired by the user.
+Current substrate: **SMoRFFI**.
 
-**Oregon State WiFi RFFP remains the first intended second implementation dataset, but its acquisition speed must not block Track A.**
+Immediate path:
+`D2 acceptance -> D3 RF evidence -> D4 embedding -> D5 closed-set identity -> D6 open-set -> D7 shift -> D8 profile evolution -> D9 poisoning -> D10 integration`
+
+The objective is to get a real-data end-to-end demonstration quickly.
 
 ### Track B — Research Validation / Strengthening
-In parallel where practical or after Track A, add larger subsets, additional days/devices and qualified datasets when a concrete experimental requirement justifies them. Use Track B for stronger cross-condition/cross-dataset validation, ablations, statistical analysis, failure analysis and support/falsification of the novelty hypothesis.
+Use qualified datasets such as WiSig and Oregon State WiFi RFFP when a claim requires temporal, receiver, environment or broader robustness evidence. Track B must support or falsify claims rather than manufacture positive evidence.
 
-Detailed policy:
-`docs/08_execution/TWO_TRACK_EXECUTION_STRATEGY.md`
+## SMoRFFI D2.2 observed schema
+Twenty uploaded IQ-only CSVs were inspected directly, totaling **19,513 rows**.
 
-## Qualified dataset portfolio
-### Primary
-1. WiSig — scale, receiver variation, multi-day/channel robustness.
-2. Oregon State WiFi RFFP — temporal/domain variation.
-3. Oregon State LoRa RFFP — same-model/environment/location/distance/receiver variation.
-4. SMoRFFI — large-scale same-model discrimination.
+Observed file schema:
+- `Device Number`
+- `MAC_address`
+- `preamble`
 
-### Secondary
-5. ORACLE — controlled transmitter-hardware/distance benchmark.
-6. Bluetooth smartphone RF database — optional cross-technology benchmark.
+Observed signal representation:
+- `preamble` is a serialized whitespace-separated complex-valued sequence;
+- all inspected rows parse successfully;
+- stored sequence length is **288–579 complex samples**;
+- 5,783 rows are exactly 288 samples;
+- 13,730 rows contain additional samples;
+- the device-109 file contains 513 rows and stored lengths 448–579, so this anomaly is retained rather than silently repaired.
 
-First implementation pair: **WiSig + Oregon State WiFi RFFP**.
+The published SMoRFFI definition describes the canonical preamble as **288 complex samples** and reports a 20 MS/s acquisition. The Track-A baseline therefore selects the first 288 parsed samples and records original length plus discarded-tail count as provenance. The full rationale is in:
+`docs/04_research/D2_2_SMORFFI_SCHEMA_EVIDENCE.md`
 
-## Dataset acquisition policy
-Acquire necessary development datasets once where practical, preserve raw copies unchanged and reuse them throughout D1–D10. Do not repeatedly download the same data. Additional acquisition is allowed only for a documented experimental, access/licensing, metadata, integrity or reproducibility need. No open-ended dataset hunt.
+## D2.3 preprocessing contract
+Baseline:
+`serialized preamble -> complex[288] -> real[2,288] (I,Q)`.
 
-Large raw datasets remain outside Git.
+No per-observation normalization, clipping, filtering, resampling or arbitrary interpolation is applied. Amplitude normalization remains a future ablation because it may remove RF-discriminative information.
 
-## Novelty status — revised 2026-08-29
-The targeted audit found two especially important boundaries:
+Implementation:
+`src/smorffi_d2.py`
 
-### Nagravision WO2023046581A1
-Already combines RF/IQ authentication, anomaly detection, persistent device models and adaptive model updating using new RF observations.
+Tests:
+`tests/test_smorffi_d2.py`
 
-### Liu et al. (2024)
-Combines temporal/domain adaptation with continual SEI learning and selectively admits “reliable” new signals into the database before model updating.
+Specification:
+`docs/04_research/D2_3_PREPROCESSING_CONTRACT.md`
 
-Therefore neither of the following is sufficient novelty:
+## D2.4 split policy
+Track-A engineering split:
+- 70% train;
+- 15% validation;
+- 15% test;
+- deterministic SHA-256 assignment from `(device_id, source_row_index)`.
 
-- RF authentication + adaptive model update;
-- reliability/sample admission + continual RF update.
+This is **not** claimed to be a temporal/session holdout because SMoRFFI does not expose those boundaries. Device identity and MAC remain labels/provenance only.
 
-### Current candidate contribution
+Specification:
+`docs/04_research/D2_4_LEAKAGE_SAFE_SPLIT.md`
+
+## Next execution sequence
+1. Run integrated D2 acceptance checks on the local SMoRFFI subset.
+2. Build D3 RF-physical evidence features/visualization from the canonical I/Q signal.
+3. Build D4 compact learned embedding baseline.
+4. Build D5 closed-set identity classifier.
+5. Build D6 unseen-device/open-set baseline.
+6. Use these validated upstream blocks to construct D7–D10 progressively.
+
+Do not block Track A on acquisition of additional large datasets.
+
+## Scientific guardrails retained
+- Do not use MAC/device identifiers as model inputs.
+- Keep raw/source rows and derived representations traceable.
+- Do not fit preprocessing statistics on validation/test data.
+- Do not claim temporal/session/receiver/environment robustness from SMoRFFI alone.
+- Keep Track A and Track B evidence separate.
+- D9 poisoning data must be controlled/synthetic or otherwise explicitly labelled.
+- D8/D9 novelty comparisons must include the required baseline ladder.
+- D10 must demonstrate the complete lifecycle.
+
+## Novelty boundary
+The current candidate contribution remains provisional:
+
 > **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
 
-Candidate supporting mechanism:
+Do not present this as proven novelty until D8/D9 evidence supports or falsifies it.
 
-> **Multi-evidence update authorization using identity confidence, representation consistency, RF-physical consistency, temporal consistency, historical-profile consistency and anomaly evidence.**
-
-The policy, score and thresholds remain open research variables.
-
-### Current uncertainty
-The strongest unresolved question is whether this security-specific separation provides a measurable advantage beyond a strong reliability/admission baseline. If not, the novelty claim must be revised or abandoned.
-
-Canonical evidence:
-`docs/04_research/targeted_prior_art_matrix.md`
-
-## D1 objective
-Build the reproducible raw-RF foundation for WiSig + Oregon State WiFi:
-- provenance/version identity;
-- acquisition/reference instructions;
-- manifests/checksums where feasible;
-- I/Q interpretation;
-- normalized metadata;
-- missing-metadata handling;
-- integrity/loadability tests;
-- reproducible data root;
-- leakage-safe identifiers;
-- raw/normalized/derived/experiment separation.
-
-The minimum Track A D1 evidence may be established first on accessible real data; broader dataset coverage can be added under Track B.
-
-## D1–D10 accelerated execution
-After minimal D1 acceptance, proceed with a vertical implementation path:
-
-`D1 ingestion -> D2 DSP -> D3 RF evidence -> D4 embedding -> D5 identity -> D6 open-set -> D7 shift -> D8 profile evolution -> D9 poisoning -> D10 integration`
-
-D8/D9 must compare:
-
-A. `Identify -> Update`
-
-B. `Identify -> Confidence -> Update`
-
-C. `Identify -> Reliability/Consistency -> Update`
-
-D. `Identify -> Security/Update-Safety -> Authorization -> Update/Reject/Quarantine`
-
-The decisive novelty comparison is C versus D.
-
-## Completion-level discipline
-Always distinguish:
-
-1. **Implemented** — code/artifact exists.
-2. **Tested** — engineering tests or reproducible checks pass.
-3. **Demonstrated** — integrated path operates on real data.
-4. **Scientifically validated** — stage-specific acceptance evidence supports the claim.
-
-Track A accelerates the first three levels. Track B supplies additional evidence where level four requires broader data or stronger experiments.
-
-## Important experimental constraints
-- Avoid random splits where session/burst leakage is possible.
-- Prefer session/day/device/receiver holdouts appropriate to the claim.
-- Keep frozen evaluation data isolated from profile updates.
-- D9 uses legitimate RF data plus controlled/synthetic poisoning and must be labelled accordingly.
-- D10 must demonstrate the complete lifecycle, not only isolated blocks.
-
-## Knowledge base
-Use:
-`docs/07_knowledge_base/RF_FINGERPRINTING_KNOWLEDGE_BASE.md`
-
-It contains the theory and practical minimum knowledge needed while implementing D1–D10.
-
-## Next-chat continuation
-Use:
-`docs/08_execution/NEXT_CHAT_FAST_TRACK_PROGRESS_PROMPT.md`
-
-The next session should inspect the repository first, determine which stages have real code/evidence, then execute the two-track strategy without repeating completed dataset qualification or broad literature searching.
-
-## Research discipline
-Distinguish:
-- source-derived fact;
-- repository-derived fact;
-- implementation;
-- test result;
-- experiment result;
-- inference;
-- hypothesis;
-- speculation.
-
-Do not claim novelty, superiority, publication-worthiness or patentability without evidence.
-
-## SUPERSEDING TRACK-A HANDOFF — 2026-08-29
-DEC-028 supersedes the earlier ORACLE Track A selection. **SMoRFFI is now the Track A working dataset.**
-
-The next implementation action is to verify the actual SMoRFFI package/access path and perform the D1 loadability/metadata/integrity checks. The existing ORACLE work is retained and is not deleted; it is no longer the Track A dependency.
-
-SMoRFFI's existing qualification assigns its strongest defined responsibility to D3–D6 and D10, with D7/D8 contingent on package-level metadata verification. Do not claim broader stage coverage until verified. If D7/D8 requires data SMoRFFI does not provide, use a qualified Track B dataset for that specific requirement.
-
-ManySig remains preserved separately as Track B validation/reproduction/cross-checking data. Oregon State acquisition remains independent of Track A.
+## Branch synchronization rule
+The D2.2–D2.4 milestone has been committed to **`develop` only** during this chat. `main` has not been changed. At the end of a significant agreed milestone, synchronize `main` and `develop` to the same agreed project state; do not silently delete or revert prior documents.
