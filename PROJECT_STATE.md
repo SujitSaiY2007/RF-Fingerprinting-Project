@@ -6,13 +6,30 @@
 - Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
 - Stable branch: `main`
 - Integration branch: `develop`
-- Phase: **Version B — security-first improvement / demonstrator construction**
+- Current phase: **Track-A Version-B security core demonstrated; final Q/A and demonstrator refinement**
 - D2 learning gate: **PASSED**
 - D7 Track A: **COMPLETE / DEMONSTRATED**
 - B0: **COMPLETE / DEMONSTRATED — Version-A control reproduced**
 - B1-B2: **COMPLETE AS MODEL-SELECTION SCREENING / DEMONSTRATED — no learned candidate justified replacing the RF control**
-- Current engineering gate: **D8 profile evolution / protected update authorization**
-- D3–D10 scientific validation: **not yet complete**
+- D8: **DEMONSTRATED**
+- D9: **DEMONSTRATED — replay protection strong; target-like unknown contamination unresolved**
+- D10: **DEMONSTRATED — integrated lifecycle**
+- Final web demonstrator: **DEPLOYED via GitHub Pages**
+- Current activity: **Q/A truth-audit before further UI/dashboard refinement**
+
+## Project strategy: Track A -> Track B
+Track A was deliberately established as a quicker, controlled, reproducible implementation and ideation track for the final product demonstrator. Its purpose was to establish the RF pipeline, create Version A, improve it into Version B, generate evidence, identify architectural limits, and produce a working demonstrator without waiting for the broader validation burden of Track B.
+
+Track A is not an inferior or disposable track. It is a constrained evidence-producing foundation. Its agreed constraints impose a ceiling on generalization claims.
+
+The intended future direction is **Track B after Track-A Version-B**. Track B is responsible for broader validation beyond Track-A constraints, including real temporal/session/environment/receiver conditions, cross-dataset validation, potentially cross-frequency validation, and more realistic adversarial evaluation. Track B must not be presented as already completed.
+
+## What Track A has achieved
+The Track-A progression is:
+
+`SMoRFFI -> D2 representation -> Version-A RF baseline -> B0-B2 model screening -> Version-B protected adaptive profiles -> D8 -> D9 -> D10 -> web demonstrator`
+
+Version A established the recognition control. Version B retained the RF recognition backbone and improved the security/governance surrounding persistent profile updates. The project therefore demonstrates a complete Track-A concept-to-demonstrator flow.
 
 ## Frozen D2 contract
 `serialized preamble -> complex[288] -> float32[2,288] I/Q`
@@ -31,114 +48,100 @@ SMoRFFI known devices 1–33; deterministic 70/15/15 engineering split; 16 deter
 
 Historical ~91.1% remains historical/unreconstructed and is not a certified result.
 
-## Version-B B0-B2 result
-The frozen benchmark contract is `configs/version_b_b0_b2_benchmark.json`.
+## Version-B model-selection boundary
+The frozen B0-B2 benchmark retains M0 RF as the Track-A recognition backbone. M1 compact I/Q CNN and M2 I/Q metric/prototype head were weaker. M3 supervised-contrastive prototype screening was promising relative to M1/M2 but incomplete and materially below the RF control. No learned candidate is certified as a replacement.
 
-B0 reproduced the RF control on 33,000 known-device observations: 23,030 train / 4,974 validation / 4,996 test.
+This is a legitimate negative model-selection result and must remain in the audit trail. It does not prove RF is globally optimal.
 
-B1-B2 candidate screening used the same real SMoRFFI source substrate and frozen I/Q contract. Full recorded results are in `experiments/track_a/version_b_b1_b2_results.json`.
-
-### M0 — Version-A RF control
-Retained as the strongest demonstrated Track-A recognition mechanism: 87.39% closed-set accuracy and 29.49% unknown rejection at the frozen 0.30 confidence threshold.
-
-### M1 — compact I/Q CNN
-15 epochs on raw frozen I/Q:
-- 7.07% accuracy
-- 2.95% macro-F1
-- 7.05% balanced accuracy
-- open-set AUROC 0.4582
-- unknown rejection 2.74% at validation-calibrated confidence threshold
-
-**Decision: rejected as Version-B replacement.**
-
-### M2 — I/Q metric/prototype head
-15 epochs:
-- 8.83% accuracy
-- 2.05% macro-F1
-- 8.53% balanced accuracy
-- open-set AUROC 0.5718
-- unknown rejection 6.27% at validation-calibrated prototype-distance threshold
-
-**Decision: rejected as Version-B replacement.**
-
-### M3 — supervised-contrastive prototype screening
-3 completed CPU epochs:
-- 57.29% accuracy
-- 55.77% macro-F1
-- 57.01% balanced accuracy
-- open-set AUROC 0.6366
-- unknown rejection 9.91% at validation-calibrated prototype-distance threshold
-
-The longer SupCon run could not be completed within the available execution budget. Therefore M3 is **not a certified winner** and must not be represented as fully optimized. It remains a literature-informed future candidate rather than a reason to block Track-A D8-D10.
-
-### B1-B2 selection decision
-**Do not replace the RF recognition backbone.** The executed Track-A evidence does not justify a learned I/Q replacement. M1/M2 were decisively weaker; M3 screening was promising relative to M1/M2 but still materially below the RF control and incompletely trained.
-
-This does **not** prove RF is globally optimal. It establishes only that a replacement is not justified by the executed benchmark. Version B therefore concentrates its improvement effort on the identified weaknesses: **open-set security, fingerprint-purity diagnostics, protected adaptive profiles and poisoning resistance**, while retaining the RF mechanism as the recognition control/backbone.
-
-This is a legitimate negative model-selection result and must remain in the audit trail.
-
-## Version-B architecture decision
+## Version-B architecture
 Working Track-A architecture:
 
-`SMoRFFI observation -> D2 -> D3 RF evidence / RF recognition -> open-set novelty decision -> D8 update authorization -> persistent profile -> D9 poisoning defense -> audit/final decision`
+`SMoRFFI observation -> D2 -> RF evidence / RF recognition -> open-set novelty decision -> D8 update authorization -> persistent profile -> D9 poisoning defense -> audit/final decision`
 
-The RF recognition mechanism is retained for Version B. Novelty/security mechanisms are allowed to evolve aggressively.
-
-The final deliverable remains a research-demonstrator web application separated from the RF engine. Planned UI surfaces: Dashboard, Identification, Device Profiles, Open-Set Security, Security/Attack Lab, Audit Trail and Evaluation/Research. UI architecture is documented in `docs/04_research/VERSION_B_RESEARCH_SPECIFICATION.md`.
-
-## Immediate next execution: D8
-Build chronological persistent profiles using real SMoRFFI observations plus explicitly labelled controlled/derived scenarios.
-
-Profile state:
-- identity
-- RF-feature statistics
-- representation/statistics where available
-- observation count
-- dispersion/consistency
-- profile version
-- update audit history
-
-Separate:
+The core security design separates:
 `OBSERVATION -> RECOGNITION -> UPDATE AUTHORIZATION -> PROFILE UPDATE`
 
-Required decisions:
+Required update outcomes are:
 - ACCEPT / UPDATE
 - HOLD / QUARANTINE
 - REJECT
 
-Required baseline ladder:
-1. frozen/no-update;
-2. always-update;
-3. confidence-only;
-4. multi-evidence authorization.
+## Frozen V-A vs V-B evidence
+- Closed-set RF accuracy: **87.3899% vs 87.3899%** — same recognizer; no unsupported model gain claimed.
+- Known acceptance: **94.90% vs 94.90%**.
+- Unknown rejection: **29.49% vs 29.49%**.
+- Profile test accuracy after adaptation: **28.6629% vs 37.9704% (+9.3075 pp)**.
+- Replay acceptance: **100% vs 1% (-99 pp)**.
+- Replay hold: **0% vs 99% (+99 pp)**.
+- Gain-drift acceptance: **100% vs 94.6809% (-5.3191 pp)**.
+- Mean profile displacement: **0.995174 vs 0.969641**.
+- Target-like unknown contamination: **100% vs 100% — unresolved**.
 
-Freeze the evaluation set before chronological update streams. Never let future evaluation observations update a profile before evaluation.
+These values are frozen Track-A evidence, not projections. Controlled/derived attack scenarios are explicitly labelled as such.
 
-## D9 next
-Controlled/synthetic poisoning against the same D8 ladder:
-- unknown-device contamination;
-- wrong-label contamination;
-- gradual target-like drift;
-- replay/repetition.
+## Outcome status
+### Demonstrated / working
+- Reproducible Track-A RF pipeline on SMoRFFI.
+- Version-A RF control.
+- Open-set evaluation in the defined setting.
+- Legitimate adaptive profile evolution in the tested scenario.
+- Protected update authorization and quarantine behaviour.
+- Strong replay improvement in the tested controlled scenario.
+- D8 profile evolution.
+- D9 controlled poisoning/security evaluation.
+- D10 integrated lifecycle.
+- Final web demonstrator and GitHub Pages deployment.
 
-Measure attack acceptance, profile displacement, identity degradation, false acceptance, legitimate acceptance, rollback/recovery and legitimate adaptation retained.
+### Partially achieved / limited
+- General poisoning resistance: only selected tested attack classes improved.
+- Gain-drift handling: improved control but not perfect acceptance.
+- Profile evolution: demonstrated in the tested Track-A setting, not general real-world validation.
 
-## D10 next
-Integrate:
-`observation -> D2 -> RF recognition -> open set -> profile -> authorization -> poisoning defense -> audit`
+### Not achieved / not demonstrated
+- Prevention of target-like unknown contamination: **100% remains accepted in the tested scenario**.
+- Universal Version-B superiority over Version A.
+- Generalization across arbitrary real RF frequencies/datasets/acquisition conditions.
+- Formal proof that the narrowed novelty hypothesis is new relative to all prior art.
+- Track-B broader validation.
 
-Demonstrate known acceptance, unknown rejection/quarantine, legitimate adaptation, suspicious-update blocking and auditable profile versions/decisions.
+## Novelty hypothesis status
+The original broad hypothesis — that adaptive RF fingerprinting/profile updating itself is novel — was narrowed after prior-art review because adaptive/online RF fingerprinting and profile updating already exist.
 
-D10 remains demonstration, not automatic scientific validation.
+The remaining research hypothesis concerns a security-oriented separation between RF recognition and authorization to modify a persistent RF identity/profile, particularly under target-like unknown contamination/poisoning conditions.
 
-## Data/evidence policy
-Track A may use real SMoRFFI, controlled/derived synthetic scenarios and published-paper evidence. Synthetic/derived observations must never be represented as source-dataset measurements.
+Current status: **implemented and tested research hypothesis; not formally proven novelty**. The 100% target-like unknown contamination result is a central limitation and prevents a claim that Version B has solved target-like profile poisoning. A stronger novelty claim requires targeted systematic prior-art validation and stronger evidence.
 
-Track B remains responsible for real temporal/session/environment/receiver/cross-dataset validation. No additional multi-gigabyte dataset is required to unblock Track-A D8-D10.
-
-## Completion discipline
+## Evidence language
 Use exactly: **Implemented / Tested / Demonstrated / Scientifically Validated**. Do not upgrade evidence level silently.
 
-## Branch rule
-`develop` is the active implementation branch. `main` must only be synchronized after an explicitly agreed milestone. No force-push or destructive history rewrite.
+Track A may use real SMoRFFI, controlled/derived synthetic scenarios and published-paper evidence. Synthetic/derived observations must never be represented as source-dataset measurements.
+
+## Track-B future direction
+Track B should build on the Track-A demonstrator rather than restart it. Candidate future work includes:
+- cross-dataset real RF validation;
+- temporal/session/environment/receiver variation;
+- potentially cross-frequency evaluation;
+- broader device populations and acquisition conditions;
+- more realistic adversarial/target-like contamination scenarios;
+- improved mechanisms specifically addressing the Track-A target-like unknown failure;
+- stronger novelty/prior-art validation.
+
+Track B is a **future direction**, not a completed result.
+
+## Final demonstrator
+The web application is separated from the RF engine. Planned/implemented UI surfaces include Dashboard, Identification, Device Profiles, Open-Set Security, Security/Attack Lab, Audit Trail and Evaluation/Research. The UI must present frozen results, methodology, provenance and limitations without inventing measurements.
+
+## Current phase: Q/A before UI refinement
+The immediate next chat is a **Q/A truth-audit session**. Resolve doubts about outcomes, novelty, evidence, Track-A ceiling, Track-B direction, real-vs-controlled data, and permissible claims before further implementation.
+
+After the Q/A, UI/dashboard refinement can proceed only on the agreed scope. Research numbers and security logic remain frozen unless a new dated experiment is explicitly opened.
+
+See `docs/09_handoff/NEXT_CHAT_QA_NOTE.md` for the required next-chat continuation protocol.
+
+## Repository discipline
+- Preserve all historical documents, experiment artifacts, decisions, PRs and commits.
+- No unnecessary deletion.
+- No force-push or destructive history rewrite.
+- `develop` is the active implementation branch.
+- `main` is synchronized with `develop` at agreed significant milestones.
+- Before further UI work, both branches must again be made identical through a non-destructive synchronization.
