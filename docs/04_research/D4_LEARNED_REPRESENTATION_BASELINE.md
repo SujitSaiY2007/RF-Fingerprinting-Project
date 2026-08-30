@@ -1,40 +1,64 @@
 # D4 — Learned Representation Baseline
 
 **Date:** 2026-08-30
-**Status:** Exploratory result recorded; reproducibility closure required before D5 acceptance.
+**Status:** **IMPLEMENTED / TESTED (unit-level); reproducibility closure BLOCKED by missing exact dataset snapshot.**
 
 ## Objective
 Move from deterministic interpretable D3 RF-evidence features to a compact learned representation derived directly from the canonical Track-A I/Q input.
 
-## Input contract
+## Frozen input contract
 The D4 input remains the D2 Track-A baseline:
 
 `serialized preamble -> complex[288] -> real[2,288] (I,Q)`
 
-MAC address and device number are labels/provenance only and are not model inputs.
+MAC address and device number are labels/provenance only and are not model inputs. No normalization is introduced.
 
-## Exploratory result
-A fast-track neural experiment was reported using the canonical `2 x 288` I/Q representation and a compact learned representation. The reported closed-set test accuracy was approximately **91.1%** on the runtime subset available for that experiment.
+## Fixed minimal model
+The committed Track-A baseline is a lightweight 1-D CNN:
 
-This result is **exploratory**, not a formal benchmark. The exact dataset manifest, model implementation, configuration and run artifact are not yet committed and reproducibly tested in the repository.
+`Conv1d(2,16,k=7) -> ReLU -> MaxPool(2) -> Conv1d(16,32,k=5) -> ReLU -> AdaptiveAvgPool(1) -> Linear(32,32) embedding -> Linear(32,C) classifier`
 
-## Interpretation
-The result is close to the earlier D3 Random Forest result (~90.9%), so the current evidence does not justify claiming that the learned representation is materially superior. The useful D4 question is whether the embedding supports later identity, open-set and shift experiments better than the handcrafted feature representation.
+Configuration is frozen in `configs/track_a_d4_baseline.json`:
+- seed: `20260830`;
+- embedding dimension: `32`;
+- epochs: `12`;
+- batch size: `128`;
+- learning rate: `1e-3`;
+- weight decay: `1e-4`;
+- split: existing D2 SHA-256 `(device_id, source_row_index)` 70/15/15 policy;
+- accuracy tuning: explicitly disabled.
 
-## Acceptance boundary
-D4 becomes engineering-accepted only after:
-1. a minimal reproducible learned-embedding implementation is committed;
-2. the exact input shape and model configuration are recorded;
-3. deterministic train/validation/test handling is verified;
-4. training does not use identity leakage;
-5. the result can be regenerated from a recorded dataset manifest;
-6. embedding-level evaluation is separated from classifier accuracy.
+Implementation: `src/smorffi_d4.py` and `scripts/run_smorffi_d4.py`.
 
-## Fast-track decision
-Do **not** hyperparameter-tune merely to increase closed-set accuracy. First freeze one reproducible baseline and proceed to D5 identity evaluation. Any stronger model or ablation belongs in Track B unless required by a failure in the Track-A demonstrator.
+## Reproducibility tooling
+`scripts/make_smorffi_manifest.py` generates a machine-readable manifest containing file names, byte sizes, SHA-256 hashes, row counts and device counts for an exact local CSV snapshot.
+
+`experiments/track_a/d4_manifest.json` records the current canonical-state limitation: the exact raw CSV snapshot used for the exploratory run is not present in the repository and is not available through the current connected file state. The prior handoff reports **10,186 usable observations across 33 devices**, but that number alone is insufficient to reproduce a run.
+
+## Exploratory result reconciliation
+The previously reported **~91.1%** closed-set test accuracy remains an **exploratory historical result**. It cannot be reproduced or independently verified from the current canonical repository state because the exact input snapshot, per-file hashes and prior model artifact are absent.
+
+Therefore the project **does not promote 91.1% to a formal D4 benchmark and does not invent a replacement score**. This is an explicit reproducibility correction, not a failed attempt hidden behind tuning.
+
+## Current acceptance assessment
+| Requirement | Status |
+|---|---|
+| Minimal learned embedding implementation | **PASS — Implemented** |
+| Fixed input shape/model/configuration | **PASS — Implemented** |
+| Unit tests for input/model contract | **PASS — Implemented** |
+| Deterministic seed/training controls | **PASS — Implemented** |
+| Identity/MAC leakage exclusion | **PASS — by design** |
+| Exact dataset manifest for exploratory run | **BLOCKED — source snapshot unavailable** |
+| Reproduction of ~91.1% | **NOT REPRODUCIBLE from canonical state** |
+| Formal D4 numerical acceptance | **NOT YET ACCEPTED** |
+
+## Boundary
+D4 must not be marked fully engineering-accepted until the exact SMoRFFI snapshot is supplied and the fixed runner produces a recorded result. Once that happens, D5 can use the **frozen embedding** without changing the D4 architecture.
+
+Do **not** hyperparameter-tune merely to increase closed-set accuracy. Stronger models or ablations remain Track B unless a documented Track-A failure requires one.
 
 ## Scientific guardrails
-- This is a closed-set engineering result, not open-set recognition.
+- This is not open-set recognition.
 - It does not establish temporal, receiver, channel or environment robustness.
 - It does not establish transmitter-intrinsic causation for the learned representation.
-- Exploratory runtime numbers must not be quoted as validated results until reproducibility evidence exists.
+- Exploratory runtime numbers must not be quoted as validated results without reproducible code/configuration/manifest evidence.
