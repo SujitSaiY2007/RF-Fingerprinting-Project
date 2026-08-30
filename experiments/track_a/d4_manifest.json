@@ -1,11 +1,16 @@
 {
   "dataset": "SMoRFFI",
   "track": "A",
-  "snapshot_status": "not-present-in-canonical-repository",
-  "verified_runtime_snapshot_from_prior_handoff": {"usable_observations": 10186, "devices": 33},
-  "d2_inspection_subset": {"files": 20, "rows": 19513},
-  "formal_run_eligible": false,
-  "reason": "Raw CSV snapshot and per-file SHA-256 manifest are not committed or otherwise available through the canonical repository state inspected on 2026-08-30.",
-  "exploratory_result": {"reported_test_accuracy": 0.911, "status": "exploratory-unreproducible-from-current-canonical-state"},
-  "required_next_action": "Provide or mount the exact SMoRFFI CSV snapshot used for the exploratory run, generate the manifest with scripts/make_smorffi_manifest.py, then execute the fixed D4 runner without tuning."
+  "snapshot_status": "user-supplied-and-verified",
+  "source_archive": "b06dafa9-3d73-4921-a375-8b2535d6364f.zip",
+  "source_archive_sha256": "1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037",
+  "complete_archive": {"files": 123, "rows": 122511, "devices": 123},
+  "track_a_d4_snapshot": {"device_range": "1-33", "files": 33, "rows": 33000, "devices": 33},
+  "row_anomalies_in_complete_archive": {"device_67": 999, "device_87": 999, "device_109": 513},
+  "input_contract": "complex[288] -> float32[2,288] I/Q",
+  "split": "sha256(device_id|source_row_index): 70/15/15",
+  "normalization": "none",
+  "historical_exploratory_result": {"test_accuracy": 0.9112, "usable_observations": 10186, "devices": 33, "status": "not_reproducible_from_exact historical selection/configuration"},
+  "current_reproducible_baseline": {"test_accuracy": 0.35808646917534026, "rows": 33000, "devices": 33, "status": "reproduced-under-frozen-repository-baseline"},
+  "interpretation": "The supplied archive establishes a reproducible 33-device Track-A snapshot, but it does not identify the historical 10,186-row selection or prior model configuration. Therefore 91.1% is not retrospectively certified; the 35.81% result is the formal reproducible baseline for the frozen repository D4 implementation."
 }
