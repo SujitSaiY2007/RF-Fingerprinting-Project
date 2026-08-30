@@ -1,0 +1,25 @@
+{
+  "milestone": "Version-B security-core completion",
+  "status": "completed_for_UI_freeze",
+  "backbone": "M0 / Version-A Random Forest retained as the immutable recognition control; Version-B contribution is the adaptive authorization/profile/security layer.",
+  "dataset_sha256": "1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037",
+  "comparison": {
+    "recognition_control": {"version_a_accuracy_pct": 87.3899, "version_b_accuracy_pct": 87.3899, "interpretation": "same frozen RF recognizer; no unsupported backbone gain claimed"},
+    "known_acceptance_pct": {"version_a": 94.90, "version_b": 94.90, "interpretation": "same frozen RF open-set control"},
+    "unknown_rejection_pct": {"version_a": 29.49, "version_b": 29.49, "interpretation": "same frozen RF open-set control"},
+    "replay_acceptance_pct": {"version_a_always_update": 100.0, "version_b_multi_evidence": 1.0, "relative_reduction_pct": 99.0},
+    "replay_hold_pct": {"version_a_always_update": 0.0, "version_b_multi_evidence": 99.0, "absolute_gain_pp": 99.0},
+    "gain_drift_acceptance_pct": {"version_a_always_update": 100.0, "version_b_multi_evidence": 94.6809, "absolute_reduction_pp": 5.3191},
+    "unknown_contamination_acceptance_pct": {"version_a_always_update": 100.0, "version_b_multi_evidence": 100.0, "interpretation": "unresolved falsifying case"},
+    "profile_test_accuracy_after_update_pct": {"version_a_frozen_profile": 28.6629, "version_b_multi_evidence": 37.9704, "absolute_gain_pp": 9.3075, "relative_gain_pct": 32.46},
+    "accepted_profile_updates": {"version_a_frozen": 0, "version_b_multi_evidence": 4799},
+    "held_updates": {"version_a_frozen": 0, "version_b_multi_evidence": 151},
+    "mean_profile_displacement_l2": {"version_a_always_update": 0.995174, "version_b_multi_evidence": 0.969641, "absolute_reduction": 0.025533, "relative_reduction_pct": 2.56}
+  },
+  "d8": "demonstrated",
+  "d9": "demonstrated",
+  "d10": "demonstrated",
+  "evidence_boundary": "Replay and gain-drift improvements are demonstrated controlled/derived scenarios. Target-like unknown contamination remains a known weakness. No poisoning-resistance claim is made beyond measured replay/gain behaviour.",
+  "b1_b2": "candidate-model benchmark remains uncertified; no candidate accuracy is fabricated. The V-B security-core is frozen around the proven M0 recognizer so the UI can be completed without contaminating the scientific record.",
+  "freeze_rule": "After this milestone, UI work may change presentation, deployment and visualization but must not alter frozen experiment numbers without a new dated experiment artifact."
+}
