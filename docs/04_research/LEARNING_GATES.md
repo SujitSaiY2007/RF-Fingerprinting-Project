@@ -1,7 +1,7 @@
 # Project Learning Gates
 
 ## Purpose
-The project now treats technical understanding as a parallel gate to engineering completion. The repository records what the researcher should understand before each D-stage is considered knowledge-complete.
+The project treats technical understanding as a parallel gate to engineering completion. The repository records what the researcher should understand before each D-stage is considered knowledge-complete.
 
 ## Operating rule
 Each stage has two linked tracks:
@@ -103,11 +103,11 @@ Learning is assessed by understanding and application, not by hours watched or c
 | D9 | Layers 1–7; specifically demonstrate threat models, poisoning and profile-corruption evaluation |
 | D10 | All layers relevant to the implemented system; demonstrate end-to-end technical and methodological understanding |
 
-## Current learning state — 2026-08-29
-- Project engineering state: **D2.1 complete; D2.2 next**.
-- Researcher learning state: **Learning Phase — D2 gate open**.
-- Current target: **Layer 1 → Layer 2**, beginning with complex numbers and I/Q representation, followed by sampling, discrete signals, Fourier/FFT, statistics/normalization and leakage.
-- The D2 engineering workflow may continue while this learning gate is open, but D2 knowledge completion requires the corresponding concepts to be understood and checked.
+## Current learning state — 2026-08-30
+- **D2 learning gate: PASSED** after concept checks on complex arithmetic, I/Q representation, magnitude/phase, sampling, Nyquist/aliasing and dataset-representation reasoning.
+- The researcher demonstrated the ability to connect these concepts to the SMoRFFI preprocessing boundary and to identify key failure modes such as assuming schema, sample count or sampling-rate equivalence.
+- **D3/D4 learning gates remain open.** Engineering may proceed in fast-track mode, but knowledge-complete status for D3/D4 requires the corresponding learning checks.
+- Current learning target: **Layer 3 → Layer 4**, beginning with RF/baseband/passband, transmitter/receiver/channel roles, modulation/OFDM, noise/SNR and RF impairments, followed by supervised ML, neural networks and embeddings.
 
 ## Learning-check protocol
 For each gate, the project workflow should use short concept checks and project-linked exercises rather than passive course completion. A gate is considered understood when the researcher can:
