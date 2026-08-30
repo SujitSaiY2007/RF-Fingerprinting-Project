@@ -1,0 +1,7 @@
+{
+  "track":"A","stage":"D6","dataset":"SMoRFFI","known_devices":"1-33","unknown_devices":"34-123",
+  "classifier":"frozen D5 Random Forest","n_estimators":100,"random_state":20260830,"max_features":"sqrt",
+  "score":"maximum predicted class probability",
+  "threshold_selection":"5th percentile on known validation only","threshold":0.3,
+  "unknown_test":"deterministic SHA-256 test partition only","test_tuning":false
+}

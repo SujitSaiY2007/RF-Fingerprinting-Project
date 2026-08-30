@@ -1,0 +1,13 @@
+{
+  "stage":"D6","track":"A","known_devices":"1-33","unknown_devices":"34-123","unknown_test_n":13329,"unknown_device_count":90,
+  "method":"Random Forest max predicted class probability rejection",
+  "model":"frozen D5 RF: 100 trees, random_state 20260830, max_features=sqrt",
+  "threshold_rule":"5th percentile of maximum predicted class probability on known-device validation",
+  "threshold":0.3,
+  "known_test_acceptance":0.9489591673338671,
+  "unknown_test_rejection":0.2949208492760147,
+  "known_test_accuracy":0.8738991192954364,
+  "known_test_macro_f1":0.873226212187689,
+  "known_test_balanced_accuracy":0.8741169358225561,
+  "interpretation":"RF open-set rejection is materially stronger than the frozen D4 embedding centroid baseline, but rejects only about 29.5% of unseen-device test observations at a threshold chosen to retain about 95% known-device acceptance. This is a baseline, not a validated deployment open-set detector."
+}

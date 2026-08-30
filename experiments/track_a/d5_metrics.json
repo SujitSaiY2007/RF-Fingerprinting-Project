@@ -1,0 +1,9 @@
+{
+  "dataset_snapshot": {"device_range":"1-33","files":33,"rows":33000,"test_rows":4996},
+  "methods": {
+    "classifier": {"accuracy":0.35808646917534026,"macro_f1":0.31581909800971136,"balanced_accuracy":0.35797137688464975},
+    "nearest_centroid": {"accuracy":0.36208967173738993,"macro_f1":0.3323038989443668,"balanced_accuracy":0.36298544662200166},
+    "nearest_neighbour": {"accuracy":0.6377101681345076,"macro_f1":0.6362530450686297,"balanced_accuracy":0.6380265570683379}
+  },
+  "note":"Per-device precision/recall/F1/support and 33x33 confusion matrices were generated from the frozen test set. The full arrays are retained in the local run artifact; this repository record stores the aggregate acceptance metrics to keep the committed result concise."
+}

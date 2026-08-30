@@ -3,186 +3,179 @@
 ## Project
 **Physics-Based RF Fingerprinting with Continuous Device Learning**
 
-## Canonical repository
-`SujitSaiY2007/RF-Fingerprinting-Project`
+## Canonical repository state
+- Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
+- Stable branch: `main`
+- Integration branch: `develop`
+- Phase: **Phase 1 — Accelerated implementation / demonstrator construction**
+- D2 learning gate: **PASSED**
+- Current execution point: **D7 complete at Track-A synthetic-stress scope; remaining Track-A critical path is D8 -> D9 -> D10**
 
-## Current position
-- Phase: **Phase 1 — Accelerated implementation / demonstrator construction**.
-- Stable branch: `main`.
-- Integration branch: `develop`.
-- Current engineering gate: **D4 — learned representation; reproducibility closure before D5**.
-- D1: **COMPLETE at source/schema/ingestion-foundation level**.
-- D2.1: **COMPLETE**.
-- D2.2: **OBSERVED / IMPLEMENTED / TESTED on a 20-file SMoRFFI subset**.
-- D2.3: **DEFINED / IMPLEMENTED / TESTED**.
-- D2.4: **DEFINED / IMPLEMENTED / TESTED as an engineering split**.
-- D2.5: **ENGINEERING ACCEPTED**.
-- D3: **IMPLEMENTED / exploratory demonstrated; scientific validation not complete**.
-- D4: **EXPLORATORY RESULT RECORDED; reproducibility closure still required**.
-- D5+: **NOT STARTED**.
-- D2 learning gate: **PASSED**.
-- D3/D4 learning gates: **OPEN**.
-- D1–D10 scientific validation: **not yet complete**.
+## Do not restart
+Do **not** redo D1/D2, re-derive the SMoRFFI schema, or replace the D2 contract. The frozen Track-A representation is:
 
-## Fast-track objective
-Move rapidly from the validated minimum data representation to a demonstrable D1–D10 software lifecycle while keeping the distinction between implementation, testing, demonstration and scientific validation.
+`serialized preamble -> complex[288] -> float32[2,288] I/Q`
 
-Execution principle:
+Baseline preprocessing remains: no per-observation normalization, clipping, filtering, resampling or arbitrary interpolation. Device number and MAC remain labels/provenance only. The Track-A engineering split is deterministic SHA-256 over `(device_id, source_row_index)` with 70/15/15 and is explicitly **not** a temporal/session split.
 
-`Build minimum viable evidence path -> test -> document -> strengthen`
+## Dataset situation and policy
+The complete user-supplied SMoRFFI archive is the executable Track-A source: 123 CSV files, 122,511 rows, 123 devices, archive SHA-256 `1d9ebcf2539e5fb7fb1dc678dba3fd2a50cada2befb86f5d84faff2b4f541037`. Track-A known devices are 1–33: 33 files, 33,000 rows; split 23,030/4,974/4,996.
 
-Do not claim scientific completion from code existence or from a single closed-set accuracy number.
+The project will **not** block Track-A on multi-gigabyte external datasets. Published papers may be used to justify shift/attack mechanisms and to construct controlled derived datasets, provided those datasets are explicitly labelled synthetic/derived. Published empirical results remain external evidence and are never presented as our own measurements.
 
-## Active two-track execution model
+Track B remains responsible for real temporal/environment/receiver/cross-dataset validation. First candidates remain Oregon State WiFi RFFP and WiSig/ManySig; SmartHomePrivacy is an optional smaller cross-day source. No unrestricted dataset hunt is permitted.
 
-### Track A — Fast Implementation / Demonstration
-Current substrate: **SMoRFFI**.
+## D4–D7 evidence that is frozen
+### D4 learned embedding
+Minimal CNN on frozen 2x288 I/Q, 32-D embedding. Test accuracy **35.8086%**. Historical ~91.12% remains **unreconstructed**, because the exact historical 10,186-row selection and historical configuration are not recoverable.
 
-Immediate path:
-`D4 reproducibility closure -> D5 closed-set identity -> D6 open-set -> D7 shift -> D8 profile evolution -> D9 poisoning -> D10 integration`
+### D5 closed-set identity
+Learned embedding:
+- classifier 35.81% accuracy, 31.58% macro-F1, 35.80% balanced accuracy;
+- nearest centroid 36.21%, 33.23%, 36.30%;
+- 1-NN **63.77%**, **63.63%**, **63.80%**.
 
-The objective is to get a real-data end-to-end demonstration quickly.
+Classical D3 RF features + fixed Random Forest:
+- 16 deterministic features;
+- 100 trees, `random_state=20260830`, `max_features=sqrt`, no tuning;
+- **87.39% accuracy**, **87.32% macro-F1**, **87.41% balanced accuracy**.
 
-### Track B — Research Validation / Strengthening
-Use qualified datasets such as WiSig and Oregon State WiFi RFFP when a claim requires temporal, receiver, environment or broader robustness evidence. Track B must support or falsify claims rather than manufacture positive evidence.
+This RF result is the primary Track-A closed-set baseline. It is close to, but does not reproduce, the historical ~91.1% result.
 
-## D2 learning gate result
-The researcher passed the D2 learning gate through concept checks covering complex arithmetic, I/Q representation, magnitude/phase, sampling, Nyquist/aliasing and project-linked dataset/schema reasoning. The researcher demonstrated understanding of why sample count alone is insufficient and why the actual SMoRFFI representation must be inspected before preprocessing.
+### D6 open-set
+Known = devices 1–33; unknown = devices 34–123.
 
-## SMoRFFI D2.2 observed schema
-Twenty uploaded IQ-only CSVs were inspected directly, totaling **19,513 rows**.
+Learned-embedding centroid gate: threshold `21.2566452`, known acceptance **95.42%**, unknown rejection **10.99%**.
 
-Observed file schema:
-- `Device Number`
-- `MAC_address`
-- `preamble`
+RF confidence gate: threshold `0.30`, known acceptance **94.90%**, unknown rejection **29.49%**.
 
-Observed signal representation:
-- `preamble` is a serialized whitespace-separated complex-valued sequence;
-- all inspected rows parse successfully;
-- stored sequence length is **288–579 complex samples**;
-- 5,783 rows are exactly 288 samples;
-- 13,730 rows contain additional samples;
-- the device-109 file contains 513 rows and stored lengths 448–579, so this anomaly is retained rather than silently repaired.
+Conclusion: closed-set RF strength does not imply strong unknown-device rejection.
 
-The published SMoRFFI definition describes the canonical preamble as **288 complex samples** and reports a 20 MS/s acquisition. The Track-A baseline therefore selects the first 288 parsed samples and records original length plus discarded-tail count as provenance. Full rationale: `docs/04_research/D2_2_SMORFFI_SCHEMA_EVIDENCE.md`.
+### D7 Track-A synthetic robustness
+Frozen D5 RF was tested without retraining/test tuning.
 
-## D2.3 preprocessing contract
-Baseline:
-`serialized preamble -> complex[288] -> real[2,288] (I,Q)`.
+Gain stress: baseline 87.39%; -6 dB 38.07%; -3 dB 27.30%; +3 dB 20.06%; +6 dB 15.93%.
 
-No per-observation normalization, clipping, filtering, resampling or arbitrary interpolation is applied. Amplitude normalization remains a future ablation because it may remove RF-discriminative information.
+AWGN: 20 dB 82.29%; 10 dB 53.34%; 5 dB 20.44%; 0 dB 6.73%.
 
-Implementation: `src/smorffi_d2.py`
-Tests: `tests/test_smorffi_d2.py`
-Specification: `docs/04_research/D2_3_PREPROCESSING_CONTRACT.md`
+Conclusion: the current RF feature baseline is highly acquisition-sensitive. These are controlled engineering stresses, **not** real temporal/receiver/environment claims.
 
-## D2.4 split policy
-Track-A engineering split:
-- 70% train;
-- 15% validation;
-- 15% test;
-- deterministic SHA-256 assignment from `(device_id, source_row_index)`.
+## D7 -> D8 decision
+The D7 result establishes the exact motivation for D8:
 
-This is **not** claimed to be a temporal/session holdout because SMoRFFI does not expose those boundaries. Device identity and MAC remain labels/provenance only.
+> Strong closed-set discrimination is not sufficient if the system cannot distinguish transmitter-specific evidence from acquisition-dependent variation.
 
-Specification: `docs/04_research/D2_4_LEAKAGE_SAFE_SPLIT.md`
+Therefore D8 must not simply “keep retraining.” It must implement **profile evolution with an explicit authorization decision** and preserve a frozen evaluation partition. This follows the project’s research question:
 
-## D2.5 acceptance
-Integrated D2 checks pass on the 20-file local subset. Specification: `docs/04_research/D2_5_INTEGRATED_ACCEPTANCE.md`.
+`RF observation -> identify device -> decide whether observation is safe to learn from -> update / hold / reject`
 
-## D3 state and result
-`src/smorffi_d3.py` defines deterministic, label-free interpretable RF evidence features from the canonical 288-sample complex preamble:
-- I/Q moments and variance ratio;
-- amplitude mean/std, RMS and crest factor;
-- mean power;
-- I/Q correlation;
-- local phase-step statistics;
-- FFT spectral centroid and spectral spread;
-- spectral entropy.
+The candidate novelty remains provisional and must be supported/falsified through comparison with strong baselines.
 
-An earlier fast-track runtime experiment reported approximately **90.9% Random Forest closed-set test accuracy**. This remains an exploratory engineering/demo result until the exact dataset manifest and run configuration are re-established. It is not a validated transmitter-intrinsic fingerprinting claim.
+## D8 — exact work to perform next
+1. Implement a persistent device profile manager.
+2. Profile state must include at least: device identity, representative embedding/RF-feature statistics, dispersion/consistency statistics, observation count, profile version, and update audit history.
+3. Separate recognition from update authorization.
+4. Implement three outcomes: **ACCEPT/UPDATE**, **HOLD/QUARANTINE**, **REJECT**.
+5. Create chronological update streams from SMoRFFI observations plus explicitly labelled controlled shifts.
+6. Freeze evaluation data before any update stream is processed.
+7. Compare this baseline ladder:
+   - frozen/no-update;
+   - always-update after recognition;
+   - confidence-only admission;
+   - multi-evidence authorization.
+8. Measure both adaptation benefit and profile damage.
 
-## D4 state and result
-A fast-track neural experiment was reported using the canonical `2 x 288` I/Q input and a compact learned representation, with approximately **91.1% closed-set test accuracy** on the runtime subset available for that experiment.
+Minimum D8 metrics:
+- identity accuracy before/after evolution;
+- profile displacement/drift;
+- legitimate new-observation acceptance;
+- rejection/hold rate;
+- performance under controlled shifts;
+- rollback success where enabled.
 
-This result is intentionally classified as **exploratory** because the exact dataset manifest, model implementation/configuration and reproducible run artifact are not yet committed and tested in the repository. Do not quote 91.1% as a formal benchmark yet.
+## D9 — exact work to perform after D8
+Use legitimate SMoRFFI observations plus controlled/synthetic attack construction. Do not search for a special poisoning dataset.
 
-D4 reproducibility closure requirements:
-1. commit a minimal learned-embedding implementation;
-2. commit tests and configuration;
-3. record the exact dataset manifest/snapshot;
-4. verify deterministic splitting and training controls;
-5. record embedding dimension and model definition;
-6. evaluate the embedding independently of classifier accuracy;
-7. freeze the baseline before moving to D5.
+Attack families:
+- label contamination;
+- unknown-device contamination into a known profile;
+- gradual embedding/feature drift;
+- suspicious replay/repetition.
 
-Do not hyperparameter-tune merely to increase the headline accuracy.
+Use the same D8 baseline ladder. Measure:
+- attack acceptance;
+- profile drift/displacement;
+- post-attack identity accuracy;
+- false acceptance of unknowns;
+- legitimate-observation acceptance after attack;
+- rollback/recovery;
+- legitimate adaptation preserved.
 
-## Dataset-count correction
-A prior conversational update stated **32,513 observations** after additional uploads. That count is not authoritative. The current reproducible runtime snapshot available for the D4 exploratory run contained **10,186 usable observations across 33 devices**. Until a complete manifest is regenerated from all uploaded files, use only explicitly verified counts in formal results. The original 19,513-row 20-file D2.2 inspection remains valid for its stated subset.
+The experiment must be capable of falsifying the novelty hypothesis. Do not tune attack parameters to guarantee a positive result.
 
-## Next-chat execution plan
+## D10 — exact integration target
+Build one auditable Track-A lifecycle:
 
-### First: close D4 reproducibility
-- Inspect the current repository tree and preserve all existing documents.
-- Implement the smallest reproducible learned encoder/baseline compatible with the D2 input contract.
-- Keep the model simple and fixed; no accuracy-chasing.
-- Run engineering tests.
-- Generate a machine-readable result/configuration record and dataset manifest for the available data snapshot.
-- Reproduce or explicitly supersede the exploratory ~91.1% result. If it cannot be reproduced, record the discrepancy rather than forcing agreement.
+`SMoRFFI observation -> D2 -> D3 RF evidence + D4 embedding -> D5 identity -> D6 known/unknown -> D8 profile lookup -> update authorization -> D9 poisoning defense -> audit/final decision`
 
-### Then: D5 closed-set identity
-Use the frozen D4 embedding and evaluate:
-- nearest-centroid and/or nearest-neighbour identity;
-- a simple classifier baseline;
-- confusion matrix;
-- per-device precision/recall/F1;
-- balanced accuracy and macro-F1;
-- reproducibility controls.
+The demonstrator must show at minimum:
+- known legitimate sample identified and accepted;
+- unknown sample rejected or quarantined;
+- legitimate later observations can evolve a profile;
+- suspicious/poisoned observations are blocked or quarantined;
+- profile versions and decisions are auditable;
+- frozen evaluation data are never consumed by the updater before evaluation.
 
-The purpose is to establish whether the learned representation is useful as an identity representation, not merely as a classifier input.
+D10 is a systems demonstration, not automatic scientific validation.
 
-### Then: D6 open-set recognition
-Reserve device classes not used for training and evaluate unknown-device rejection. Report threshold selection procedure, known-device performance, unknown rejection, false acceptance and false rejection. Do not choose a threshold using the frozen test set.
+## Track A / Track B boundary
+### Track A
+Goal: complete a small, defensible, reproducible D1–D10 software lifecycle using SMoRFFI plus controlled/derived scenarios and paper-grounded experimental design.
 
-### Later D7–D10
-- **D7:** controlled distribution-shift experiments using only variation the available data actually exposes; Track B datasets supply stronger temporal/receiver/environment evidence.
-- **D8:** persistent device profiles/prototypes; separate recognition from authorization to modify a profile.
-- **D9:** controlled/synthetic poisoning of the profile-update path; compare admission policies and legitimate adaptation.
-- **D10:** integrate the complete lifecycle into a demonstrable pipeline.
+### Track B
+Goal: test whether the Track-A claims survive independently collected real-world variation. Use qualified datasets only when a concrete gap requires them.
 
-## Professor-demonstration priority
-The fast-track demonstrator should eventually show one coherent path:
+Current real-world gaps:
+- actual day/session boundaries;
+- actual receiver variation;
+- actual environment variation;
+- cross-dataset transfer.
 
-`SMoRFFI CSV -> D2 parse/IQ -> D3 RF evidence -> D4 embedding -> D5 identity -> D6 unknown rejection -> D8 update decision -> D9 poisoning defense -> final decision`
+Do not label synthetic transformations as these real-world conditions.
 
-Use a clear status label for every result: **Implemented / Tested / Demonstrated / Scientifically Validated**.
+## Scientific status discipline
+Use exactly four maturity labels:
+1. **Implemented**
+2. **Tested**
+3. **Demonstrated**
+4. **Scientifically Validated**
 
-## Scientific guardrails retained
-- Do not use MAC/device identifiers as model inputs.
-- Keep raw/source rows and derived representations traceable.
-- Do not fit preprocessing statistics on validation/test data.
-- Do not claim temporal/session/receiver/environment robustness from SMoRFFI alone.
-- Keep Track A and Track B evidence separate.
-- D9 poisoning data must be controlled/synthetic or otherwise explicitly labelled.
-- D8/D9 novelty comparisons must include the required baseline ladder.
-- D10 must demonstrate the complete lifecycle.
-- Never convert an exploratory runtime result into a formal benchmark without a reproducible dataset manifest, code/configuration and test evidence.
-- Never silently delete, overwrite or simplify earlier project decisions/documents.
+Current D4–D7 Track-A artifacts are at **Demonstrated**, not Scientifically Validated. D8–D10 will start as Implemented and advance only when evidence justifies it.
 
-## Novelty boundary
-The current candidate contribution remains provisional:
+## Historical-result discipline
+The historical values remain preserved, not deleted:
+- approximately 91.12% D4 exploratory result;
+- approximately 90.9% earlier RF exploratory result;
+- approximately 60 historical features.
 
-> **A security-oriented continual RF profile-evolution mechanism that treats device recognition and permission to modify persistent identity state as separate decisions, and evaluates that separation against controlled profile-poisoning while preserving legitimate adaptation.**
+The exact historical dataset selection/configuration is not recoverable. Do not fabricate or silently infer missing details. The current reproducible RF baseline is 87.39% on the frozen 33-device protocol.
 
-Do not present this as proven novelty until D8/D9 evidence supports or falsifies it.
+## Repository records to use first
+For the next chat read:
+- `PROJECT_STATE.md`
+- `CURRENT_HANDOFF.md`
+- `docs/04_research/D7_D10_TRACK_A_NEXT_DIRECTION.md`
+- `docs/04_research/D4_LEARNED_REPRESENTATION_BASELINE.md`
+- `docs/04_research/D5_CLOSED_SET_IDENTITY.md`
+- `docs/04_research/D5_RANDOM_FOREST_CLASSICAL_BASELINE.md`
+- `docs/04_research/D6_OPEN_SET_UNKNOWN_REJECTION.md`
+- `docs/04_research/D6_RF_OPEN_SET_BASELINE.md`
+- `docs/04_research/D7_RF_DISTRIBUTION_SHIFT.md`
+- relevant configs/metrics under `configs/` and `experiments/track_a/`
 
-## Branch synchronization rule
-At the end of a significant agreed milestone, synchronize `main` and `develop` to the same **content state** without deleting or silently reverting prior information. Merge commits may make branch histories differ even when their file contents are identical; content equivalence is the operative synchronization requirement.
+## Exact next-chat continuation prompt
 
-The D2–D4 milestone has now been synchronized to both branches. Future significant milestones should again land on `develop` first and then be synchronized to `main` after agreement.
+> Continue the RF Fingerprinting Project from the canonical GitHub state of `SujitSaiY2007/RF-Fingerprinting-Project`. First read `PROJECT_STATE.md`, `CURRENT_HANDOFF.md`, and `docs/04_research/D7_D10_TRACK_A_NEXT_DIRECTION.md`, then read the existing D4–D7 evidence documents/configs/metrics before modifying anything. D2 learning gate is PASSED and the frozen D2 contract is `serialized preamble -> complex[288] -> float32[2,288] I/Q`; do not redo D1/D2 or assume a new schema. The historical ~91.1% result remains historical/unreconstructed; the current frozen Track-A RF baseline is 87.39% closed-set on devices 1–33, with D6 RF unknown rejection 29.49% at ~94.90% known acceptance and D7 synthetic gain/AWGN stress showing strong degradation. Track A is now explicitly allowed to complete D8–D10 using real SMoRFFI data, controlled/derived synthetic scenarios, and published-paper evidence; additional multi-gigabyte datasets are not required to unblock Track-A. A constructed dataset must be labelled synthetic/derived and never represented as a measurement from the cited paper/dataset. Track B remains for real temporal/environment/receiver/cross-dataset validation using qualified datasets only when a concrete gap requires them. Proceed directly with D8 profile evolution: implement persistent profiles, recognition vs update authorization separation, ACCEPT/HOLD/REJECT decisions, chronological update streams, frozen evaluation, and the required baseline ladder of frozen/no-update, always-update, confidence-only admission, and multi-evidence authorization. Then run D9 controlled/synthetic poisoning against that ladder and D10 the integrated auditable lifecycle. Preserve provenance, leakage controls, frozen evaluation, novelty boundaries, and the Implemented/Tested/Demonstrated/Scientifically Validated discipline. Do not silently delete or overwrite prior information. Develop on `develop`; synchronize `main` only after an explicitly agreed milestone.`
 
-## Exact prompt for the next chat
-
-> Continue the RF Fingerprinting Project from the canonical GitHub state. First read `PROJECT_STATE.md`, `CURRENT_HANDOFF.md`, `docs/04_research/LEARNING_GATES.md`, `docs/04_research/D2_2_SMORFFI_SCHEMA_EVIDENCE.md`, `docs/04_research/D2_3_PREPROCESSING_CONTRACT.md`, `docs/04_research/D2_4_LEAKAGE_SAFE_SPLIT.md`, `docs/04_research/D2_5_INTEGRATED_ACCEPTANCE.md`, and `docs/04_research/D4_LEARNED_REPRESENTATION_BASELINE.md`. The D2 learning gate is passed. Do not redo D1/D2 or assume the SMoRFFI schema. We are in accelerated Track-A implementation mode. First close D4 reproducibility honestly: inspect the current repository, implement the smallest reproducible learned embedding using the frozen `2 x 288` I/Q D2 input, add tests/configuration/manifest, and reproduce or explicitly correct the exploratory ~91.1% result. Do not tune merely for accuracy. Then freeze D4 and proceed directly to D5 closed-set identity using the learned embedding, with confusion matrix, per-device metrics, macro-F1/balanced accuracy and nearest-centroid/nearest-neighbour baseline where useful. After D5, move to D6 open-set unknown-device rejection. Maintain Track A/Track B separation, provenance, leakage controls, frozen test evaluation, novelty boundaries, and the Implemented/Tested/Demonstrated/Scientifically Validated status discipline. Do not silently delete or overwrite any existing project information. At the end of the chat, prepare the updated handoff and synchronize main/develop only after the milestone is explicitly agreed.`
+## Branch rule
+Significant work lands on `develop` first. When a milestone is explicitly agreed, synchronize `main` and `develop` to the same **content state** without deleting or silently reverting earlier information. Never force-push protected `main`.
