@@ -1,12 +1,12 @@
 # PROJECT STATE
 
-**Last updated:** 2026-08-30
+**Last updated:** 2026-08-31
 
 ## Authoritative status
 - Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
 - Stable branch: `main`
 - Integration branch: `develop`
-- Current phase: **Track-A Version-B security core demonstrated; final Q/A and demonstrator refinement**
+- Current phase: **Track-A Version-B baseline established; Q/A truth-audit and reference consolidation complete; next direction Track B**
 - D2 learning gate: **PASSED**
 - D7 Track A: **COMPLETE / DEMONSTRATED**
 - B0: **COMPLETE / DEMONSTRATED — Version-A control reproduced**
@@ -15,9 +15,13 @@
 - D9: **DEMONSTRATED — replay protection strong; target-like unknown contamination unresolved**
 - D10: **DEMONSTRATED — integrated lifecycle**
 - Final web demonstrator: **DEPLOYED via GitHub Pages**
-- Current activity: **Q/A truth-audit before further UI/dashboard refinement**
+- Current activity: **Track-A baseline/reference consolidation; Track B is the future validation direction**
 
 ## Project strategy: Track A -> Track B
+The project is treated as one complete project executed through constrained tracks:
+
+`Complete Project -> Track A under constraints -> Track-A Version-B final demonstrator baseline -> Track B broader validation -> desired end product`
+
 Track A was deliberately established as a quicker, controlled, reproducible implementation and ideation track for the final product demonstrator. Its purpose was to establish the RF pipeline, create Version A, improve it into Version B, generate evidence, identify architectural limits, and produce a working demonstrator without waiting for the broader validation burden of Track B.
 
 Track A is not an inferior or disposable track. It is a constrained evidence-producing foundation. Its agreed constraints impose a ceiling on generalization claims.
@@ -129,14 +133,13 @@ Track B should build on the Track-A demonstrator rather than restart it. Candida
 Track B is a **future direction**, not a completed result.
 
 ## Final demonstrator
-The web application is separated from the RF engine. Planned/implemented UI surfaces include Dashboard, Identification, Device Profiles, Open-Set Security, Security/Attack Lab, Audit Trail and Evaluation/Research. The UI must present frozen results, methodology, provenance and limitations without inventing measurements.
+The web application is separated from the RF engine. Current/planned UI surfaces include Dashboard, Identification, Device Profiles, Open-Set Security, Security/Attack Lab, Audit Trail and Evaluation/Research. The UI must present frozen results, methodology, provenance and limitations without inventing measurements.
 
-## Current phase: Q/A before UI refinement
-The immediate next chat is a **Q/A truth-audit session**. Resolve doubts about outcomes, novelty, evidence, Track-A ceiling, Track-B direction, real-vs-controlled data, and permissible claims before further implementation.
-
-After the Q/A, UI/dashboard refinement can proceed only on the agreed scope. Research numbers and security logic remain frozen unless a new dated experiment is explicitly opened.
-
-See `docs/09_handoff/NEXT_CHAT_QA_NOTE.md` for the required next-chat continuation protocol.
+## Current checkpoint artifacts
+- Complete project reference: `docs/06_continuity/REFERENCE_REPORT_2026-08-31.md`
+- Next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
+- Historical Q/A continuation note: `docs/09_handoff/NEXT_CHAT_QA_NOTE.md`
+- D8/D10 milestone addendum: `docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md`
 
 ## Repository discipline
 - Preserve all historical documents, experiment artifacts, decisions, PRs and commits.
@@ -144,4 +147,4 @@ See `docs/09_handoff/NEXT_CHAT_QA_NOTE.md` for the required next-chat continuati
 - No force-push or destructive history rewrite.
 - `develop` is the active implementation branch.
 - `main` is synchronized with `develop` at agreed significant milestones.
-- Before further UI work, both branches must again be made identical through a non-destructive synchronization.
+- Before new Track-B implementation, preserve the accepted Track-A baseline and explicitly define the new dated research boundary.
