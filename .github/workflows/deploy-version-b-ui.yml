@@ -22,10 +22,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Prepare site with /ui/ path
+      - name: Prepare site at root and preserve /ui/ path
         run: |
           rm -rf site
-          mkdir -p site/ui
+          mkdir -p site site/ui
+          cp -R ui/. site/
           cp -R ui/. site/ui/
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
