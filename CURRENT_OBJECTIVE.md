@@ -1,7 +1,13 @@
 # CURRENT OBJECTIVE
 
-## Current checkpoint — Track-A Version-B demonstrated; Q/A truth-audit
-Track-A Version-B security core is demonstrated and the final web demonstrator is deployed. The next chat must begin as a project Q/A session before any further implementation or research changes.
+## Current checkpoint — Track-A Version-B baseline established; Q/A and reference consolidation complete
+Track-A Version-B security core is demonstrated and the professional web demonstrator is deployed. The Q/A truth-audit has been completed, the current evidence/limitations have been consolidated, and a complete solo project reference report plus next-chat handoff have been prepared.
+
+The project is now treated as one complete project executed through constrained tracks:
+
+`Complete Project -> Track A under constraints -> Track-A Version-B final demonstrator baseline -> Track B broader validation -> desired end product`
+
+Track A is complete to its intended demonstration ceiling. Track B is the planned future research/validation direction and is not a completed result.
 
 ## Agreed project direction — Track A -> Track B
 Track A was deliberately created as a quicker, controlled, reproducible implementation and ideation track for the final product demonstrator. It established Version A, improved it into Version B, generated evidence, exposed limitations and produced the working demonstrator.
@@ -46,7 +52,13 @@ Use exactly: Implemented / Tested / Demonstrated / Scientifically Validated. Do 
 Track A may use real SMoRFFI, controlled/derived synthetic scenarios and published-paper evidence. Controlled/derived observations must never be represented as source-dataset measurements.
 
 ## Current implementation direction
-After the Q/A session and only after explicit agreement, proceed to final UI/dashboard refinement. Research numbers and security logic remain frozen unless a new dated experiment is explicitly opened.
+The current Track-A demonstrator and reference documentation form the baseline for presentation and continuation. Track B is the next research direction, but its implementation boundary, datasets and success/falsification criteria must be explicitly agreed before new experiments begin. Research numbers and security logic remain frozen unless a new dated experiment is explicitly opened.
+
+## Reference and handoff artifacts
+- Complete project reference: `docs/06_continuity/REFERENCE_REPORT_2026-08-31.md`
+- Next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
+- Historical Q/A continuation note: `docs/09_handoff/NEXT_CHAT_QA_NOTE.md`
+- D8/D10 milestone addendum: `docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md`
 
 ## Repository discipline
 - Preserve all historical documents, experiment artifacts, decisions, PRs and commits.
@@ -54,4 +66,4 @@ After the Q/A session and only after explicit agreement, proceed to final UI/das
 - No force-push or destructive history rewrite.
 - `develop` is the active implementation branch.
 - Synchronize `main` and `develop` at agreed significant milestones.
-- The next chat must read `docs/09_handoff/NEXT_CHAT_QA_NOTE.md` and this document before proposing repository changes.
+- The current accepted Track-A state must be preserved before Track-B work begins.
