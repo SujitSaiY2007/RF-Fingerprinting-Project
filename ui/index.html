@@ -1,1 +1,58 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="RF Fingerprinting Version A vs Version B research demonstrator"><title>RF-Fingerprint | Version B Demonstrator</title><link rel="stylesheet" href="styles.css"></head><body><header class="top"><div class="brand"><div class="mark">RF</div><div><h1>RF Fingerprinting</h1><p>Version-B Security Demonstrator</p></div></div><div class="status"><span class="dot"></span> Research core frozen</div></header><nav class="nav"><button class="active" data-view="overview">Overview</button><button data-view="comparison">V-A vs V-B</button><button data-view="d8">D8 Adaptation</button><button data-view="d9">D9 Security</button><button data-view="d10">D10 Lifecycle</button><button data-view="provenance">Methodology</button></nav><main id="app"></main><footer><span>SMoRFFI · 33 known devices · controlled derived scenarios explicitly labelled</span><span>Research demonstrator</span></footer><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Track-A RF fingerprinting research demonstrator: recognition, adaptive profile authorization, security evaluation and lifecycle audit.">
+  <title>RF-Fingerprint | Track-A Research Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span>RF</span><i></i></div>
+        <div>
+          <div class="brand-name">RF Fingerprinting</div>
+          <div class="brand-sub">Track-A Research Dashboard</div>
+        </div>
+      </div>
+      <div class="top-meta">
+        <span class="env-badge"><span class="status-dot"></span> FROZEN EVIDENCE</span>
+        <span class="meta-divider"></span>
+        <span class="meta-text">SMoRFFI · 33 devices</span>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Dashboard navigation">
+        <div class="sidebar-label">Research views</div>
+        <nav class="nav">
+          <button class="active" data-view="overview"><span class="nav-icon">01</span><span>Command Center</span></button>
+          <button data-view="comparison"><span class="nav-icon">02</span><span>V-A vs V-B</span></button>
+          <button data-view="d8"><span class="nav-icon">03</span><span>D8 · Adaptation</span></button>
+          <button data-view="d9"><span class="nav-icon">04</span><span>D9 · Security</span></button>
+          <button data-view="d10"><span class="nav-icon">05</span><span>D10 · Lifecycle</span></button>
+          <button data-view="provenance"><span class="nav-icon">06</span><span>Methodology</span></button>
+        </nav>
+        <div class="sidebar-note">
+          <span class="note-kicker">CURRENT STAGE</span>
+          <strong>Track A complete</strong>
+          <p>Working reference implementation with controlled evidence. Track B is the next research direction.</p>
+        </div>
+      </aside>
+
+      <main id="app" class="content"></main>
+    </div>
+
+    <footer class="footer">
+      <div><strong>RF Fingerprinting Research Demonstrator</strong><span>Track-A controlled evidence · Version B security core</span></div>
+      <div><span>Not a live RF inference backend</span><span>·</span><span>Research use</span></div>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
