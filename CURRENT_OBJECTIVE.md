@@ -1,7 +1,7 @@
 # CURRENT OBJECTIVE
 
-## Current checkpoint — Track-A Version-B baseline established; Q/A and reference consolidation complete
-Track-A Version-B security core is demonstrated and the professional web demonstrator is deployed. The Q/A truth-audit has been completed, the current evidence/limitations have been consolidated, and a complete solo project reference report plus next-chat handoff have been prepared.
+## Current checkpoint — Track-A Version-B baseline established; Track-B ManySig preparation started
+Track-A Version-B security core is demonstrated and the professional web demonstrator is deployed. The Q/A truth-audit has been completed, the current evidence/limitations have been consolidated, and the complete solo project reference/handoff artifacts have been prepared.
 
 The project is now treated as one complete project executed through constrained tracks:
 
@@ -51,12 +51,35 @@ Use exactly: Implemented / Tested / Demonstrated / Scientifically Validated. Do 
 
 Track A may use real SMoRFFI, controlled/derived synthetic scenarios and published-paper evidence. Controlled/derived observations must never be represented as source-dataset measurements.
 
-## Current implementation direction
-The current Track-A demonstrator and reference documentation form the baseline for presentation and continuation. Track B is the next research direction, but its implementation boundary, datasets and success/falsification criteria must be explicitly agreed before new experiments begin. Research numbers and security logic remain frozen unless a new dated experiment is explicitly opened.
+## Current Track-B ManySig preparation checkpoint — 02 September 2026
+ManySig has now been acquired locally and non-destructively inspected with Antigravity IDE. It is retained outside Git as raw data and remains a Track-B validation/reproduction/cross-condition resource; it does not replace the frozen Track-A SMoRFFI baseline.
+
+Verified ManySig structure:
+- Python Pickle Protocol 3;
+- top-level keys: `tx_list`, `rx_list`, `capture_date_list`, `equalized_list`, `max_sig`, `data`;
+- 6 transmitters;
+- 12 receivers;
+- 4 March 2021 capture dates;
+- 2 equalization states;
+- `data[tx][rx][date][eq]` hierarchy;
+- 576 leaf arrays;
+- each leaf `(1000, 256, 2)` `float64`;
+- 576,000 signal bursts;
+- compressed archive ~1.355 GB and contained pickle ~2.197 GB.
+
+Detailed evidence record:
+`docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
+
+### Immediate next boundary
+Before final feature extraction, verify the proposed incremental/chunked ingestion mechanism with a small controlled memory test. The previously reported <=25–30 MB peak-RAM figure is not yet scientifically/experimentally verified.
+
+Only after ingestion behaviour is demonstrated should the project define the exact ManySig experiment, extraction schema and feature set. Do not load/extract the full dataset merely for inspection.
 
 ## Reference and handoff artifacts
 - Complete project reference: `docs/06_continuity/REFERENCE_REPORT_2026-08-31.md`
-- Next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
+- ManySig inspection: `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
+- Current next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-09-02.md`
+- Previous handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
 - Historical Q/A continuation note: `docs/09_handoff/NEXT_CHAT_QA_NOTE.md`
 - D8/D10 milestone addendum: `docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md`
 
@@ -67,3 +90,4 @@ The current Track-A demonstrator and reference documentation form the baseline f
 - `develop` is the active implementation branch.
 - Synchronize `main` and `develop` at agreed significant milestones.
 - The current accepted Track-A state must be preserved before Track-B work begins.
+- Raw datasets and secrets such as GitHub Personal Access Tokens must never be committed to the repository.

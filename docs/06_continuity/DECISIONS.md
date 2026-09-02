@@ -169,3 +169,26 @@ The existing SMoRFFI qualification states that its strongest defined responsibil
 
 ## DEC-029 — Track A access criterion
 For the fast-track path, a dataset must satisfy both **scientific task fit** and **practical access suitability**. A scientifically strong dataset is not sufficient if its official acquisition method makes it a critical-path bottleneck under the project's time constraint. Conversely, download convenience alone is never sufficient for selection.
+
+## DEC-030 — ManySig acquisition and non-destructive schema inspection
+On 02 September 2026, the user acquired the WiSig ManySig archive locally and performed a non-destructive schema inspection using Antigravity IDE. This creates a new **Track-B data-preparation checkpoint**, not a replacement of the Track-A SMoRFFI baseline.
+
+Verified inspection facts include:
+- `ManySig.pkl.zip` compressed size `1,454,577,503` bytes (~1.355 GB);
+- contained `ManySig.pkl` size `2,359,341,461` bytes (~2.197 GB);
+- Python Pickle Protocol 3;
+- top-level keys `tx_list`, `rx_list`, `capture_date_list`, `equalized_list`, `max_sig`, `data`;
+- 6 transmitters, 12 receivers, 4 capture dates, 2 equalization states;
+- `data[tx][rx][date][eq]` leaf arrays;
+- 576 leaf arrays, each `(1000, 256, 2)` `float64`;
+- 576,000 total signal bursts.
+
+The raw ManySig archive remains outside Git and must not be committed. The project records its schema/provenance in `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`.
+
+### Scientific and engineering boundary
+The inspection does **not** establish D1/D7/D8/D9 completion, model results, temporal adaptation results, poisoning results or novelty. The reported possibility of <=25–30 MB peak-RAM incremental processing remains unproven until a controlled memory test demonstrates it.
+
+Before implementing the final extractor, the next task is a small proof-of-concept that verifies whether the compressed pickle can be accessed incrementally, what mechanism is required, and what the actual peak memory usage is. Only after that should the minimum extraction schema and experiment-specific feature set be frozen.
+
+### Security/provenance rule
+GitHub Personal Access Token credentials used for repository access must never be stored in the repository, dataset folder, prompts, logs or project documentation. Local IDE credentials/settings are operational configuration, not project evidence.

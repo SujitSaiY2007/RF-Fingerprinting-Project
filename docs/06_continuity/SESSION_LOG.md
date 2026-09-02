@@ -145,3 +145,33 @@ DEC-028 therefore supersedes DEC-027. **SMoRFFI is Track A; ORACLE remains quali
 SMoRFFI's existing qualification assigns its strongest defined responsibility to D3–D6 and D10 and leaves D7/D8 contingent on package-level metadata verification. The project will therefore inspect the actual SMoRFFI package before claiming D7/D8 coverage and will use a qualified Track B dataset for any specific D7/D8 requirement that SMoRFFI cannot defensibly support.
 
 No prior dataset qualification, novelty finding, D1–D10 definition, leakage control, poisoning control, branch rule or scientific completion standard is removed or weakened. No raw dataset is added to Git.
+
+## 2026-09-02 — ManySig acquired and inspected with Antigravity IDE
+The user acquired the WiSig ManySig archive locally and began using Antigravity IDE as the local agent-assisted execution environment for dataset inspection and later extraction work.
+
+The user also configured GitHub Personal Access Token access for repository operations. The token itself is a secret and is not stored in the repository or project documentation.
+
+### Non-destructive ManySig inspection
+Antigravity inspected the compressed archive and the initial pickle stream without modifying, renaming, moving or permanently extracting the raw dataset.
+
+Verified structure:
+- ZIP archive compressed size: `1,454,577,503` bytes (~1.355 GB);
+- contained `ManySig.pkl` size: `2,359,341,461` bytes (~2.197 GB);
+- Pickle Protocol 3;
+- top-level keys: `tx_list`, `rx_list`, `capture_date_list`, `equalized_list`, `max_sig`, `data`;
+- 6 transmitter IDs;
+- 12 receiver IDs;
+- 4 weekly March 2021 capture dates;
+- 2 equalization states `[0, 1]`;
+- `data[tx][rx][date][eq]` hierarchy;
+- 576 leaf arrays;
+- each leaf array `(1000, 256, 2)` with `float64` values;
+- 576,000 total bursts.
+
+The detailed inspection record is:
+`docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
+
+### Boundary and next action
+This is **dataset preparation/understanding progress**, not D1/D7/D8/D9 scientific validation. The proposed low-memory streaming/chunked processing approach has not yet been independently demonstrated. The next engineering task is a small controlled proof-of-concept measuring the actual incremental access mechanism and peak memory before implementing the final extractor.
+
+ManySig remains a Track-B dataset and does not replace the frozen Track-A SMoRFFI baseline.
