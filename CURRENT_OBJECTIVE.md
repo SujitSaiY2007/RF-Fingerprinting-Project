@@ -52,7 +52,7 @@ Use exactly: Implemented / Tested / Demonstrated / Scientifically Validated. Do 
 Track A may use real SMoRFFI, controlled/derived synthetic scenarios and published-paper evidence. Controlled/derived observations must never be represented as source-dataset measurements.
 
 ## Current Track-B ManySig preparation checkpoint — 02 September 2026
-ManySig has now been acquired locally and non-destructively inspected with Antigravity IDE. It is retained outside Git as raw data and remains a Track-B validation/reproduction/cross-condition resource; it does not replace the frozen Track-A SMoRFFI baseline.
+ManySig has been acquired locally and non-destructively inspected with Antigravity IDE. It is retained outside Git as raw data and remains a Track-B validation/reproduction/cross-condition resource; it does not replace the frozen Track-A SMoRFFI baseline.
 
 Verified ManySig structure:
 - Python Pickle Protocol 3;
@@ -70,21 +70,36 @@ Verified ManySig structure:
 Detailed evidence record:
 `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
 
-### Immediate next boundary
-Before final feature extraction, verify the proposed incremental/chunked ingestion mechanism with a small controlled memory test. The previously reported <=25–30 MB peak-RAM figure is not yet scientifically/experimentally verified.
+## Streaming/chunked ingestion checkpoint — 02 September 2026
+A controlled synthetic memory POC has now been executed before final extractor implementation. It used 24 Protocol-3 pickle leaves of shape `(1000, 256, 2)` `float64`, approximately matching the inspected ManySig leaf size.
 
-Only after ingestion behaviour is demonstrated should the project define the exact ManySig experiment, extraction schema and feature set. Do not load/extract the full dataset merely for inspection.
+Observed peak RSS:
+- plain pickle + `pickle.load()`: ~184.88 MiB;
+- ZIP member + `pickle.load()`: ~189.19 MiB.
+
+The POC demonstrates that ordinary `pickle.load()` does not provide leaf-wise bounded-memory access for a single nested top-level object, and that wrapping the pickle in ZIP streaming does not change that object-materialization behaviour.
+
+This is engineering evidence from a controlled synthetic analogue, **not** a real-ManySig memory measurement. The previous <=25–30 MB claim remains unverified for the real archive.
+
+Detailed record:
+`docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md`
+
+### Immediate next boundary
+Before final feature extraction, Antigravity must test the actual ManySig archive with a narrowly scoped read-only proof-of-concept that determines whether a custom opcode-aware/incremental mechanism can recover selected leaves without materializing the full top-level object. It must measure actual peak RSS and verify correctness before any final extractor is implemented.
+
+Do not load/extract the full dataset merely for inspection. Do not treat the synthetic POC as proof of a <=25–30 MB real-dataset bound.
 
 ## Reference and handoff artifacts
 - Complete project reference: `docs/06_continuity/REFERENCE_REPORT_2026-08-31.md`
 - ManySig inspection: `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
+- ManySig streaming POC: `docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md`
 - Current next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-09-02.md`
 - Previous handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
 - Historical Q/A continuation note: `docs/09_handoff/NEXT_CHAT_QA_NOTE.md`
 - D8/D10 milestone addendum: `docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md`
 
 ## Repository discipline
-- Preserve all historical documents, experiment artifacts, decisions, PRs and commits.
+- Preserve all historical documents, experiment artifacts, decisions and commits.
 - No unnecessary deletion.
 - No force-push or destructive history rewrite.
 - `develop` is the active implementation branch.
