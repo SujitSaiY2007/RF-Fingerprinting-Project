@@ -155,3 +155,12 @@ No prior dataset qualification, novelty finding, D1–D10 definition, leakage co
 - Benchmarked single-leaf extraction: Baseline RSS $30.42\text{ MiB}$, Peak RSS $45.24\text{ MiB}$, Delta $14.82\text{ MiB}$, Time $9.01\text{ s}$.
 - Benchmarked full 576-leaf sequential streaming: Baseline RSS $35.94\text{ MiB}$, Peak RSS $52.84\text{ MiB}$, Delta $16.90\text{ MiB}$, Time $20.95\text{ s}$ ($27,497\text{ bursts/s}$).
 - Documented in `docs/06_continuity/MANYSIG_REAL_STREAMING_POC_2026-09-02.md` and DEC-030.
+
+## 2026-09-02 — ManySig 16-feature extraction runner designed and validated
+- Branch: `task/manysig-feature-extraction-runner-2026-09-02`.
+- Formally preserved Track-A 16 physical RF evidence features (`src/smorffi_d3.py`) for $(256, 2)$ ManySig bursts.
+- Implemented vectorized batch feature extractor `src/manysig_features.py` and Parquet runner `src/manysig_feature_extractor.py`.
+- Established per-burst observation unit ($1,000\text{ rows/leaf}$, $576,000\text{ rows}$ total) with 23-column Arrow schema.
+- Validated exact mathematical equivalence against Track-A formulas ($\max |\Delta| = 4.34 \times 10^{-17}$) on real Leaf 0.
+- Generated sample validation Parquet file ($157,999\text{ bytes}$) and cryptographic manifest.
+- Documented in `docs/06_continuity/MANYSIG_FEATURE_EXTRACTION_DESIGN_2026-09-02.md` and DEC-031.

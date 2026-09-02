@@ -1,0 +1,32 @@
+{
+  "dataset_name": "ManySig_Validation_Slice",
+  "source_archive": "ManySig.pkl.zip",
+  "target_leaves": [
+    0
+  ],
+  "total_leaves_processed": 1,
+  "total_rows": 1000,
+  "sample_rate_hz": 20000000.0,
+  "features": [
+    "i_mean",
+    "i_std",
+    "q_mean",
+    "q_std",
+    "amplitude_mean",
+    "amplitude_std",
+    "rms_amplitude",
+    "crest_factor",
+    "mean_power",
+    "iq_variance_ratio_db",
+    "iq_correlation",
+    "mean_phase_step_rad",
+    "std_phase_step_rad",
+    "spectral_centroid_hz",
+    "spectral_spread_hz",
+    "spectral_entropy_bits"
+  ],
+  "parquet_file": "validation_leaf_0_features.parquet",
+  "parquet_size_bytes": 157999,
+  "parquet_sha256": "97a3b1d258f09cd04d8f2ad1626516cedd7a4019d602a6f6faacbd7a1caefd92",
+  "elapsed_seconds": 16.09
+}

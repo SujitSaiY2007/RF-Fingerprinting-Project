@@ -1,0 +1,79 @@
+{
+  "validation_report": {
+    "leaf_index": 0,
+    "tx_id": "14-10",
+    "rx_id": "1-1",
+    "date": "2021_03_01",
+    "is_equalized": false,
+    "num_bursts_validated": 20,
+    "max_absolute_difference": 4.336808689942018e-17,
+    "per_feature_max_diff": {
+      "i_mean": 0.0,
+      "i_std": 0.0,
+      "q_mean": 0.0,
+      "q_std": 0.0,
+      "amplitude_mean": 0.0,
+      "amplitude_std": 0.0,
+      "rms_amplitude": 0.0,
+      "crest_factor": 0.0,
+      "mean_power": 0.0,
+      "iq_variance_ratio_db": 0.0,
+      "iq_correlation": 4.336808689942018e-17,
+      "mean_phase_step_rad": 0.0,
+      "std_phase_step_rad": 0.0,
+      "spectral_centroid_hz": 0.0,
+      "spectral_spread_hz": 0.0,
+      "spectral_entropy_bits": 0.0
+    },
+    "first_burst_features": {
+      "i_mean": -8.368704014571904e-05,
+      "i_std": 0.008110854329752922,
+      "q_mean": -5.1142050551789e-05,
+      "q_std": 0.007926209958568815,
+      "amplitude_mean": 0.01035313451481944,
+      "amplitude_std": 0.004629577412017711,
+      "rms_amplitude": 0.011341092597091788,
+      "crest_factor": 1.7550295102222246,
+      "mean_power": 0.00012862038129581016,
+      "iq_variance_ratio_db": 0.20002058673497286,
+      "iq_correlation": -0.01929783285075676,
+      "mean_phase_step_rad": 0.30569319666206884,
+      "std_phase_step_rad": 1.3744751370352564,
+      "spectral_centroid_hz": 1575060.9012136748,
+      "spectral_spread_hz": 3785434.423752867,
+      "spectral_entropy_bits": 5.5593549796131825
+    }
+  },
+  "manifest": {
+    "dataset_name": "ManySig_Validation_Slice",
+    "source_archive": "ManySig.pkl.zip",
+    "target_leaves": [
+      0
+    ],
+    "total_leaves_processed": 1,
+    "total_rows": 1000,
+    "sample_rate_hz": 20000000.0,
+    "features": [
+      "i_mean",
+      "i_std",
+      "q_mean",
+      "q_std",
+      "amplitude_mean",
+      "amplitude_std",
+      "rms_amplitude",
+      "crest_factor",
+      "mean_power",
+      "iq_variance_ratio_db",
+      "iq_correlation",
+      "mean_phase_step_rad",
+      "std_phase_step_rad",
+      "spectral_centroid_hz",
+      "spectral_spread_hz",
+      "spectral_entropy_bits"
+    ],
+    "parquet_file": "validation_leaf_0_features.parquet",
+    "parquet_size_bytes": 157999,
+    "parquet_sha256": "97a3b1d258f09cd04d8f2ad1626516cedd7a4019d602a6f6faacbd7a1caefd92",
+    "elapsed_seconds": 16.09
+  }
+}

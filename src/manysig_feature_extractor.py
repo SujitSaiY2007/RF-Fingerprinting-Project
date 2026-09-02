@@ -1,0 +1,166 @@
+"""Streaming Feature-Extraction Runner for WiSig ManySig.
+
+This module consumes raw (1000, 256, 2) I/Q burst leaves from the memory-bounded
+ManySig streaming unpickler (src.manysig_streamer), extracts the 16 Track-A
+RF evidence features per burst, and writes partitioned Parquet tables with
+cryptographic manifest provenance.
+"""
+
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+import hashlib
+import json
+from pathlib import Path
+from typing import Callable, Optional, Sequence, Tuple
+import time
+
+import numpy as np
+import pyarrow as pa
+import pyarrow.parquet as pq
+
+from src.manysig_features import (
+    DEFAULT_SAMPLE_RATE_HZ,
+    FEATURE_NAMES,
+    extract_burst_features_batch,
+    extract_burst_features_scalar,
+    get_feature_arrow_schema,
+)
+from src.manysig_streamer import (
+    BURSTS_PER_LEAF,
+    SAMPLES_PER_BURST,
+    TOTAL_LEAVES,
+    LeafCoordinate,
+    extract_single_leaf,
+    stream_all_leaves,
+)
+
+
+@dataclass(frozen=True)
+class ExtractorConfig:
+    archive_path: Path
+    output_dir: Path
+    sample_rate_hz: float = DEFAULT_SAMPLE_RATE_HZ
+    compression: str = "SNAPPY"
+    partition_column: str = "rx_id"
+
+
+def build_arrow_table_from_leaf(
+    coord: LeafCoordinate,
+    leaf_array: np.ndarray,
+    sample_rate_hz: float = DEFAULT_SAMPLE_RATE_HZ,
+    max_bursts: Optional[int] = None,
+) -> pa.Table:
+    """Transform a (1000, 256, 2) leaf array into a typed PyArrow Table of feature records."""
+    if leaf_array.ndim != 3 or leaf_array.shape[1] != SAMPLES_PER_BURST or leaf_array.shape[2] != 2:
+        raise ValueError(f"expected leaf array shape (N, {SAMPLES_PER_BURST}, 2), got {leaf_array.shape}")
+
+    n_bursts = len(leaf_array) if max_bursts is None else min(len(leaf_array), max_bursts)
+    burst_slice = leaf_array[:n_bursts]
+
+    # Compute 16 RF evidence features in one vectorized pass
+    feats = extract_burst_features_batch(burst_slice, sample_rate_hz=sample_rate_hz)
+
+    # Build columnar arrays
+    arrays = [
+        pa.array(np.full(n_bursts, coord.leaf_index, dtype=np.int16), type=pa.int16()),
+        pa.array(np.arange(n_bursts, dtype=np.int16), type=pa.int16()),
+        pa.array([coord.tx_id] * n_bursts, type=pa.string()),
+        pa.array([coord.rx_id] * n_bursts, type=pa.string()),
+        pa.array([coord.date] * n_bursts, type=pa.string()),
+        pa.array([coord.is_equalized] * n_bursts, type=pa.bool_()),
+        pa.array(np.full(n_bursts, SAMPLES_PER_BURST, dtype=np.int16), type=pa.int16()),
+    ]
+
+    for feat_name in FEATURE_NAMES:
+        arrays.append(pa.array(feats[feat_name], type=pa.float64()))
+
+    schema = get_feature_arrow_schema()
+    return pa.Table.from_arrays(arrays, schema=schema)
+
+
+def extract_validation_slice(
+    archive_path: Path,
+    target_leaf_index: int = 0,
+    num_bursts: int = 10,
+    sample_rate_hz: float = DEFAULT_SAMPLE_RATE_HZ,
+) -> dict:
+    """Extract a small validation slice and verify exact mathematical equivalence between scalar and batch implementations."""
+    coord, leaf_array, meta = extract_single_leaf(archive_path, target_leaf_index)
+    table = build_arrow_table_from_leaf(coord, leaf_array, sample_rate_hz=sample_rate_hz, max_bursts=num_bursts)
+
+    # Verify each burst against the scalar reference function
+    max_abs_diff = 0.0
+    diff_report = {}
+    for b in range(num_bursts):
+        scalar_dict = extract_burst_features_scalar(leaf_array[b], sample_rate_hz=sample_rate_hz)
+        for feat in FEATURE_NAMES:
+            table_val = table[feat][b].as_py()
+            scalar_val = scalar_dict[feat]
+            diff = abs(table_val - scalar_val)
+            if diff > max_abs_diff:
+                max_abs_diff = diff
+            diff_report[feat] = max(diff_report.get(feat, 0.0), diff)
+
+    return {
+        "leaf_index": target_leaf_index,
+        "tx_id": coord.tx_id,
+        "rx_id": coord.rx_id,
+        "date": coord.date,
+        "is_equalized": coord.is_equalized,
+        "num_bursts_validated": num_bursts,
+        "max_absolute_difference": max_abs_diff,
+        "per_feature_max_diff": diff_report,
+        "first_burst_features": {f: table[f][0].as_py() for f in FEATURE_NAMES},
+    }
+
+
+class ManySigFeatureExtractor:
+    """Manages streaming feature extraction, partitioned writing, and manifest generation."""
+
+    def __init__(self, config: ExtractorConfig):
+        self.config = config
+
+    def extract_slice_to_parquet(
+        self,
+        target_leaf_indices: Sequence[int],
+        output_file: Path,
+    ) -> dict:
+        """Extract a designated sequence of leaves and write a single validated Parquet file with manifest."""
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+        schema = get_feature_arrow_schema()
+
+        total_rows = 0
+        leaves_processed = 0
+        start_time = time.perf_counter()
+
+        with pq.ParquetWriter(output_file, schema=schema, compression=self.config.compression) as writer:
+            for idx in target_leaf_indices:
+                coord, leaf, _ = extract_single_leaf(self.config.archive_path, idx)
+                tbl = build_arrow_table_from_leaf(coord, leaf, sample_rate_hz=self.config.sample_rate_hz)
+                writer.write_table(tbl)
+                total_rows += len(tbl)
+                leaves_processed += 1
+
+        elapsed = time.perf_counter() - start_time
+        file_bytes = output_file.stat().st_size
+        file_sha256 = hashlib.sha256(output_file.read_bytes()).hexdigest()
+
+        manifest = {
+            "dataset_name": "ManySig_Validation_Slice",
+            "source_archive": str(self.config.archive_path.name),
+            "target_leaves": list(target_leaf_indices),
+            "total_leaves_processed": leaves_processed,
+            "total_rows": total_rows,
+            "sample_rate_hz": self.config.sample_rate_hz,
+            "features": list(FEATURE_NAMES),
+            "parquet_file": str(output_file.name),
+            "parquet_size_bytes": file_bytes,
+            "parquet_sha256": file_sha256,
+            "elapsed_seconds": round(elapsed, 2),
+        }
+
+        manifest_path = output_file.with_suffix(".manifest.json")
+        manifest_path.write_text(json.dumps(manifest, indent=2))
+
+        return manifest

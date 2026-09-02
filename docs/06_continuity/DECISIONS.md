@@ -174,3 +174,9 @@ For the fast-track path, a dataset must satisfy both **scientific task fit** and
 To prevent memory exhaustion during Track-B large-scale ingestion of `ManySig.pkl` (2.2 GB uncompressed), the project adopts an opcode-level streaming unpickler (`src/manysig_streamer.py`) that overrides `REDUCE (0x52)` and `BINBYTES (0x42)`.
 
 This ensures that non-target 4 MB leaf buffers are bypassed without accumulating Python bytes objects on the evaluation stack or memo table, keeping process memory bounded at $\approx 45\text{--}52\text{ MiB}$ peak RSS ($\approx 14\text{--}17\text{ MiB}$ delta) during both selective leaf extraction and single-pass sequential streaming across all 576,000 observations.
+
+## DEC-031 — ManySig per-burst feature extraction and columnar Parquet format
+For Track-B research experiments on WiSig ManySig:
+1. The **fundamental feature extraction unit is the individual burst** (`(256, 2)` complex baseband samples). Each 1,000-burst leaf generates 1,000 discrete feature records, preserving all 576,000 dataset observations without lossy aggregation.
+2. The **16 Track-A RF evidence feature definitions** (`src/smorffi_d3.py`) are reused without alteration or artificial normalization.
+3. Feature records are structured into a 23-column Apache Arrow schema (7 coordinate/provenance + 16 features) and written to partitioned Parquet files with cryptographic SHA-256 manifests.
