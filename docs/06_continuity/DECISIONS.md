@@ -169,3 +169,8 @@ The existing SMoRFFI qualification states that its strongest defined responsibil
 
 ## DEC-029 — Track A access criterion
 For the fast-track path, a dataset must satisfy both **scientific task fit** and **practical access suitability**. A scientifically strong dataset is not sufficient if its official acquisition method makes it a critical-path bottleneck under the project's time constraint. Conversely, download convenience alone is never sufficient for selection.
+
+## DEC-030 — ManySig streaming ingestion via custom opcode dispatch
+To prevent memory exhaustion during Track-B large-scale ingestion of `ManySig.pkl` (2.2 GB uncompressed), the project adopts an opcode-level streaming unpickler (`src/manysig_streamer.py`) that overrides `REDUCE (0x52)` and `BINBYTES (0x42)`.
+
+This ensures that non-target 4 MB leaf buffers are bypassed without accumulating Python bytes objects on the evaluation stack or memo table, keeping process memory bounded at $\approx 45\text{--}52\text{ MiB}$ peak RSS ($\approx 14\text{--}17\text{ MiB}$ delta) during both selective leaf extraction and single-pass sequential streaming across all 576,000 observations.

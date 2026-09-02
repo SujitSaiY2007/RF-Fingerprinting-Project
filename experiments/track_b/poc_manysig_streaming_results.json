@@ -1,0 +1,89 @@
+{
+  "stage": "Track-B Pre-Ingestion Streaming POC",
+  "archive_path": "C:\\Users\\sujit\\Downloads\\ManySig.pkl.zip",
+  "archive_size_bytes": 1454577503,
+  "single_leaf_tests": [
+    {
+      "leaf_index": 0,
+      "tx_id": "14-10",
+      "rx_id": "1-1",
+      "date": "2021_03_01",
+      "is_equalized": false,
+      "shape": [
+        1000,
+        256,
+        2
+      ],
+      "dtype": "float64",
+      "byte_length": 4096000,
+      "sha256": "27798a5668c6b2b2946b9db556bfcb4eafacbbe60aacf11a98472c3ca3d94281",
+      "mean_i": 2.6640371277864006e-06,
+      "mean_q": 2.8110304589290537e-07,
+      "rms_amplitude": 0.011284005349367389,
+      "baseline_rss_mib": 30.42,
+      "peak_rss_mib": 45.24,
+      "current_rss_mib": 35.44,
+      "delta_rss_mib": 14.82,
+      "elapsed_seconds": 9.01
+    },
+    {
+      "leaf_index": 288,
+      "tx_id": "20-19",
+      "rx_id": "1-1",
+      "date": "2021_03_01",
+      "is_equalized": false,
+      "shape": [
+        1000,
+        256,
+        2
+      ],
+      "dtype": "float64",
+      "byte_length": 4096000,
+      "sha256": "b8c0bbaf1f056c90c8c8bdfab12058101397b043447db58ae23193d9a271c5c2",
+      "mean_i": -1.2811267395505865e-05,
+      "mean_q": -0.00010290058932856993,
+      "rms_amplitude": 0.02265297278305368,
+      "baseline_rss_mib": 35.55,
+      "peak_rss_mib": 49.82,
+      "current_rss_mib": 35.92,
+      "delta_rss_mib": 14.27,
+      "elapsed_seconds": 8.96
+    },
+    {
+      "leaf_index": 575,
+      "tx_id": "8-20",
+      "rx_id": "8-8",
+      "date": "2021_03_23",
+      "is_equalized": true,
+      "shape": [
+        1000,
+        256,
+        2
+      ],
+      "dtype": "float64",
+      "byte_length": 4096000,
+      "sha256": "1e9ae4513278d9ca08470b9e2e1f3e4798b7a0d5ec0364380e7de8bb7bffeed8",
+      "mean_i": -0.016601138425366105,
+      "mean_q": -0.019974379485273173,
+      "rms_amplitude": 1.161269455679637,
+      "baseline_rss_mib": 35.92,
+      "peak_rss_mib": 49.82,
+      "current_rss_mib": 35.94,
+      "delta_rss_mib": 13.9,
+      "elapsed_seconds": 9.35
+    }
+  ],
+  "full_stream_benchmark": {
+    "total_leaves_processed": 576,
+    "total_signal_bursts": 576000,
+    "tx_count": 6,
+    "rx_count": 12,
+    "date_count": 4,
+    "baseline_rss_mib": 35.94,
+    "peak_rss_mib": 52.84,
+    "current_rss_mib": 35.46,
+    "delta_rss_mib": 16.9,
+    "elapsed_seconds": 20.95,
+    "bursts_per_second": 27497.1
+  }
+}

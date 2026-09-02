@@ -145,3 +145,13 @@ DEC-028 therefore supersedes DEC-027. **SMoRFFI is Track A; ORACLE remains quali
 SMoRFFI's existing qualification assigns its strongest defined responsibility to D3–D6 and D10 and leaves D7/D8 contingent on package-level metadata verification. The project will therefore inspect the actual SMoRFFI package before claiming D7/D8 coverage and will use a qualified Track B dataset for any specific D7/D8 requirement that SMoRFFI cannot defensibly support.
 
 No prior dataset qualification, novelty finding, D1–D10 definition, leakage control, poisoning control, branch rule or scientific completion standard is removed or weakened. No raw dataset is added to Git.
+
+## 2026-09-02 — ManySig real-archive streaming POC demonstrated
+- Branch: `task/manysig-real-streaming-poc-2026-09-02`.
+- Located `ManySig.pkl.zip` ($1.455\text{ GB}$) in local Downloads.
+- Investigated Protocol-3 opcode stream and identified that standard `pickle.load()` accumulates $576 \times 4\text{ MB}$ raw bytes objects in the unpickler's memo table, resulting in $\ge 2.288\text{ GiB}$ peak RSS.
+- Implemented `src/manysig_streamer.py` using custom opcode dispatch for `REDUCE (0x52)` and `BINBYTES (0x42)` to bypass non-target array allocations.
+- Successfully recovered target Leaf 0 (`data[0][0][0][0]`), verifying shape `(1000, 256, 2)`, `float64`, 1000 bursts, and SHA-256 `27798a5668c6b2b2946b9db556bfcb4eafacbbe60aacf11a98472c3ca3d94281`.
+- Benchmarked single-leaf extraction: Baseline RSS $30.42\text{ MiB}$, Peak RSS $45.24\text{ MiB}$, Delta $14.82\text{ MiB}$, Time $9.01\text{ s}$.
+- Benchmarked full 576-leaf sequential streaming: Baseline RSS $35.94\text{ MiB}$, Peak RSS $52.84\text{ MiB}$, Delta $16.90\text{ MiB}$, Time $20.95\text{ s}$ ($27,497\text{ bursts/s}$).
+- Documented in `docs/06_continuity/MANYSIG_REAL_STREAMING_POC_2026-09-02.md` and DEC-030.
