@@ -36,13 +36,25 @@ from src.manysig_streamer import (
 )
 
 
+def compute_file_sha256(file_path: Path, chunk_size: int = 65536) -> str:
+    """Compute SHA-256 digest of a file in streaming chunks without loading the entire file into RAM."""
+    hasher = hashlib.sha256()
+    with file_path.open("rb") as f:
+        while True:
+            chunk = f.read(chunk_size)
+            if not chunk:
+                break
+            hasher.update(chunk)
+    return hasher.hexdigest()
+
+
 @dataclass(frozen=True)
 class ExtractorConfig:
     archive_path: Path
     output_dir: Path
     sample_rate_hz: float = DEFAULT_SAMPLE_RATE_HZ
     compression: str = "SNAPPY"
-    partition_column: str = "rx_id"
+    partition_columns: Tuple[str, ...] = ("rx_id", "is_equalized")
 
 
 def build_arrow_table_from_leaf(
@@ -126,7 +138,7 @@ class ManySigFeatureExtractor:
         target_leaf_indices: Sequence[int],
         output_file: Path,
     ) -> dict:
-        """Extract a designated sequence of leaves and write a single validated Parquet file with manifest."""
+        """Extract a designated sequence of leaves and write a single validated Parquet file with streaming manifest."""
         output_file.parent.mkdir(parents=True, exist_ok=True)
         schema = get_feature_arrow_schema()
 
@@ -144,7 +156,7 @@ class ManySigFeatureExtractor:
 
         elapsed = time.perf_counter() - start_time
         file_bytes = output_file.stat().st_size
-        file_sha256 = hashlib.sha256(output_file.read_bytes()).hexdigest()
+        file_sha256 = compute_file_sha256(output_file)
 
         manifest = {
             "dataset_name": "ManySig_Validation_Slice",
@@ -153,6 +165,7 @@ class ManySigFeatureExtractor:
             "total_leaves_processed": leaves_processed,
             "total_rows": total_rows,
             "sample_rate_hz": self.config.sample_rate_hz,
+            "sample_rate_status": "REQUIRES VALIDATION (Engineering default)",
             "features": list(FEATURE_NAMES),
             "parquet_file": str(output_file.name),
             "parquet_size_bytes": file_bytes,
@@ -164,3 +177,81 @@ class ManySigFeatureExtractor:
         manifest_path.write_text(json.dumps(manifest, indent=2))
 
         return manifest
+
+    def extract_partitioned_dataset(
+        self,
+        output_dir: Path,
+        target_leaf_indices: Optional[Sequence[int]] = None,
+    ) -> dict:
+        """Extract leaves into a partitioned Parquet layout (by rx_id and is_equalized) with streaming manifests."""
+        output_dir.mkdir(parents=True, exist_ok=True)
+        schema = get_feature_arrow_schema()
+
+        open_writers: dict[str, pq.ParquetWriter] = {}
+        partition_files: dict[str, Path] = {}
+        partition_row_counts: dict[str, int] = {}
+        leaves_processed = 0
+        total_rows = 0
+        start_time = time.perf_counter()
+
+        indices_to_process = target_leaf_indices if target_leaf_indices is not None else range(TOTAL_LEAVES)
+
+        try:
+            for idx in indices_to_process:
+                coord, leaf, _ = extract_single_leaf(self.config.archive_path, idx)
+                tbl = build_arrow_table_from_leaf(coord, leaf, sample_rate_hz=self.config.sample_rate_hz)
+
+                # Determine partition path: rx_id=<rx>/is_equalized=<0|1>
+                eq_str = "1" if coord.is_equalized else "0"
+                part_key = f"rx_id={coord.rx_id}/is_equalized={eq_str}"
+                part_dir = output_dir / part_key
+
+                if part_key not in open_writers:
+                    part_dir.mkdir(parents=True, exist_ok=True)
+                    part_file = part_dir / "data.parquet"
+                    open_writers[part_key] = pq.ParquetWriter(
+                        part_file,
+                        schema=schema,
+                        compression=self.config.compression,
+                    )
+                    partition_files[part_key] = part_file
+                    partition_row_counts[part_key] = 0
+
+                open_writers[part_key].write_table(tbl)
+                partition_row_counts[part_key] += len(tbl)
+                total_rows += len(tbl)
+                leaves_processed += 1
+        finally:
+            # Close all writers safely
+            for writer in open_writers.values():
+                writer.close()
+
+        elapsed = time.perf_counter() - start_time
+
+        # Calculate partition file sizes and streaming SHA-256 digests
+        partitions_manifest = {}
+        for part_key, part_file in partition_files.items():
+            partitions_manifest[part_key] = {
+                "relative_path": str(part_file.relative_to(output_dir)),
+                "rows": partition_row_counts[part_key],
+                "size_bytes": part_file.stat().st_size,
+                "sha256": compute_file_sha256(part_file),
+            }
+
+        root_manifest = {
+            "dataset_name": "ManySig_Partitioned_Features",
+            "source_archive": str(self.config.archive_path.name),
+            "partition_columns": list(self.config.partition_columns),
+            "sample_rate_hz": self.config.sample_rate_hz,
+            "sample_rate_status": "REQUIRES VALIDATION (Engineering default)",
+            "total_leaves_processed": leaves_processed,
+            "total_rows": total_rows,
+            "features": list(FEATURE_NAMES),
+            "partitions": partitions_manifest,
+            "elapsed_seconds": round(elapsed, 2),
+        }
+
+        manifest_path = output_dir / "manifest.json"
+        manifest_path.write_text(json.dumps(root_manifest, indent=2))
+
+        return root_manifest

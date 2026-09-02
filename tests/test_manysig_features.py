@@ -17,25 +17,58 @@ from src.manysig_feature_extractor import (
     ExtractorConfig,
     ManySigFeatureExtractor,
     build_arrow_table_from_leaf,
+    compute_file_sha256,
 )
 from src.manysig_streamer import LeafCoordinate
 from src.smorffi_d3 import extract_rf_features as smorffi_extract_features
 
 
 class TestManySigFeatures(unittest.TestCase):
-    def test_feature_names_match_track_a(self):
-        # Generate dummy 288-sample complex array for Track-A smorffi_d3
-        dummy_288 = np.ones(288, dtype=np.complex128) + 1j * np.ones(288, dtype=np.complex128)
-        track_a_dict = smorffi_extract_features(dummy_288)
+    def test_direct_numerical_comparison_against_track_a_smorffi_d3(self):
+        """Directly compare numerical outputs of authoritative smorffi_d3 against ManySig feature extractor."""
+        np.random.seed(42)
+        # Generate random 288-sample complex burst
+        real_i = np.random.randn(288) * 0.05
+        imag_q = np.random.randn(288) * 0.05
+        x_288 = real_i + 1j * imag_q
+        iq_288 = np.column_stack([real_i, imag_q])  # (288, 2)
 
-        self.assertEqual(len(FEATURE_NAMES), 16)
-        self.assertEqual(len(track_a_dict), 16)
-        for name in FEATURE_NAMES:
-            self.assertIn(name, track_a_dict)
+        # 1. Authoritative Track-A execution
+        res_track_a = smorffi_extract_features(x_288, sample_rate_hz=20_000_000.0)
+
+        # 2. ManySig scalar execution
+        res_manysig_scalar = extract_burst_features_scalar(iq_288, sample_rate_hz=20_000_000.0)
+
+        # 3. ManySig vectorized batch execution
+        res_manysig_batch = extract_burst_features_batch(iq_288[None, :, :], sample_rate_hz=20_000_000.0)
+
+        # Check all 16 features numerically
+        self.assertEqual(len(res_track_a), 16)
+        self.assertEqual(len(res_manysig_scalar), 16)
+        self.assertEqual(len(res_manysig_batch), 16)
+
+        for feat in FEATURE_NAMES:
+            val_a = res_track_a[feat]
+            val_s = res_manysig_scalar[feat]
+            val_b = float(res_manysig_batch[feat][0])
+
+            # Assert exact equality to within floating point epsilon
+            self.assertAlmostEqual(
+                val_a,
+                val_s,
+                places=14,
+                msg=f"Scalar discrepancy on feature {feat}: Track-A={val_a}, ManySig-Scalar={val_s}",
+            )
+            self.assertAlmostEqual(
+                val_a,
+                val_b,
+                places=14,
+                msg=f"Batch discrepancy on feature {feat}: Track-A={val_a}, ManySig-Batch={val_b}",
+            )
 
     def test_scalar_vs_batch_mathematical_identity(self):
+        """Test vectorized batch vs scalar extractor across 50 random 256-sample bursts."""
         np.random.seed(12345)
-        # 50 bursts of shape (50, 256, 2)
         bursts = np.random.randn(50, 256, 2)
         batch_results = extract_burst_features_batch(bursts)
 
@@ -84,6 +117,16 @@ class TestManySigFeatures(unittest.TestCase):
         self.assertEqual(table["capture_date"][0].as_py(), "2021_03_01")
         self.assertEqual(table["is_equalized"][0].as_py(), False)
         self.assertEqual(table["sample_count"][0].as_py(), 256)
+
+    def test_streaming_file_sha256_computation(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_file = Path(tmp_dir) / "test_data.bin"
+            data = b"RF-Fingerprinting-Track-B-Streaming-Test" * 10000
+            test_file.write_bytes(data)
+
+            expected_sha256 = hashlib.sha256(data).hexdigest()
+            streaming_sha256 = compute_file_sha256(test_file, chunk_size=1024)
+            self.assertEqual(streaming_sha256, expected_sha256)
 
     def test_parquet_roundtrip(self):
         coord = LeafCoordinate(

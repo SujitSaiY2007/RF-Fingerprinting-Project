@@ -35,6 +35,7 @@ FEATURE_NAMES: Tuple[str, ...] = (
     "spectral_entropy_bits",
 )
 
+# Engineering default inherited from Track-A; NOT verified from ManySig metadata (REQUIRES VALIDATION)
 DEFAULT_SAMPLE_RATE_HZ: float = 20_000_000.0
 
 

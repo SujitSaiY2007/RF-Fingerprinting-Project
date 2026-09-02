@@ -12,7 +12,7 @@ This continuity document establishes the formal architecture and validated imple
 
 The runner connects the demonstrated memory-bounded ManySig streaming ingestion primitive ([`src/manysig_streamer.py`](file:///c:/Users/sujit/OneDrive/Documents/RF-Fingerprinting-Project-Intergration/RF-Fingerprinting-Project/src/manysig_streamer.py)) to the frozen 16-feature physical RF evidence contract established in Track-A ([`src/smorffi_d3.py`](file:///c:/Users/sujit/OneDrive/Documents/RF-Fingerprinting-Project-Intergration/RF-Fingerprinting-Project/src/smorffi_d3.py)).
 
-A small validation slice was extracted from real Leaf 0 ($Tx=\text{"14-10"}, Rx=\text{"1-1"}, Date=\text{"2021\_03\_01"}, Eq=\text{raw}$), verifying that the vectorized batch extractor matches the scalar Track-A reference formulas down to machine precision ($\max |\Delta| = 4.34 \times 10^{-17}$), with output written to a partitioned Apache Parquet structure accompanied by a cryptographic manifest.
+A small validation slice was extracted from real Leaf 0 ($Tx=\text{"14-10"}, Rx=\text{"1-1"}, Date=\text{"2021\_03\_01"}, Eq=\text{raw}$), verifying that the vectorized batch extractor matches both the scalar Track-A reference formulas and the actual `src/smorffi_d3.py::extract_rf_features` function down to machine precision ($\max |\Delta| = 4.34 \times 10^{-17}$), with output written to a partitioned Apache Parquet structure accompanied by a streaming-calculated cryptographic manifest.
 
 ---
 
@@ -32,9 +32,9 @@ Typed Arrow Table Builder (23 Columns: 7 Coordinate/Provenance + 16 Features)
     │ (Zero-copy memory encapsulation)
     ▼
 Incremental Parquet Writer (src.manysig_feature_extractor)
-    │ (Partitioned by rx_id / date / is_equalized, Snappy-compressed)
+    │ (Partitioned by rx_id=<rx>/is_equalized=<0|1>/data.parquet, Snappy-compressed)
     ▼
-Cryptographic Manifest & Checksum Registry (manifest.json)
+Streaming Cryptographic Manifest & Checksum Registry (manifest.json)
     │
     ▼
 Track-B Research Substrate (Cross-Receiver, Time Drift, Equalization Holdouts)
@@ -65,14 +65,30 @@ Track-A defines 16 physical RF evidence features in [`src/smorffi_d3.py`](file:/
 | 15 | `spectral_spread_hz` | $\sqrt{\sum (f_k - f_c)^2 \cdot \text{PSD}_{\text{norm}}[k]}$ | Spectral bandwidth / power dispersion | **YES** |
 | 16 | `spectral_entropy_bits`| $-\sum \text{PSD}_{\text{norm}}[k] \log_2(\text{PSD}_{\text{norm}}[k] + \epsilon)$ | Spectral flatness / carrier disorder | **YES** |
 
-### Track-A Invariant vs. Dataset-Specific Alignment
+### Direct Numerical Verification Against `src/smorffi_d3.py`
 
-1. **Length Invariance ($N=256$ vs $288$):**  
-   All 16 mathematical definitions are strictly length-agnostic. While SMoRFFI preambles have length $N=288$, ManySig bursts have length $N=256$ ($2^8$, optimal for exact FFT computation without zero-padding or window truncation).
-2. **Zero Preprocessing / No Artificial Normalization:**  
-   In strict accordance with the Track-A baseline contract, **no amplitude normalization, filtering, clipping, or resampling is applied**. Real signal amplitude carrying hardware fingerprint characteristics is preserved intact.
-3. **Sample Rate Parameter:**  
-   Standard baseband scaling uses $F_s = 20.0\text{ MHz}$ ($20,000,000\text{ Hz}$). Spectral centroid and spread scale linearly with $F_s$; spectral entropy and time-domain features are scale-invariant.
+To establish direct numerical equivalence beyond feature names, a controlled test was executed on identical 288-sample complex input evaluated simultaneously across `src.smorffi_d3.extract_rf_features` and the ManySig implementations:
+
+| Feature Name | Track-A `smorffi_d3` Value | ManySig Scalar Value | ManySig Batch Value | Max Absolute Difference |
+| :--- | :---: | :---: | :---: | :---: |
+| `amplitude_mean` | $+6.1590247862 \times 10^{-2}$ | $+6.1590247862 \times 10^{-2}$ | $+6.1590247862 \times 10^{-2}$ | $0.00 \times 10^0$ |
+| `amplitude_std` | $+3.1394698317 \times 10^{-2}$ | $+3.1394698317 \times 10^{-2}$ | $+3.1394698317 \times 10^{-2}$ | $0.00 \times 10^0$ |
+| `crest_factor` | $+2.7899744693 \times 10^{0}$ | $+2.7899744693 \times 10^{0}$ | $+2.7899744693 \times 10^{0}$ | $0.00 \times 10^0$ |
+| `i_mean` | $-5.5476917971 \times 10^{-4}$ | $-5.5476917971 \times 10^{-4}$ | $-5.5476917971 \times 10^{-4}$ | $0.00 \times 10^0$ |
+| `i_std` | $+4.9756837935 \times 10^{-2}$ | $+4.9756837935 \times 10^{-2}$ | $+4.9756837935 \times 10^{-2}$ | $0.00 \times 10^0$ |
+| `iq_correlation` | $-6.3360084162 \times 10^{-2}$ | $-6.3360084162 \times 10^{-2}$ | $-6.3360084162 \times 10^{-2}$ | $\mathbf{4.16 \times 10^{-17}}$ |
+| `iq_variance_ratio_db` | $+3.1712754464 \times 10^{-1}$ | $+3.1712754464 \times 10^{-1}$ | $+3.1712754464 \times 10^{-1}$ | $0.00 \times 10^0$ |
+| `mean_phase_step_rad` | $-1.3771665767 \times 10^{-1}$ | $-1.3771665767 \times 10^{-1}$ | $-1.3771665767 \times 10^{-1}$ | $0.00 \times 10^0$ |
+| `mean_power` | $+4.7789857141 \times 10^{-3}$ | $+4.7789857141 \times 10^{-3}$ | $+4.7789857141 \times 10^{-3}$ | $0.00 \times 10^0$ |
+| `q_mean` | $-1.2374998673 \times 10^{-3}$ | $-1.2374998673 \times 10^{-3}$ | $-1.2374998673 \times 10^{-3}$ | $0.00 \times 10^0$ |
+| `q_std` | $+4.7972946731 \times 10^{-2}$ | $+4.7972946731 \times 10^{-2}$ | $+4.7972946731 \times 10^{-2}$ | $0.00 \times 10^0$ |
+| `rms_amplitude` | $+6.9130208405 \times 10^{-2}$ | $+6.9130208405 \times 10^{-2}$ | $+6.9130208405 \times 10^{-2}$ | $0.00 \times 10^0$ |
+| `spectral_centroid_hz` | $-2.3492599895 \times 10^{5}$ | $-2.3492599895 \times 10^{5}$ | $-2.3492599895 \times 10^{5}$ | $0.00 \times 10^0$ |
+| `spectral_entropy_bits` | $+7.5928516433 \times 10^{0}$ | $+7.5928516433 \times 10^{0}$ | $+7.5928516433 \times 10^{0}$ | $0.00 \times 10^0$ |
+| `spectral_spread_hz` | $+5.7605956102 \times 10^{6}$ | $+5.7605956102 \times 10^{6}$ | $+5.7605956102 \times 10^{6}$ | $0.00 \times 10^0$ |
+| `std_phase_step_rad` | $+1.8522981472 \times 10^{0}$ | $+1.8522981472 \times 10^{0}$ | $+1.8522981472 \times 10^{0}$ | $0.00 \times 10^0$ |
+
+**Conclusion:** All 16 features match the authoritative Track-A implementation to within standard floating-point machine precision ($\le 4.16 \times 10^{-17}$).
 
 ---
 
@@ -121,25 +137,23 @@ spectral_entropy_bits    float64       NON-NULL      PSD spectral entropy (bits)
 
 ### Partitioning & Storage Layout
 - Format: **Apache Parquet (Snappy compressed)**.
-- Partition Strategy: By receiver ID (`rx_id`) and equalization state (`is_equalized`).
+- Partition Strategy: Implemented in [`src/manysig_feature_extractor.py`](file:///c:/Users/sujit/OneDrive/Documents/RF-Fingerprinting-Project-Intergration/RF-Fingerprinting-Project/src/manysig_feature_extractor.py) using partitioned directory layout:
+  `rx_id=<rx_id>/is_equalized=<0|1>/data.parquet`
+- Memory Boundedness: Parquet writers stream per partition chunk so that neither raw I/Q bursts nor the full feature table are accumulated in Python RAM.
 - Output Footprint:
   - 1,000 rows $\times 23$ columns: $\approx 158\text{ KB}$ per leaf.
   - Complete 576,000-row dataset: estimated $\approx \mathbf{18\text{--}24\text{ MB}}$ total on disk.
 
 ---
 
-## 6. Manifest & Provenance Design
+## 6. Manifest & Streaming Checksum Design
 
-Every extraction run produces an immutable JSON manifest containing:
+Every extraction run produces an immutable JSON manifest:
 1. `source_archive`: Source archive filename (`ManySig.pkl.zip`).
-2. `source_sha256`: SHA-256 of the source archive ($1,454,577,503\text{ bytes}$).
-3. `target_leaves`: Sequence of unpickled leaf indices.
-4. `total_rows`: Total generated feature records.
-5. `sample_rate_hz`: Scaling sample rate used ($20,000,000.0\text{ Hz}$).
-6. `features`: Ordered list of 16 feature names.
-7. `parquet_file`: Relative file path.
-8. `parquet_size_bytes`: File size on disk.
-9. `parquet_sha256`: Cryptographic SHA-256 checksum of the generated Parquet file.
+2. `sample_rate_hz`: Scaling sample rate used ($20,000,000.0\text{ Hz}$).
+3. `sample_rate_status`: Explicitly flagged as `"REQUIRES VALIDATION (Engineering default)"`.
+4. `features`: Ordered list of 16 feature names.
+5. `partitions`: Dictionary mapping partition keys to row counts, byte sizes, and **streaming 64 KB chunk-computed SHA-256 digests** (preventing memory exhaustion during checksumming).
 
 ---
 
@@ -151,7 +165,7 @@ A controlled validation run was executed against real Leaf 0 using [`scripts/val
 - **Validated Bursts:** First 20 bursts compared between scalar reference and vectorized batch extractor.
 - **Maximum Absolute Discrepancy:** **$4.34 \times 10^{-17}$** (within standard floating point machine epsilon).
 - **Validation Parquet Written:** [`experiments/track_b/validation_leaf_0_features.parquet`](file:///c:/Users/sujit/OneDrive/Documents/RF-Fingerprinting-Project-Intergration/RF-Fingerprinting-Project/experiments/track_b/validation_leaf_0_features.parquet) ($157,999\text{ bytes}$, 1,000 rows $\times$ 23 columns).
-- **Parquet SHA-256:** `97a3b1d258f09cd04d8f2ad1626516cedd7a4019d602a6f6faacbd7a1caefd92`
+- **Parquet SHA-256 (Streaming Hash):** `97a3b1d258f09cd04d8f2ad1626516cedd7a4019d602a6f6faacbd7a1caefd92`
 - **Manifest Written:** [`experiments/track_b/validation_leaf_0_features.manifest.json`](file:///c:/Users/sujit/OneDrive/Documents/RF-Fingerprinting-Project-Intergration/RF-Fingerprinting-Project/experiments/track_b/validation_leaf_0_features.manifest.json)
 - **Table Read-Back Check:** Successfully read back 1,000 rows $\times$ 23 columns with exact value preservation.
 
@@ -160,19 +174,21 @@ A controlled validation run was executed against real Leaf 0 using [`scripts/val
 ## 8. Evidentiary Categorization
 
 ### VERIFIED FACTS
-1. All 16 Track-A RF evidence feature formulas execute without modification on $(256, 2)$ ManySig bursts.
-2. Vectorized SIMD batch computation produces results identical to the scalar reference implementation to within $4.34 \times 10^{-17}$.
+1. All 16 Track-A RF evidence feature formulas match `src/smorffi_d3.py::extract_rf_features` to within $\le 4.16 \times 10^{-17}$.
+2. Vectorized SIMD batch computation produces results identical to the scalar reference implementation to within $4.34 \times 10^{-17}$ on real Leaf 0 Wi-Fi bursts.
 3. Leaf 0 features serialize to Parquet with a size of $157,999\text{ bytes}$ for 1,000 rows.
 4. Arrow table read-back preserves all 23 columns and 1,000 rows losslessly.
+5. Checksum hashing operates in streaming chunks without loading complete Parquet files into RAM.
 
 ### ENGINEERING DECISIONS
 1. Set the fundamental observation unit to **1 burst** (yielding 1,000 rows per leaf and 576,000 rows total).
 2. Store extracted features in columnar **Apache Parquet with Snappy compression**.
-3. Require cryptographic SHA-256 manifest generation for every output partition.
-4. Implement vectorized batch extraction ([`src/manysig_features.py`](file:///c:/Users/sujit/OneDrive/Documents/RF-Fingerprinting-Project-Intergration/RF-Fingerprinting-Project/src/manysig_features.py)) to minimize processing latency.
+3. Implement partitioned layout (`rx_id=<rx>/is_equalized=<0|1>/data.parquet`) for sub-5ms slice loading during cross-receiver holdout experiments.
+4. Require cryptographic SHA-256 manifest generation for every output partition.
+5. Implement vectorized batch extraction ([`src/manysig_features.py`](file:///c:/Users/sujit/OneDrive/Documents/RF-Fingerprinting-Project-Intergration/RF-Fingerprinting-Project/src/manysig_features.py)) to minimize processing latency.
 
-### ASSUMPTIONS
-1. WiSig baseband capture sample rate is scaled at $F_s = 20.0\text{ MHz}$ for canonical spectral feature alignment with Track-A.
+### REQUIRES VALIDATION (Engineering Assumptions)
+1. **Sample Rate Default ($20\text{ MHz}$):** `sample_rate_hz = 20_000_000.0` is an **engineering default** inherited from Track-A. It is **NOT** explicitly recorded in `ManySig.pkl` metadata (which stores only `tx_list`, `rx_list`, `capture_date_list`, `equalized_list`, `max_sig`, `data`). The code permits explicit injection of `sample_rate_hz` to support alternative capture rates (e.g. $25\text{ MS/s}$) once verified from external WiSig documentation.
 
 ### SCIENTIFIC QUESTIONS (For Later Track-B Experiments)
 1. How do the 16 physical features shift when transmitter signals are observed across different receiver nodes (Rx 1..12)?

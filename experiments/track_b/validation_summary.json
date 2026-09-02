@@ -53,6 +53,7 @@
     "total_leaves_processed": 1,
     "total_rows": 1000,
     "sample_rate_hz": 20000000.0,
+    "sample_rate_status": "REQUIRES VALIDATION (Engineering default)",
     "features": [
       "i_mean",
       "i_std",
@@ -74,6 +75,6 @@
     "parquet_file": "validation_leaf_0_features.parquet",
     "parquet_size_bytes": 157999,
     "parquet_sha256": "97a3b1d258f09cd04d8f2ad1626516cedd7a4019d602a6f6faacbd7a1caefd92",
-    "elapsed_seconds": 16.09
+    "elapsed_seconds": 10.02
   }
 }
