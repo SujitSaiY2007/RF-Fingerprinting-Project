@@ -192,3 +192,12 @@ Before implementing the final extractor, the next task is a small proof-of-conce
 
 ### Security/provenance rule
 GitHub Personal Access Token credentials used for repository access must never be stored in the repository, dataset folder, prompts, logs or project documentation. Local IDE credentials/settings are operational configuration, not project evidence.
+
+## DEC-031 — Standard pickle loading is not a bounded-memory ManySig ingestion mechanism
+A controlled synthetic Protocol-3 POC on 02 September 2026 used 24 NumPy leaves with the verified ManySig leaf shape `(1000, 256, 2)` and `float64` dtype. The measured peak RSS was approximately 184.88 MiB for plain `pickle.load()` and 189.19 MiB when the pickle was read from a compressed ZIP member before `pickle.load()`.
+
+This establishes an engineering boundary for the proposed implementation: ordinary `pickle.load()` / normal `Unpickler` object reconstruction must not be treated as leaf-wise streaming access to the verified single top-level ManySig object.
+
+This decision is based on a controlled synthetic analogue, not the real ManySig archive. It therefore does **not** establish the real archive's peak memory or prove that a custom parser can achieve <=25–30 MB.
+
+Until a real-archive proof-of-concept demonstrates correctness and measured memory behaviour, the final ManySig extractor must not assume a bounded-memory streaming mechanism.

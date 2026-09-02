@@ -6,7 +6,7 @@
 - Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
 - Stable branch: `main`
 - Integration branch: `develop`
-- Current phase: **Track-A Version-B baseline established; Q/A truth-audit and reference consolidation complete; Track-B ManySig acquisition and schema inspection checkpoint established**
+- Current phase: **Track-A Version-B baseline established; Q/A truth-audit and reference consolidation complete; Track-B ManySig acquisition/schema inspection established; standard pickle streaming limitation experimentally characterized**
 - D2 learning gate: **PASSED**
 - D7 Track A: **COMPLETE / DEMONSTRATED**
 - B0: **COMPLETE / DEMONSTRATED — Version-A control reproduced**
@@ -15,7 +15,7 @@
 - D9: **DEMONSTRATED — replay protection strong; target-like unknown contamination unresolved**
 - D10: **DEMONSTRATED — integrated lifecycle**
 - Final web demonstrator: **DEPLOYED via GitHub Pages**
-- Current activity: **Track-B ManySig data-preparation/inspection; streaming ingestion proof-of-concept is next**
+- Current activity: **Track-B ManySig ingestion-method validation; real-archive custom streaming proof-of-concept is next**
 
 ## Project strategy: Track A -> Track B
 The project is treated as one complete project executed through constrained tracks:
@@ -152,9 +152,24 @@ Verified facts:
 Detailed record:
 `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
 
-The proposed <=25–30 MB peak-RAM streaming claim is **not yet verified**. Before final feature extraction, a small controlled ingestion/memory proof-of-concept must establish the actual mechanism and peak memory behaviour.
+## ManySig streaming/chunked ingestion checkpoint — 02 September 2026
+A controlled synthetic memory POC was executed before final feature extraction. It used 24 Protocol-3 NumPy leaves with the inspected ManySig leaf shape `(1000, 256, 2)` `float64`.
 
-ManySig is a Track-B data-preparation/validation resource and does not replace the frozen Track-A SMoRFFI baseline.
+Observed peak process RSS:
+- plain pickle + `pickle.load()`: **~184.88 MiB**;
+- ZIP member + `pickle.load()`: **~189.19 MiB**.
+
+The result demonstrates that ordinary `pickle.load()` does not provide leaf-wise bounded-memory access for a single nested top-level object. Reading the pickle from a compressed ZIP member does not change that object-materialization behaviour.
+
+This is controlled engineering evidence from a synthetic analogue, not a real-ManySig memory measurement. The prior <=25–30 MB claim remains unverified for the real archive.
+
+Detailed record:
+`docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md`
+
+### Immediate next boundary
+Use Antigravity IDE against the actual ManySig archive for a narrowly scoped read-only proof-of-concept. Determine whether a custom opcode-aware/incremental mechanism can recover selected leaves without materializing the complete top-level object, measure actual peak RSS, and verify recovered-leaf correctness. Do not implement the final extractor until this is demonstrated.
+
+ManySig remains a Track-B data-preparation/validation resource and does not replace the frozen Track-A SMoRFFI baseline.
 
 ## Final demonstrator
 The web application is separated from the RF engine. Current/planned UI surfaces include Dashboard, Identification, Device Profiles, Open-Set Security, Security/Attack Lab, Audit Trail and Evaluation/Research. The UI must present frozen results, methodology, provenance and limitations without inventing measurements.
@@ -162,6 +177,7 @@ The web application is separated from the RF engine. Current/planned UI surfaces
 ## Current checkpoint artifacts
 - Complete project reference: `docs/06_continuity/REFERENCE_REPORT_2026-08-31.md`
 - 02 Sep ManySig inspection record: `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
+- 02 Sep ManySig streaming POC: `docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md`
 - 02 Sep next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-09-02.md`
 - Previous next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
 - Historical Q/A continuation note: `docs/09_handoff/NEXT_CHAT_QA_NOTE.md`
