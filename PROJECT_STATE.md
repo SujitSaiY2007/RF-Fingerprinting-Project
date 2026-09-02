@@ -1,12 +1,12 @@
 # PROJECT STATE
 
-**Last updated:** 2026-08-31
+**Last updated:** 2026-09-02
 
 ## Authoritative status
 - Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
 - Stable branch: `main`
 - Integration branch: `develop`
-- Current phase: **Track-A Version-B baseline established; Q/A truth-audit and reference consolidation complete; next direction Track B**
+- Current phase: **Track-A Version-B baseline established; Q/A truth-audit and reference consolidation complete; Track-B ManySig acquisition and schema inspection checkpoint established**
 - D2 learning gate: **PASSED**
 - D7 Track A: **COMPLETE / DEMONSTRATED**
 - B0: **COMPLETE / DEMONSTRATED — Version-A control reproduced**
@@ -15,7 +15,7 @@
 - D9: **DEMONSTRATED — replay protection strong; target-like unknown contamination unresolved**
 - D10: **DEMONSTRATED — integrated lifecycle**
 - Final web demonstrator: **DEPLOYED via GitHub Pages**
-- Current activity: **Track-A baseline/reference consolidation; Track B is the future validation direction**
+- Current activity: **Track-B ManySig data-preparation/inspection; streaming ingestion proof-of-concept is next**
 
 ## Project strategy: Track A -> Track B
 The project is treated as one complete project executed through constrained tracks:
@@ -132,12 +132,38 @@ Track B should build on the Track-A demonstrator rather than restart it. Candida
 
 Track B is a **future direction**, not a completed result.
 
+## ManySig acquisition and inspection checkpoint — 2026-09-02
+A user-acquired WiSig ManySig archive is now available locally and has undergone non-destructive schema inspection using Antigravity IDE. The raw archive remains outside Git.
+
+Verified facts:
+- `ManySig.pkl.zip` compressed size: `1,454,577,503` bytes (~1.355 GB);
+- contained `ManySig.pkl` size: `2,359,341,461` bytes (~2.197 GB);
+- Python Pickle Protocol 3;
+- top-level keys: `tx_list`, `rx_list`, `capture_date_list`, `equalized_list`, `max_sig`, `data`;
+- 6 transmitters;
+- 12 receivers;
+- 4 March 2021 capture dates;
+- 2 equalization states;
+- `data[tx][rx][date][eq]` hierarchy;
+- 576 leaf arrays;
+- each leaf array `(1000, 256, 2)` with `float64` values;
+- 576,000 total signal bursts.
+
+Detailed record:
+`docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
+
+The proposed <=25–30 MB peak-RAM streaming claim is **not yet verified**. Before final feature extraction, a small controlled ingestion/memory proof-of-concept must establish the actual mechanism and peak memory behaviour.
+
+ManySig is a Track-B data-preparation/validation resource and does not replace the frozen Track-A SMoRFFI baseline.
+
 ## Final demonstrator
 The web application is separated from the RF engine. Current/planned UI surfaces include Dashboard, Identification, Device Profiles, Open-Set Security, Security/Attack Lab, Audit Trail and Evaluation/Research. The UI must present frozen results, methodology, provenance and limitations without inventing measurements.
 
 ## Current checkpoint artifacts
 - Complete project reference: `docs/06_continuity/REFERENCE_REPORT_2026-08-31.md`
-- Next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
+- 02 Sep ManySig inspection record: `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
+- 02 Sep next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-09-02.md`
+- Previous next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
 - Historical Q/A continuation note: `docs/09_handoff/NEXT_CHAT_QA_NOTE.md`
 - D8/D10 milestone addendum: `docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md`
 
@@ -148,3 +174,4 @@ The web application is separated from the RF engine. Current/planned UI surfaces
 - `develop` is the active implementation branch.
 - `main` is synchronized with `develop` at agreed significant milestones.
 - Before new Track-B implementation, preserve the accepted Track-A baseline and explicitly define the new dated research boundary.
+- Raw datasets and secrets such as GitHub Personal Access Tokens must never be committed to the repository.
