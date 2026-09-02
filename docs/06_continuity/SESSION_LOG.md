@@ -175,3 +175,21 @@ The detailed inspection record is:
 This is **dataset preparation/understanding progress**, not D1/D7/D8/D9 scientific validation. The proposed low-memory streaming/chunked processing approach has not yet been independently demonstrated. The next engineering task is a small controlled proof-of-concept measuring the actual incremental access mechanism and peak memory before implementing the final extractor.
 
 ManySig remains a Track-B dataset and does not replace the frozen Track-A SMoRFFI baseline.
+
+## 2026-09-02 — Controlled ManySig-style streaming memory POC
+A controlled synthetic Protocol-3 pickle POC was executed before final extractor implementation. It used 24 NumPy leaves with the inspected ManySig leaf shape `(1000, 256, 2)` and `float64` dtype, approximately 3.90625 MiB per leaf.
+
+Observed peak process RSS:
+- plain pickle + `pickle.load()`: ~184.88 MiB;
+- ZIP member + `zipfile.ZipFile.open()` + `pickle.load()`: ~189.19 MiB.
+
+The POC demonstrates an engineering limitation: standard `pickle.load()` materializes the single top-level object rather than exposing it as a leaf-wise streaming reader. Streaming the compressed ZIP member into `pickle.load()` does not remove that materialization behaviour.
+
+This is controlled engineering evidence from a synthetic analogue, not a real-ManySig memory measurement. The prior <=25–30 MB claim remains unverified for the real archive.
+
+The detailed POC record and reproduction script are:
+- `docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md`
+- `tools/manysig_streaming_poc.py`
+
+### Next boundary
+Antigravity must now test the actual ManySig stream with a narrowly scoped read-only proof-of-concept to determine whether a custom opcode-aware/incremental mechanism can recover selected leaves without materializing the complete top-level object. Actual peak RSS and recovery correctness must be measured before any final extractor is implemented.
