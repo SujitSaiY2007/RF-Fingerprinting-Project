@@ -194,33 +194,39 @@ class ManySigFeatureExtractor:
         total_rows = 0
         start_time = time.perf_counter()
 
-        indices_to_process = target_leaf_indices if target_leaf_indices is not None else range(TOTAL_LEAVES)
+        def process_leaf_record(coord: LeafCoordinate, leaf_arr: np.ndarray):
+            nonlocal leaves_processed, total_rows
+            tbl = build_arrow_table_from_leaf(coord, leaf_arr, sample_rate_hz=self.config.sample_rate_hz)
+
+            # Determine partition path: rx_id=<rx>/is_equalized=<0|1>
+            eq_str = "1" if coord.is_equalized else "0"
+            part_key = f"rx_id={coord.rx_id}/is_equalized={eq_str}"
+            part_dir = output_dir / part_key
+
+            if part_key not in open_writers:
+                part_dir.mkdir(parents=True, exist_ok=True)
+                part_file = part_dir / "data.parquet"
+                open_writers[part_key] = pq.ParquetWriter(
+                    part_file,
+                    schema=schema,
+                    compression=self.config.compression,
+                )
+                partition_files[part_key] = part_file
+                partition_row_counts[part_key] = 0
+
+            open_writers[part_key].write_table(tbl)
+            partition_row_counts[part_key] += len(tbl)
+            total_rows += len(tbl)
+            leaves_processed += 1
 
         try:
-            for idx in indices_to_process:
-                coord, leaf, _ = extract_single_leaf(self.config.archive_path, idx)
-                tbl = build_arrow_table_from_leaf(coord, leaf, sample_rate_hz=self.config.sample_rate_hz)
-
-                # Determine partition path: rx_id=<rx>/is_equalized=<0|1>
-                eq_str = "1" if coord.is_equalized else "0"
-                part_key = f"rx_id={coord.rx_id}/is_equalized={eq_str}"
-                part_dir = output_dir / part_key
-
-                if part_key not in open_writers:
-                    part_dir.mkdir(parents=True, exist_ok=True)
-                    part_file = part_dir / "data.parquet"
-                    open_writers[part_key] = pq.ParquetWriter(
-                        part_file,
-                        schema=schema,
-                        compression=self.config.compression,
-                    )
-                    partition_files[part_key] = part_file
-                    partition_row_counts[part_key] = 0
-
-                open_writers[part_key].write_table(tbl)
-                partition_row_counts[part_key] += len(tbl)
-                total_rows += len(tbl)
-                leaves_processed += 1
+            if target_leaf_indices is None:
+                # High-performance single-pass streaming across all 576 leaves
+                stream_all_leaves(self.config.archive_path, on_leaf_callback=process_leaf_record)
+            else:
+                for idx in target_leaf_indices:
+                    coord, leaf, _ = extract_single_leaf(self.config.archive_path, idx)
+                    process_leaf_record(coord, leaf)
         finally:
             # Close all writers safely
             for writer in open_writers.values():

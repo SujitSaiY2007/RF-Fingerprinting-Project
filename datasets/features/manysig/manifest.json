@@ -1,0 +1,177 @@
+{
+  "dataset_name": "ManySig_Partitioned_Features",
+  "source_archive": "ManySig.pkl.zip",
+  "partition_columns": [
+    "rx_id",
+    "is_equalized"
+  ],
+  "sample_rate_hz": 20000000.0,
+  "sample_rate_status": "REQUIRES VALIDATION (Engineering default)",
+  "total_leaves_processed": 576,
+  "total_rows": 576000,
+  "features": [
+    "i_mean",
+    "i_std",
+    "q_mean",
+    "q_std",
+    "amplitude_mean",
+    "amplitude_std",
+    "rms_amplitude",
+    "crest_factor",
+    "mean_power",
+    "iq_variance_ratio_db",
+    "iq_correlation",
+    "mean_phase_step_rad",
+    "std_phase_step_rad",
+    "spectral_centroid_hz",
+    "spectral_spread_hz",
+    "spectral_entropy_bits"
+  ],
+  "partitions": {
+    "rx_id=1-1/is_equalized=0": {
+      "relative_path": "rx_id=1-1\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3749825,
+      "sha256": "847c4cbd628d2c80f0bdb2ad44e3937b3457b94121129964eec5f0bf2ff9b48a"
+    },
+    "rx_id=1-1/is_equalized=1": {
+      "relative_path": "rx_id=1-1\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787477,
+      "sha256": "30a356abd68bd2e5ea69ff50c1bcc3ba8e0179f886f53b04ff23a0443da71b58"
+    },
+    "rx_id=1-19/is_equalized=0": {
+      "relative_path": "rx_id=1-19\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3750633,
+      "sha256": "b2e994a2e03c30b95b6e5d85de48a44905b80081f8620b812eba6f2b0f285d28"
+    },
+    "rx_id=1-19/is_equalized=1": {
+      "relative_path": "rx_id=1-19\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787626,
+      "sha256": "5c545726896d3639d91d7087f175c5074a1b79601a0244d17a6d5f2404e43b8a"
+    },
+    "rx_id=14-7/is_equalized=0": {
+      "relative_path": "rx_id=14-7\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3754962,
+      "sha256": "a15bf597a844d4374a6d42daf0afd645011eb880eeb96afb03fefdf223d3dfce"
+    },
+    "rx_id=14-7/is_equalized=1": {
+      "relative_path": "rx_id=14-7\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787623,
+      "sha256": "7487aedb64028d145704c15e40da236243b889d761282de3ede0b4fe96e3e894"
+    },
+    "rx_id=18-2/is_equalized=0": {
+      "relative_path": "rx_id=18-2\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3714995,
+      "sha256": "4d207042a8fdc1a557bb9df1a0073e9b9a3d7c25ceb039cdeb6233858e5627e3"
+    },
+    "rx_id=18-2/is_equalized=1": {
+      "relative_path": "rx_id=18-2\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787621,
+      "sha256": "d8c04134202d7444ca34ec754a94c2c8b8c2cfeb18435f8827864b5b659a56ad"
+    },
+    "rx_id=19-2/is_equalized=0": {
+      "relative_path": "rx_id=19-2\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3754336,
+      "sha256": "bdc72231c6a62829c32eb74d08958187d7611713fcc67e7fcc95b9f4a2d026e7"
+    },
+    "rx_id=19-2/is_equalized=1": {
+      "relative_path": "rx_id=19-2\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787620,
+      "sha256": "359d2af5bc9295f8c5618750d13c7cdf82ac181622d2806c5cc5adca7aaf0c1f"
+    },
+    "rx_id=2-1/is_equalized=0": {
+      "relative_path": "rx_id=2-1\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3749860,
+      "sha256": "66461caca502ff4ae7381e73b087a11d080d91eabc685ec7562a61796491ae2f"
+    },
+    "rx_id=2-1/is_equalized=1": {
+      "relative_path": "rx_id=2-1\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787478,
+      "sha256": "6a6b7c8692664c3f4af91bad7a0284348027f0e4057c43539f3e024eb7262f03"
+    },
+    "rx_id=2-19/is_equalized=0": {
+      "relative_path": "rx_id=2-19\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3753339,
+      "sha256": "9aca8323031c6f1160325b1b9662689e9cd9b100534c0226a2d8bb36d7506bf3"
+    },
+    "rx_id=2-19/is_equalized=1": {
+      "relative_path": "rx_id=2-19\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787625,
+      "sha256": "0f4ad795a763f10d630cbd111268f5c2bbb1b36c608aa413db77bb6917c1ece0"
+    },
+    "rx_id=20-1/is_equalized=0": {
+      "relative_path": "rx_id=20-1\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3751301,
+      "sha256": "58c34520892831277a8634e4e19e11b3001f8027fde8c8c8b0a436056fdcc2a0"
+    },
+    "rx_id=20-1/is_equalized=1": {
+      "relative_path": "rx_id=20-1\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787621,
+      "sha256": "926bf4a2e410a08081fde624bf64f37f90faf3e26a38987791f284e60dd1708e"
+    },
+    "rx_id=3-19/is_equalized=0": {
+      "relative_path": "rx_id=3-19\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3723245,
+      "sha256": "e24f90f3b68c6925454ba8e6d922666753ab5be4bb92ad6b47af6b00311e95f9"
+    },
+    "rx_id=3-19/is_equalized=1": {
+      "relative_path": "rx_id=3-19\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787621,
+      "sha256": "538103ab6c10f9a3f5e0d2a74761db38c1b37932f208ba741613650c434e45c8"
+    },
+    "rx_id=7-14/is_equalized=0": {
+      "relative_path": "rx_id=7-14\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3753095,
+      "sha256": "52a44e2f9aec1caea5a5ed82dec61aa2990e156767b63f4c5a82437b0ce58f36"
+    },
+    "rx_id=7-14/is_equalized=1": {
+      "relative_path": "rx_id=7-14\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787623,
+      "sha256": "a14b4715b15b041b328e8909aeb46eae9c41983c8bdafc7de572c4eeda95b05b"
+    },
+    "rx_id=7-7/is_equalized=0": {
+      "relative_path": "rx_id=7-7\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3751810,
+      "sha256": "8df82ac8d484c1d92eeb60816401adbdd249074994598a04de00fe9672c73021"
+    },
+    "rx_id=7-7/is_equalized=1": {
+      "relative_path": "rx_id=7-7\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787479,
+      "sha256": "87251f2a8e00d6a38ba355fe4984e40fa2aefe8073521e1adb506f53bf9d316d"
+    },
+    "rx_id=8-8/is_equalized=0": {
+      "relative_path": "rx_id=8-8\\is_equalized=0\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3750298,
+      "sha256": "b6f43b9537bfe02b40231d75b93354d1403283040989f73309f72d1039c3e5a4"
+    },
+    "rx_id=8-8/is_equalized=1": {
+      "relative_path": "rx_id=8-8\\is_equalized=1\\data.parquet",
+      "rows": 24000,
+      "size_bytes": 3787483,
+      "sha256": "192513e8f4f490ecdc9367ce8fd51ba9e253a87580d7c09efc86820ce8ac8dae"
+    }
+  },
+  "elapsed_seconds": 71.99
+}

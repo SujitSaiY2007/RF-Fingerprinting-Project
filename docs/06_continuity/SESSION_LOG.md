@@ -164,3 +164,14 @@ No prior dataset qualification, novelty finding, D1–D10 definition, leakage co
 - Validated exact mathematical equivalence against Track-A formulas ($\max |\Delta| = 4.34 \times 10^{-17}$) on real Leaf 0.
 - Generated sample validation Parquet file ($157,999\text{ bytes}$) and cryptographic manifest.
 - Documented in `docs/06_continuity/MANYSIG_FEATURE_EXTRACTION_DESIGN_2026-09-02.md` and DEC-031.
+
+## 2026-09-02 — Complete 576-leaf ManySig feature extraction executed and verified
+- Branch: `task/manysig-feature-extraction-runner-2026-09-02`.
+- Executed full single-pass streaming extraction across all 576 leaves ($576,000\text{ bursts}$) via `scripts/run_manysig_feature_extraction.py`.
+- Total runtime: $72.59\text{ seconds}$ ($7,935.1\text{ bursts/s}$).
+- Memory profile: Baseline RSS $41.98\text{ MiB}$, Peak RSS $132.59\text{ MiB}$, Delta $\Delta\text{RSS} = 90.61\text{ MiB}$.
+- Generated partitioned Parquet dataset (24 partitions, 23 columns, $90,408,596\text{ bytes}$) under `datasets/features/manysig/`.
+- Verified all 576 leaves, 576,000 rows, 6 TXs, 12 RXs, 4 dates, 2 equalization states without duplicates or omissions.
+- Reopened and verified all 24 Parquet partitions and matched streaming SHA-256 digests against `manifest.json`.
+- Confirmed source archive `ManySig.pkl.zip` remained unmodified ($1,454,577,503\text{ bytes}$).
+- Documented in `docs/06_continuity/MANYSIG_FULL_EXTRACTION_2026-09-02.md`.
