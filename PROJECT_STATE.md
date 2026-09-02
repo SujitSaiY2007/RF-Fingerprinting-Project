@@ -36,7 +36,7 @@ The Track-A progression is:
 Version A established the recognition control. Version B retained the RF recognition backbone and improved the security/governance surrounding persistent profile updates. The project therefore demonstrates a complete Track-A concept-to-demonstrator flow.
 
 ## Frozen D2 contract
-`serialized preamble -> complex[288] -> float32[2,288]`
+`serialized preamble -> complex[288] -> float32[2,288] I/Q`
 
 Do not restart D1/D2 or silently change the input schema. Baseline preprocessing remains without per-observation normalization, clipping, filtering, resampling or arbitrary interpolation. Device number/MAC is label/provenance only.
 
@@ -146,8 +146,8 @@ Verified facts:
 - 2 equalization states;
 - `data[tx][rx][date][eq]` hierarchy;
 - 576 leaf arrays;
-- each leaf array `(1000, 256, 2)` `float64`;
-- 576,000 signal bursts.
+- each leaf array `(1000, 256, 2)` with `float64` values;
+- 576,000 total signal bursts.
 
 Detailed record:
 `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
