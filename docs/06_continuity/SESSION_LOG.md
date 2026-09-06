@@ -175,3 +175,19 @@ No prior dataset qualification, novelty finding, D1–D10 definition, leakage co
 - Reopened and verified all 24 Parquet partitions and matched streaming SHA-256 digests against `manifest.json`.
 - Confirmed source archive `ManySig.pkl.zip` remained unmodified ($1,454,577,503\text{ bytes}$).
 - Documented in `docs/06_continuity/MANYSIG_FULL_EXTRACTION_2026-09-02.md`.
+
+## 2026-09-06 — Track-B B1 ManySig scientific validation and dataset quality analysis completed
+- Branch: `task/manysig-feature-extraction-runner-2026-09-02`.
+- Implemented and executed automated scientific validation runner `scripts/run_manysig_b1_validation.py` across all 576,000 burst feature records in `datasets/features/manysig/`.
+- **Integrity & Sanity:** Independently verified source archive size ($1,454,577,503\text{ B}$), all 24 Parquet partition SHA-256 digests ($100\%$ match), 23-column Arrow schema, 100% non-nullness, 100% finite values ($0$ NaNs / $\pm\infty$), zero coordinate collisions, and zero duplicate feature vectors.
+- **Coverage:** Verified exact full factorial orthogonal grid of $6\text{ TX} \times 12\text{ RX} \times 4\text{ Dates} \times 2\text{ Eq states} = 576\text{ leaves}$ ($1,000\text{ bursts/cell}$, $100\%$ balanced).
+- **Confounding & Factor Decomposition:** 
+  - Computed one-way ANOVA $\eta^2$ effect sizes across all factors: Equalization accounts for up to $97.17\%$ variance in magnitude/power (`amplitude_mean` $\eta^2 = 0.9717$); Receiver node accounts for up to $30.19\%$ variance in phase/frequency (`mean_phase_step_rad` $\eta^2_{\text{RX}} = 0.3019$ vs $\eta^2_{\text{TX}} = 0.0045$, `spectral_centroid_hz` $\eta^2_{\text{RX}} = 0.2876$ vs $\eta^2_{\text{TX}} = 0.0047$).
+  - Measured normalized Euclidean distances in $\mathbb{R}^{16}$: Intra-TX cross-receiver distance ($2.605$) equals matched inter-TX distance ($2.608$, ratio $1.00\times$), proving that receiver hardware/channel shift induces identical drift to changing emitter identity.
+  - Stratified ANOVA showed that when conditioned on equalized data, DC bias and envelope variance provide strong emitter discrimination (`q_mean` $\eta^2_{\text{TX}} = 0.6294$, `q_std` $\eta^2_{\text{TX}} = 0.5020$).
+  - `crest_factor` is the single most invariant emitter signature ($\eta^2_{\text{TX}} = 0.4230$, $\eta^2_{\text{Eq}} = 0.0000$).
+- **Leakage & Split Risks:** Quantified hierarchical leaf structure; proved that random row-level splitting causes catastrophic data leakage; established formal requirement for factor-holdout evaluation (Receiver, Date, TX, Equalization holdouts).
+- **Sample Rate Contract:** Documented linear scaling of `spectral_centroid_hz` and `spectral_spread_hz` with $F_s$; reaffirmed that $F_s = 20.0\text{ MHz}$ remains `REQUIRES VALIDATION (Engineering default)`.
+- **Machine-Readable Artifact:** Saved structured validation results to `experiments/track_b/manysig_b1_validation_results.json` ($67,202\text{ bytes}$).
+- **Continuity Documentation:** Recorded comprehensive report in `docs/06_continuity/MANYSIG_B1_VALIDATION_2026-09-06.md` and adopted DEC-032 / DEC-033.
+- **Boundaries Preserved:** Zero machine learning models trained; Track-A baseline and demonstrator preserved unchanged; branch `task/manysig-feature-extraction-runner-2026-09-02` retained without merging.
