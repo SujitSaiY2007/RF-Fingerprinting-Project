@@ -1,0 +1,72 @@
+{
+  "experiment_id": "EXP-B3-02",
+  "title": "Open-Set Transmitter Identification and Unknown Rejection",
+  "research_question": "Can an RF fingerprinting classifier reliably reject transmission bursts from unseen, held-out transmitters while maintaining high identification accuracy on known transmitters?",
+  "dataset": "WiSig ManySig",
+  "dataset_provenance": {
+    "source_archive": "ManySig.pkl.zip",
+    "primary_receiver": "1-1",
+    "multi_receiver_cluster": [
+      "1-1",
+      "1-19",
+      "2-1",
+      "2-19",
+      "14-7"
+    ],
+    "total_transmitters": 6,
+    "known_transmitters": [
+      "14-10",
+      "14-7",
+      "20-15",
+      "20-19"
+    ],
+    "held_out_unknown_transmitters": [
+      "6-15",
+      "8-20"
+    ],
+    "samples_per_burst": 256,
+    "features_per_burst": 16,
+    "nominal_sample_rate_hz": 20000000.0
+  },
+  "model_configuration": {
+    "model_family": "RandomForestClassifier",
+    "n_estimators": 100,
+    "max_features": "sqrt",
+    "random_state": 20260902,
+    "n_jobs": -1
+  },
+  "protocols": {
+    "temporal_open_set_split": {
+      "train_dates": [
+        "2021_03_01",
+        "2021_03_08"
+      ],
+      "val_dates": [
+        "2021_03_15"
+      ],
+      "test_dates": [
+        "2021_03_23"
+      ],
+      "train_bursts_known": 8000,
+      "val_bursts_known": 4000,
+      "test_bursts_known": 4000,
+      "test_bursts_unknown": 2000,
+      "calibration_policy": "Strict known-validation calibration. Threshold T is selected on Day 3 known validation set only. Zero unknown observations or test labels enter calibration."
+    }
+  },
+  "threshold_calibration_percentiles": [
+    1.0,
+    5.0,
+    10.0
+  ],
+  "fixed_baseline_thresholds": [
+    0.5,
+    0.7,
+    0.9
+  ],
+  "equalization_states": [
+    0,
+    1
+  ],
+  "random_seed": 20260902
+}

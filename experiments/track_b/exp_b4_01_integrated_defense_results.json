@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "experiment_id": "EXP-B4-01",
+    "title": "Integrated Community-Aware Authorization and Continual Adaptation Defense",
+    "target_transmitter": "14-10",
+    "total_rounds": 1000,
+    "timestamp": "2026-10-18T13:46:07Z",
+    "environment": {
+      "python_version": "3.12.4",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "scikit_learn_version": "1.9.1",
+      "numpy_version": "2.2.6",
+      "pandas_version": "2.3.3",
+      "pyarrow_version": "22.0.0"
+    },
+    "execution_time_seconds": 5.25
+  },
+  "evaluations": {
+    "no_community_naive": {
+      "gating_mode": "no_community_naive",
+      "disrupt_gateways_50pct": false,
+      "total_rounds_evaluated": 1000,
+      "legitimate_metrics": {
+        "total_legitimate_rounds": 500,
+        "accepted_count": 500,
+        "held_count": 0,
+        "rejected_count": 0,
+        "acceptance_rate": 1.0,
+        "false_rejection_or_hold_rate": 0.0
+      },
+      "attack_metrics": {
+        "total_attack_rounds": 500,
+        "unauthorized_accepted_count": 400,
+        "overall_attack_acceptance_rate": 0.8,
+        "overall_attack_block_rate": 0.19999999999999996,
+        "category_breakdown": {
+          "stealthy_poisoning": {
+            "total": 150,
+            "accepted": 150,
+            "held": 0,
+            "rejected": 0
+          },
+          "target_spoofing": {
+            "total": 150,
+            "accepted": 150,
+            "held": 0,
+            "rejected": 0
+          },
+          "stale_replay": {
+            "total": 100,
+            "accepted": 100,
+            "held": 0,
+            "rejected": 0
+          },
+          "unknown_transmitter": {
+            "total": 100,
+            "accepted": 0,
+            "held": 0,
+            "rejected": 100
+          }
+        }
+      },
+      "continual_adaptation_metrics": {
+        "total_profile_updates": 900,
+        "legitimate_updates": 500,
+        "unauthorized_updates": 400,
+        "contamination_rate": 0.4444444444444444,
+        "prototype_distortion_euclidean": 75639.53797472779
+      },
+      "security_audit_logging": {
+        "total_log_entries": 1000,
+        "cryptographic_hash_chain_verified": true
+      }
+    },
+    "threshold_only": {
+      "gating_mode": "threshold_only",
+      "disrupt_gateways_50pct": false,
+      "total_rounds_evaluated": 1000,
+      "legitimate_metrics": {
+        "total_legitimate_rounds": 500,
+        "accepted_count": 500,
+        "held_count": 0,
+        "rejected_count": 0,
+        "acceptance_rate": 1.0,
+        "false_rejection_or_hold_rate": 0.0
+      },
+      "attack_metrics": {
+        "total_attack_rounds": 500,
+        "unauthorized_accepted_count": 296,
+        "overall_attack_acceptance_rate": 0.592,
+        "overall_attack_block_rate": 0.40800000000000003,
+        "category_breakdown": {
+          "stealthy_poisoning": {
+            "total": 150,
+            "accepted": 150,
+            "held": 0,
+            "rejected": 0
+          },
+          "target_spoofing": {
+            "total": 150,
+            "accepted": 0,
+            "held": 150,
+            "rejected": 0
+          },
+          "stale_replay": {
+            "total": 100,
+            "accepted": 100,
+            "held": 0,
+            "rejected": 0
+          },
+          "unknown_transmitter": {
+            "total": 100,
+            "accepted": 46,
+            "held": 0,
+            "rejected": 54
+          }
+        }
+      },
+      "continual_adaptation_metrics": {
+        "total_profile_updates": 796,
+        "legitimate_updates": 500,
+        "unauthorized_updates": 296,
+        "contamination_rate": 0.37185929648241206,
+        "prototype_distortion_euclidean": 28651.2956906177
+      },
+      "security_audit_logging": {
+        "total_log_entries": 1000,
+        "cryptographic_hash_chain_verified": true
+      }
+    },
+    "community_gated_integrated": {
+      "gating_mode": "community_gated_integrated",
+      "disrupt_gateways_50pct": false,
+      "total_rounds_evaluated": 1000,
+      "legitimate_metrics": {
+        "total_legitimate_rounds": 500,
+        "accepted_count": 500,
+        "held_count": 0,
+        "rejected_count": 0,
+        "acceptance_rate": 1.0,
+        "false_rejection_or_hold_rate": 0.0
+      },
+      "attack_metrics": {
+        "total_attack_rounds": 500,
+        "unauthorized_accepted_count": 0,
+        "overall_attack_acceptance_rate": 0.0,
+        "overall_attack_block_rate": 1.0,
+        "category_breakdown": {
+          "stealthy_poisoning": {
+            "total": 150,
+            "accepted": 0,
+            "held": 0,
+            "rejected": 150
+          },
+          "target_spoofing": {
+            "total": 150,
+            "accepted": 0,
+            "held": 150,
+            "rejected": 0
+          },
+          "stale_replay": {
+            "total": 100,
+            "accepted": 0,
+            "held": 0,
+            "rejected": 100
+          },
+          "unknown_transmitter": {
+            "total": 100,
+            "accepted": 0,
+            "held": 0,
+            "rejected": 100
+          }
+        }
+      },
+      "continual_adaptation_metrics": {
+        "total_profile_updates": 500,
+        "legitimate_updates": 500,
+        "unauthorized_updates": 0,
+        "contamination_rate": 0.0,
+        "prototype_distortion_euclidean": 10904.353113615321
+      },
+      "security_audit_logging": {
+        "total_log_entries": 1000,
+        "cryptographic_hash_chain_verified": true
+      }
+    },
+    "ablation_disrupted_gateways_50pct": {
+      "gating_mode": "community_gated_integrated",
+      "disrupt_gateways_50pct": true,
+      "total_rounds_evaluated": 1000,
+      "legitimate_metrics": {
+        "total_legitimate_rounds": 500,
+        "accepted_count": 347,
+        "held_count": 153,
+        "rejected_count": 0,
+        "acceptance_rate": 0.694,
+        "false_rejection_or_hold_rate": 0.306
+      },
+      "attack_metrics": {
+        "total_attack_rounds": 500,
+        "unauthorized_accepted_count": 0,
+        "overall_attack_acceptance_rate": 0.0,
+        "overall_attack_block_rate": 1.0,
+        "category_breakdown": {
+          "stealthy_poisoning": {
+            "total": 150,
+            "accepted": 0,
+            "held": 150,
+            "rejected": 0
+          },
+          "target_spoofing": {
+            "total": 150,
+            "accepted": 0,
+            "held": 150,
+            "rejected": 0
+          },
+          "stale_replay": {
+            "total": 100,
+            "accepted": 0,
+            "held": 0,
+            "rejected": 100
+          },
+          "unknown_transmitter": {
+            "total": 100,
+            "accepted": 0,
+            "held": 0,
+            "rejected": 100
+          }
+        }
+      },
+      "continual_adaptation_metrics": {
+        "total_profile_updates": 347,
+        "legitimate_updates": 347,
+        "unauthorized_updates": 0,
+        "contamination_rate": 0.0,
+        "prototype_distortion_euclidean": 8569.77948337844
+      },
+      "security_audit_logging": {
+        "total_log_entries": 1000,
+        "cryptographic_hash_chain_verified": true
+      }
+    }
+  }
+}

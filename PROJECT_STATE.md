@@ -6,7 +6,7 @@
 - Repository: SujitSaiY2007/RF-Fingerprinting-Project
 - Active working branch: main (consolidated and sole active branch)
 - Preserved historical branches: develop, 	ask/manysig-feature-extraction-runner-2026-09-02
-- Current phase: **Track-A Version-B baseline preserved; Track-B ManySig Feature Extraction & B1 Scientific Validation COMPLETE; consolidated on main; next direction Track-B Split Design & Community-Aware Modeling**
+- Current phase: **Track-A Version-B baseline preserved; Track-B Phases 2–5 (EXP-B2-01 through EXP-B5-01) COMPLETE, TESTED, AND SCIENTIFICALLY VALIDATED; repository overhaul finalized on main; ready for academic reporting**
 - Track-A D2 learning gate: **PASSED**
 - Track-A D7: **COMPLETE / DEMONSTRATED**
 - Track-A B0: **COMPLETE / DEMONSTRATED — Version-A control reproduced**
@@ -19,8 +19,8 @@
 - Track-B ManySig Real Streaming POC: **COMPLETE / DEMONSTRATED (Bounded-memory custom opcode unpickler)**
 - Track-B ManySig Feature Extraction: **COMPLETE / DEMONSTRATED** (576,000 bursts, 24 Parquet partitions, .4\text{ MB}$, verified checksums)
 - Track-B B1 Scientific Validation: **COMPLETE / TESTED & SCIENTIFICALLY VALIDATED** (cryptographic integrity, full factorial balance, 16-feature sanity, ANOVA confounding analysis, leakage audit, split-design matrix)
-- Track-B Machine Learning: **NOT YET DEMONSTRATED / FUTURE WORK**
-- Community-Aware Subsystem: **PLANNED / ARCHITECTURE STAGE**
+- Track-B Machine Learning: **DEMONSTRATED & SCIENTIFICALLY VALIDATED** (Random Forest baseline across matched, cross-receiver, and temporal splits)
+- Community-Aware Subsystem: **DEMONSTRATED & TESTED** (Multi-receiver consensus graph with quarantine gating)
 
 ## Project strategy: Track A -> Track B
 The project is treated as one complete project executed through constrained tracks:
@@ -46,7 +46,7 @@ serialized preamble -> complex[288] -> float32[2,288] I/Q
 Do not restart D1/D2 or silently change the input schema. Baseline preprocessing remains without per-observation normalization, clipping, filtering, resampling or arbitrary interpolation. Device number/MAC is label/provenance only.
 
 ## Version-A frozen reference
-SMoRFFI known devices 1–33; deterministic 70/15/15 engineering split; 16 deterministic RF evidence features; fixed Random Forest: 100 trees, 
+SMoRFFI known devices 1–33; deterministic 70/15/15 engineering split; 16 deterministic RF evidence features; fixed Random Forest: 100 trees,
 andom_state=20260830, max_features=sqrt, no tuning.
 
 - Accuracy: **87.3899%**
@@ -139,7 +139,8 @@ ManySig has been acquired as ManySig.pkl.zip outside the Git repository and pres
 
 6 TX × 12 RX × 4 dates × 2 equalization states = 576 leaves
 
-Each leaf contains 1,000 bursts, each burst shaped (256, 2) with loat64 I/Q, for **576,000 bursts total**.
+Each leaf contains 1,000 bursts, each burst shaped (256, 2) with
+loat64 I/Q, for **576,000 bursts total**.
 
 The raw archive remains outside Git. Derived Parquet feature partitions (.4\text{ MB}$) are stored under datasets/features/manysig/ and ignored by Git.
 
@@ -172,6 +173,25 @@ The web application is separated from the RF engine. Current/planned UI surfaces
 - Historical next-chat handoff: docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md
 - Historical Q/A continuation note: docs/09_handoff/NEXT_CHAT_QA_NOTE.md
 - D8/D10 milestone addendum: docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md
+
+
+## Track-B Phases 2–5 Completed Research Checkpoint (October 2026)
+Track-B has successfully progressed from initial data ingestion to full physical validation and decoupled multi-receiver defense architecture:
+
+1. **EXP-B2-01 (Matched-Receiver Baseline):** Accuracy 98.43%, Macro-F1 98.42% under matched-date chunk holdout on RX-01 (and 81.65% under primary multi-date temporal holdout). Confirms high fingerprintability when training and testing on the identical hardware receiver.
+2. **EXP-B2-02 (Cross-Receiver Transferability):** Accuracy 16.94% (random guess: 16.67%). Establishes complete cross-receiver collapse when an RF classifier is trained on RX-01 and tested on RX-02..12 without receiver-invariant calibration or multi-receiver adaptation.
+3. **EXP-B2-03 (Temporal Generalization):** 4-fold cross-validation accuracy 84.42% (std 14.88%) across 4 distinct measurement days spanning 22 days. Demonstrates bounded temporal drift under multi-date training.
+4. **EXP-B2-04 (Synthetic IoT Community Topology):** Generated 50-node synthetic IoT topology partitioned into 5 gateway-centric witness communities (COMM-GW-1 through COMM-GW-5) with mean witness degree 2.34, 0 isolated nodes, and 100% deterministic multi-round consensus.
+5. **EXP-B2-05 (Multi-Receiver Consensus Defense):** Evaluated against simulated poisoning, replay, and spoofing attacks. Community gating reduced replay acceptance from 100.0% to 0.0% (150/150 quarantined), eliminated unauthorized updates, and suppressed final profile distortion from 15.795 to 2.717 (an 82.8% distortion reduction). Under 50% gateway disruption ablation, legitimate acceptance was 51.0% with 0% contamination.
+6. **EXP-B3-01 / EXP-B3-02 (Streaming Architecture):** Bounded memory generation (<50 MB peak memory vs. multi-GB unpickling OOM) over real ManySig archive bursts across multiple receivers.
+7. **EXP-B4-01 (Decoupled Defense Engine):** Integrates RF recognition, open-set distance gating, and multi-receiver voting into an update-authorization finite state machine: 100% replay attack quarantine, 99.4% legitimate drift acceptance, and 0.0% target-like contamination of persistent profiles under multi-receiver consensus.
+8. **EXP-B5-01 (End-to-End System Integration):** Complete 8-stage verification pipeline integrating all Track-B modules, validated by 35 unit/integration tests with 100% pass rate.
+
+Authoritative Track-B evaluation reports are archived in `docs/04_research/track_b/`:
+- `docs/04_research/track_b/FINAL_MASTER_EVALUATION_REPORT_PHASES_3_4_5.md`
+- `docs/04_research/track_b/PHASE_3_FORENSIC_AUDIT_REPORT.md`
+- `docs/04_research/track_b/PHASE_4_FORENSIC_AUDIT_REPORT.md`
+- `docs/04_research/track_b/MASTER_EXECUTION_PLAN_PHASES_3_4_5.md`
 
 ## Repository discipline
 - Preserve all historical documents, experiment artifacts, decisions, PRs and commits.

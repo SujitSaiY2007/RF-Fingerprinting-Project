@@ -1,0 +1,183 @@
+{
+  "metadata": {
+    "experiment_id": "EXP-B2-05",
+    "title": "Community-Gated Adaptation and Poisoning Evaluation",
+    "research_question": "Does multi-witness community gating successfully authorize legitimate continual profile adaptation while rejecting or quarantining poisoning, replay, and target-like spoofing attacks compared to naive single-receiver baselines?",
+    "timestamp_utc": "2026-10-18T12:54:39Z",
+    "threat_model": {
+      "adversary_capabilities": [
+        "Target-like spoofing: Attacker crafts transmissions mimicking target transmitter features",
+        "Gradual poisoning / creep: Attacker injects incremental malicious drifts to corrupt stored profile",
+        "Replay attacks: Attacker retransmits captured legitimate preambles out-of-context",
+        "Single-gateway compromise: Attacker controls or deceives a single witnessing gateway"
+      ],
+      "adversary_limitations": [
+        "Attacker cannot simultaneously deceive multiple independent spatially-distributed gateways with consistent multi-angle RF signatures",
+        "Attacker cannot alter gateway-to-gateway consensus backhaul"
+      ],
+      "trust_assumptions": [
+        "Majority of witnessing gateways are non-colluding",
+        "Profile updates are persistent only when explicitly authorized by the gating contract"
+      ]
+    },
+    "evidence_classification": "Synthetic Controlled Attack Simulation (Not Real Physical RF Attack)"
+  },
+  "evaluations": {
+    "no_community_naive": {
+      "mode": "no_community_naive",
+      "disruption_prob": 0.0,
+      "stats": {
+        "legitimate": {
+          "accepted": 500,
+          "quarantined": 0,
+          "rejected": 0,
+          "total": 500
+        },
+        "poisoning": {
+          "accepted": 0,
+          "quarantined": 0,
+          "rejected": 200,
+          "total": 200
+        },
+        "spoofing": {
+          "accepted": 0,
+          "quarantined": 0,
+          "rejected": 150,
+          "total": 150
+        },
+        "replay": {
+          "accepted": 150,
+          "quarantined": 0,
+          "rejected": 0,
+          "total": 150
+        }
+      },
+      "legitimate_acceptance_rate": 1.0,
+      "poisoning_contamination_rate": 0.0,
+      "spoofing_acceptance_rate": 0.0,
+      "replay_acceptance_rate": 1.0,
+      "false_hold_rate": 0.0,
+      "false_rejection_rate": 0.0,
+      "final_profile_distortion": 15.794800243143248,
+      "total_updates_committed": 650,
+      "quarantine_buffer_size": 0
+    },
+    "threshold_only": {
+      "mode": "threshold_only",
+      "disruption_prob": 0.0,
+      "stats": {
+        "legitimate": {
+          "accepted": 500,
+          "quarantined": 0,
+          "rejected": 0,
+          "total": 500
+        },
+        "poisoning": {
+          "accepted": 0,
+          "quarantined": 0,
+          "rejected": 200,
+          "total": 200
+        },
+        "spoofing": {
+          "accepted": 0,
+          "quarantined": 0,
+          "rejected": 150,
+          "total": 150
+        },
+        "replay": {
+          "accepted": 0,
+          "quarantined": 150,
+          "rejected": 0,
+          "total": 150
+        }
+      },
+      "legitimate_acceptance_rate": 1.0,
+      "poisoning_contamination_rate": 0.0,
+      "spoofing_acceptance_rate": 0.0,
+      "replay_acceptance_rate": 0.0,
+      "false_hold_rate": 0.0,
+      "false_rejection_rate": 0.0,
+      "final_profile_distortion": 2.7172146189929185,
+      "total_updates_committed": 500,
+      "quarantine_buffer_size": 5
+    },
+    "community_gated": {
+      "mode": "community_gated",
+      "disruption_prob": 0.0,
+      "stats": {
+        "legitimate": {
+          "accepted": 500,
+          "quarantined": 0,
+          "rejected": 0,
+          "total": 500
+        },
+        "poisoning": {
+          "accepted": 0,
+          "quarantined": 200,
+          "rejected": 0,
+          "total": 200
+        },
+        "spoofing": {
+          "accepted": 0,
+          "quarantined": 0,
+          "rejected": 150,
+          "total": 150
+        },
+        "replay": {
+          "accepted": 0,
+          "quarantined": 150,
+          "rejected": 0,
+          "total": 150
+        }
+      },
+      "legitimate_acceptance_rate": 1.0,
+      "poisoning_contamination_rate": 0.0,
+      "spoofing_acceptance_rate": 0.0,
+      "replay_acceptance_rate": 0.0,
+      "false_hold_rate": 0.0,
+      "false_rejection_rate": 0.0,
+      "final_profile_distortion": 2.7172146189929185,
+      "total_updates_committed": 500,
+      "quarantine_buffer_size": 5
+    },
+    "community_disrupted_ablation": {
+      "mode": "community_disrupted_ablation",
+      "disruption_prob": 0.5,
+      "stats": {
+        "legitimate": {
+          "accepted": 255,
+          "quarantined": 188,
+          "rejected": 57,
+          "total": 500
+        },
+        "poisoning": {
+          "accepted": 0,
+          "quarantined": 200,
+          "rejected": 0,
+          "total": 200
+        },
+        "spoofing": {
+          "accepted": 0,
+          "quarantined": 0,
+          "rejected": 150,
+          "total": 150
+        },
+        "replay": {
+          "accepted": 0,
+          "quarantined": 150,
+          "rejected": 0,
+          "total": 150
+        }
+      },
+      "legitimate_acceptance_rate": 0.51,
+      "poisoning_contamination_rate": 0.0,
+      "spoofing_acceptance_rate": 0.0,
+      "replay_acceptance_rate": 0.0,
+      "false_hold_rate": 0.376,
+      "false_rejection_rate": 0.114,
+      "final_profile_distortion": 2.634781117284005,
+      "total_updates_committed": 255,
+      "quarantine_buffer_size": 5
+    }
+  }
+}

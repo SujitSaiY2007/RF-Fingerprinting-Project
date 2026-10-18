@@ -1,0 +1,86 @@
+{
+  "experiment_id": "EXP-B2-02",
+  "title": "Cross-Receiver Spatial Generalization and Confounding Benchmark",
+  "research_question": "How severely does a 16-feature Random Forest trained on a single source receiver degrade when tested on unseen target receivers across the network?",
+  "dataset": "WiSig ManySig",
+  "dataset_provenance": {
+    "source_archive": "ManySig.pkl.zip",
+    "total_transmitters": 6,
+    "total_receivers": 12,
+    "total_capture_dates": 4,
+    "total_equalization_states": 2,
+    "source_receiver": "1-1",
+    "target_receivers": [
+      "1-19",
+      "14-7",
+      "18-2",
+      "19-2",
+      "2-1",
+      "2-19",
+      "20-1",
+      "3-19",
+      "7-14",
+      "7-7",
+      "8-8"
+    ],
+    "matched_control_receiver": "1-1",
+    "nominal_sample_rate_hz": 20000000.0,
+    "sample_rate_status": "REQUIRES VALIDATION (Engineering default inherited from Track-A)"
+  },
+  "known_transmitters": [
+    "14-10",
+    "14-7",
+    "20-15",
+    "20-19",
+    "6-15",
+    "8-20"
+  ],
+  "feature_contract": {
+    "feature_count": 16,
+    "feature_names": [
+      "i_mean",
+      "i_std",
+      "q_mean",
+      "q_std",
+      "amplitude_mean",
+      "amplitude_std",
+      "rms_amplitude",
+      "crest_factor",
+      "mean_power",
+      "iq_variance_ratio_db",
+      "iq_correlation",
+      "mean_phase_step_rad",
+      "std_phase_step_rad",
+      "spectral_centroid_hz",
+      "spectral_spread_hz",
+      "spectral_entropy_bits"
+    ]
+  },
+  "model_configuration": {
+    "model_family": "RandomForestClassifier",
+    "n_estimators": 100,
+    "max_features": "sqrt",
+    "class_weight": null,
+    "random_state": 20260902,
+    "n_jobs": -1,
+    "tuning": false
+  },
+  "random_seed": 20260902,
+  "protocols": {
+    "cross_receiver_evaluation": {
+      "training_receiver": "1-1",
+      "training_dates": ["2021_03_01", "2021_03_08", "2021_03_15"],
+      "testing_dates": ["2021_03_23"],
+      "total_training_bursts": 18000,
+      "test_bursts_per_receiver": 6000,
+      "total_evaluation_bursts": 72000,
+      "leakage_safeguard": "Model is trained strictly on source receiver 1-1; target receiver data is strictly held out and evaluated only on unseen test date 2021_03_23."
+    }
+  },
+  "leakage_controls": [
+    "Receiver identifiers strictly excluded from classifier features",
+    "Zero training on any target receiver partition",
+    "Source receiver model weights frozen prior to target receiver evaluation",
+    "Temporal separation preserved: testing strictly on Day 4 (2021_03_23)"
+  ]
+}

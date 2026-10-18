@@ -1,0 +1,46 @@
+{
+  "experiment_id": "EXP-B2-05",
+  "title": "Community-Gated Adaptation and Poisoning Evaluation",
+  "research_question": "Does multi-witness community gating successfully authorize legitimate continual profile adaptation while rejecting or quarantining poisoning, replay, and target-like spoofing attacks compared to naive single-receiver baselines?",
+  "threat_model": {
+    "adversary_capabilities": [
+      "Target-like spoofing: Attacker crafts transmissions mimicking target transmitter features",
+      "Gradual poisoning / creep: Attacker injects incremental malicious drifts to corrupt stored profile",
+      "Replay attacks: Attacker retransmits captured legitimate preambles out-of-context",
+      "Single-gateway compromise: Attacker controls or deceives a single witnessing gateway"
+    ],
+    "adversary_limitations": [
+      "Attacker cannot simultaneously deceive multiple independent spatially-distributed gateways with consistent multi-angle RF signatures",
+      "Attacker cannot alter gateway-to-gateway consensus backhaul"
+    ],
+    "trust_assumptions": [
+      "Majority of witnessing gateways are non-colluding",
+      "Profile updates are persistent only when explicitly authorized by the gating contract"
+    ]
+  },
+  "simulation_profile": {
+    "feature_dimension": 16,
+    "initial_variance": 1.0,
+    "learning_rate": 0.05,
+    "max_drift_threshold_std": 3.0,
+    "rounds_per_scenario": {
+      "legitimate_adaptation": 500,
+      "gradual_poisoning": 200,
+      "target_like_spoofing": 150,
+      "replay_attack": 150
+    },
+    "total_evaluation_rounds": 1000,
+    "random_seed": 20260902
+  },
+  "evaluated_architectures": [
+    "no_community_naive",
+    "threshold_only",
+    "community_gated",
+    "community_disrupted_ablation"
+  ],
+  "leakage_controls": [
+    "Identity classification decision strictly separated from update authorization",
+    "Synthetic attack scenarios evaluated under fixed deterministic seeds",
+    "No claim that synthetic poisoning defenses guarantee real-world physical security without further testing"
+  ]
+}

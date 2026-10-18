@@ -1,0 +1,99 @@
+{
+  "experiment_id": "EXP-B2-01",
+  "title": "Matched-Receiver ManySig Random Forest Baseline",
+  "research_question": "Can the existing 16-feature Random Forest distinguish the six ManySig transmitters when training and testing are restricted to a matched receiver condition?",
+  "dataset": "WiSig ManySig",
+  "dataset_provenance": {
+    "source_archive": "ManySig.pkl.zip",
+    "total_transmitters": 6,
+    "total_receivers": 12,
+    "total_capture_dates": 4,
+    "total_equalization_states": 2,
+    "total_bursts": 576000,
+    "samples_per_burst": 256,
+    "selected_receiver": "1-1",
+    "selected_receiver_rows_per_eq": 24000,
+    "nominal_sample_rate_hz": 20000000.0,
+    "sample_rate_status": "REQUIRES VALIDATION (Engineering default inherited from Track-A)"
+  },
+  "known_transmitters": [
+    "14-10",
+    "14-7",
+    "20-15",
+    "20-19",
+    "6-15",
+    "8-20"
+  ],
+  "feature_contract": {
+    "feature_count": 16,
+    "feature_names": [
+      "i_mean",
+      "i_std",
+      "q_mean",
+      "q_std",
+      "amplitude_mean",
+      "amplitude_std",
+      "rms_amplitude",
+      "crest_factor",
+      "mean_power",
+      "iq_variance_ratio_db",
+      "iq_correlation",
+      "mean_phase_step_rad",
+      "std_phase_step_rad",
+      "spectral_centroid_hz",
+      "spectral_spread_hz",
+      "spectral_entropy_bits"
+    ],
+    "source_module": "src/manysig_features.py"
+  },
+  "model_configuration": {
+    "model_family": "RandomForestClassifier",
+    "n_estimators": 100,
+    "max_features": "sqrt",
+    "class_weight": null,
+    "random_state": 20260902,
+    "n_jobs": -1,
+    "tuning": false,
+    "provenance": "Track-A D5 classical RF baseline specification"
+  },
+  "random_seed": 20260902,
+  "protocols": {
+    "primary_temporal_holdout": {
+      "name": "Date-Holdout Protocol (Days 1-3 Train -> Day 4 Test)",
+      "train_dates": ["2021_03_01", "2021_03_08", "2021_03_15"],
+      "test_dates": ["2021_03_23"],
+      "train_bursts_per_tx": 3000,
+      "test_bursts_per_tx": 1000,
+      "total_train_bursts": 18000,
+      "total_test_bursts": 6000,
+      "leakage_safeguard": "Strict temporal date holdout. Test date 2021_03_23 is completely unseen during training."
+    },
+    "secondary_matched_date_chunk_holdout": {
+      "name": "Burst-Block Holdout Protocol (70% Train, 15% Val, 15% Test within each leaf)",
+      "train_burst_range": [0, 699],
+      "val_burst_range": [700, 849],
+      "test_burst_range": [850, 999],
+      "total_train_bursts": 16800,
+      "total_val_bursts": 3600,
+      "total_test_bursts": 3600,
+      "leakage_safeguard": "Contiguous block separation prevents burst-to-burst autocorrelation while testing matched-date performance."
+    },
+    "tertiary_two_date_temporal_holdout": {
+      "name": "Two-Date Train Protocol (Days 1-2 Train -> Day 3 Val -> Day 4 Test)",
+      "train_dates": ["2021_03_01", "2021_03_08"],
+      "val_dates": ["2021_03_15"],
+      "test_dates": ["2021_03_23"],
+      "total_train_bursts": 12000,
+      "total_val_bursts": 6000,
+      "total_test_bursts": 6000,
+      "leakage_safeguard": "Unseen validation and test dates to quantify temporal drift under limited training observation."
+    }
+  },
+  "leakage_controls": [
+    "Strict prohibition of uniform random row splitting (DEC-035)",
+    "Metadata columns (rx_id, capture_date, is_equalized, leaf_index, burst_index, sample_count) strictly excluded from input features",
+    "Model trained strictly on features from training partition",
+    "No hyperparameter tuning against test partitions",
+    "Closed-set 6-transmitter classification in controlled matched-receiver condition"
+  ]
+}

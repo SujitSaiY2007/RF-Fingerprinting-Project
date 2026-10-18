@@ -1,0 +1,1986 @@
+{
+  "metadata": {
+    "experiment_id": "EXP-B3-02",
+    "title": "Open-Set Transmitter Identification and Unknown Rejection",
+    "dataset": "WiSig ManySig",
+    "known_transmitters": [
+      "14-10",
+      "14-7",
+      "20-15",
+      "20-19"
+    ],
+    "held_out_unknown_transmitters": [
+      "6-15",
+      "8-20"
+    ],
+    "calibration_policy": "Strict known-validation calibration. Threshold T is selected on Day 3 known validation set only. Zero unknown observations or test labels enter calibration.",
+    "timestamp": "2026-10-18T13:24:55Z",
+    "environment": {
+      "python_version": "3.12.4",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "scikit_learn_version": "1.9.1",
+      "numpy_version": "2.2.6",
+      "pandas_version": "2.3.3",
+      "pyarrow_version": "22.0.0"
+    },
+    "execution_time_seconds": 10.57
+  },
+  "evaluations": {
+    "equalized_0": {
+      "single_rx_1_1_open_set": {
+        "calibrated_99pct_val": {
+          "threshold": 0.51,
+          "threshold_name": "Calibrated 99% Validation Target (percentile 1.0)",
+          "known_acceptance_rate": 0.8985,
+          "known_false_rejection_rate": 0.1015,
+          "known_accuracy_among_accepted": 0.9994435169727324,
+          "known_overall_accuracy": 0.898,
+          "unknown_false_acceptance_rate": 0.7805,
+          "unknown_rejection_rate": 0.21950000000000003,
+          "open_set_balanced_accuracy": 0.7623,
+          "open_set_macro_f1": 0.7017018537259521,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.4791566842357451,
+              "recall": 1.0,
+              "f1": 0.6478781988986071,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.998997995991984,
+              "recall": 0.997,
+              "f1": 0.997997997997998,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.9983221476510067,
+              "recall": 0.595,
+              "f1": 0.7456140350877193,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.6784260515603799,
+              "recall": 1.0,
+              "f1": 0.8084074373484236,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.5195266272189349,
+              "recall": 0.2195,
+              "f1": 0.3086115992970123,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              1000,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              997,
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              1,
+              595,
+              0,
+              404
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              1087,
+              0,
+              1,
+              473,
+              439
+            ]
+          ]
+        },
+        "calibrated_95pct_val": {
+          "threshold": 0.57,
+          "threshold_name": "Calibrated 95% Validation Target (percentile 5.0)",
+          "known_acceptance_rate": 0.74925,
+          "known_false_rejection_rate": 0.25075,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.74925,
+          "unknown_false_acceptance_rate": 0.553,
+          "unknown_rejection_rate": 0.44699999999999995,
+          "open_set_balanced_accuracy": 0.6888,
+          "open_set_macro_f1": 0.6171994634035508,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.4904364884747425,
+              "recall": 1.0,
+              "f1": 0.6581112207963146,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.995,
+              "f1": 0.9974937343358395,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 1.0,
+              "recall": 0.002,
+              "f1": 0.003992015968063872,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.9372071227741331,
+              "recall": 1.0,
+              "f1": 0.9675858732462506,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.47127042698998417,
+              "recall": 0.447,
+              "f1": 0.4588144726712856,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              1000,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              995,
+              0,
+              0,
+              5
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              998
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              1039,
+              0,
+              0,
+              67,
+              894
+            ]
+          ]
+        },
+        "calibrated_90pct_val": {
+          "threshold": 0.59,
+          "threshold_name": "Calibrated 90% Validation Target (percentile 10.0)",
+          "known_acceptance_rate": 0.748,
+          "known_false_rejection_rate": 0.252,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.748,
+          "unknown_false_acceptance_rate": 0.5365,
+          "unknown_rejection_rate": 0.4635,
+          "open_set_balanced_accuracy": 0.6910999999999999,
+          "open_set_macro_f1": 0.6202606965288879,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.4972650422675286,
+              "recall": 1.0,
+              "f1": 0.6642311524410495,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.992,
+              "f1": 0.9959839357429718,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.9416195856873822,
+              "recall": 1.0,
+              "f1": 0.9699321047526673,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.4790697674418605,
+              "recall": 0.4635,
+              "f1": 0.471156289707751,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              1000,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              992,
+              0,
+              0,
+              8
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              1000
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              1011,
+              0,
+              0,
+              62,
+              927
+            ]
+          ]
+        },
+        "fixed_0.50": {
+          "threshold": 0.5,
+          "threshold_name": "Fixed Confidence Baseline (0.50)",
+          "known_acceptance_rate": 0.8987499999999999,
+          "known_false_rejection_rate": 0.10125,
+          "known_accuracy_among_accepted": 0.9994436717663422,
+          "known_overall_accuracy": 0.89825,
+          "unknown_false_acceptance_rate": 0.9175,
+          "unknown_rejection_rate": 0.08250000000000002,
+          "open_set_balanced_accuracy": 0.7351,
+          "open_set_macro_f1": 0.6497186020544435,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.47869794159885115,
+              "recall": 1.0,
+              "f1": 0.6474587245063127,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.998997995991984,
+              "recall": 0.997,
+              "f1": 0.997997997997998,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.998324958123953,
+              "recall": 0.596,
+              "f1": 0.7463994990607389,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.572737686139748,
+              "recall": 1.0,
+              "f1": 0.7283321194464676,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.2894736842105263,
+              "recall": 0.0825,
+              "f1": 0.12840466926070038,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              1000,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              997,
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              1,
+              596,
+              0,
+              403
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              1089,
+              0,
+              1,
+              745,
+              165
+            ]
+          ]
+        },
+        "fixed_0.70": {
+          "threshold": 0.7,
+          "threshold_name": "Fixed Confidence Baseline (0.70)",
+          "known_acceptance_rate": 0.732,
+          "known_false_rejection_rate": 0.268,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.732,
+          "unknown_false_acceptance_rate": 0.5245,
+          "unknown_rejection_rate": 0.47550000000000003,
+          "open_set_balanced_accuracy": 0.6807,
+          "open_set_macro_f1": 0.615609227955196,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.5002501250625313,
+              "recall": 1.0,
+              "f1": 0.6668889629876625,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.931,
+              "f1": 0.9642672190574831,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.9522445081184336,
+              "recall": 0.997,
+              "f1": 0.9741084513922814,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.47009391992090954,
+              "recall": 0.4755,
+              "f1": 0.4727815063385533,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              1000,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              931,
+              0,
+              0,
+              69
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              1000
+            ],
+            [
+              0,
+              0,
+              0,
+              997,
+              3
+            ],
+            [
+              999,
+              0,
+              0,
+              50,
+              951
+            ]
+          ]
+        },
+        "fixed_0.90": {
+          "threshold": 0.9,
+          "threshold_name": "Fixed Confidence Baseline (0.90)",
+          "known_acceptance_rate": 0.24375000000000002,
+          "known_false_rejection_rate": 0.75625,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.24375,
+          "unknown_false_acceptance_rate": 0.442,
+          "unknown_rejection_rate": 0.558,
+          "open_set_balanced_accuracy": 0.3066,
+          "open_set_macro_f1": 0.2661537824727157,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.001,
+              "f1": 0.001998001998001998,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.9567779960707269,
+              "recall": 0.974,
+              "f1": 0.9653121902874133,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.2695001207437817,
+              "recall": 0.558,
+              "f1": 0.36345872007816316,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              1000
+            ],
+            [
+              0,
+              1,
+              0,
+              0,
+              999
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              1000
+            ],
+            [
+              0,
+              0,
+              0,
+              974,
+              26
+            ],
+            [
+              840,
+              0,
+              0,
+              44,
+              1116
+            ]
+          ]
+        }
+      },
+      "multi_rx_cluster_open_set": {
+        "calibrated_99pct_val": {
+          "threshold": 0.656,
+          "threshold_name": "Calibrated 99% Validation Target (percentile 1.0)",
+          "known_acceptance_rate": 0.61475,
+          "known_false_rejection_rate": 0.38525,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.61475,
+          "unknown_false_acceptance_rate": 0.0005,
+          "unknown_rejection_rate": 0.9995,
+          "open_set_balanced_accuracy": 0.6917,
+          "open_set_macro_f1": 0.6704938638463196,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 1.0,
+              "recall": 0.002,
+              "f1": 0.003992015968063872,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.457,
+              "f1": 0.6273164035689773,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.999000999000999,
+              "recall": 1.0,
+              "f1": 0.9995002498750625,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.5646892655367232,
+              "recall": 0.9995,
+              "f1": 0.7216606498194946,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              2,
+              0,
+              0,
+              0,
+              998
+            ],
+            [
+              0,
+              457,
+              0,
+              0,
+              543
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0,
+              1999
+            ]
+          ]
+        },
+        "calibrated_95pct_val": {
+          "threshold": 0.732,
+          "threshold_name": "Calibrated 95% Validation Target (percentile 5.0)",
+          "known_acceptance_rate": 0.5435,
+          "known_false_rejection_rate": 0.4565,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.5435,
+          "unknown_false_acceptance_rate": 0.0,
+          "unknown_rejection_rate": 1.0,
+          "open_set_balanced_accuracy": 0.6348,
+          "open_set_macro_f1": 0.5965999797652654,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.174,
+              "f1": 0.29642248722316866,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.5227391531625719,
+              "recall": 1.0,
+              "f1": 0.6865774116031582,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              1000
+            ],
+            [
+              0,
+              174,
+              0,
+              0,
+              826
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              2000
+            ]
+          ]
+        },
+        "calibrated_90pct_val": {
+          "threshold": 0.738,
+          "threshold_name": "Calibrated 90% Validation Target (percentile 10.0)",
+          "known_acceptance_rate": 0.5367500000000001,
+          "known_false_rejection_rate": 0.46325,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.53675,
+          "unknown_false_acceptance_rate": 0.0,
+          "unknown_rejection_rate": 1.0,
+          "open_set_balanced_accuracy": 0.6294000000000001,
+          "open_set_macro_f1": 0.5879462107897485,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.147,
+              "f1": 0.2563208369659983,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.5190760446405398,
+              "recall": 1.0,
+              "f1": 0.6834102169827438,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              1000
+            ],
+            [
+              0,
+              147,
+              0,
+              0,
+              853
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              2000
+            ]
+          ]
+        },
+        "fixed_0.50": {
+          "threshold": 0.5,
+          "threshold_name": "Fixed Confidence Baseline (0.50)",
+          "known_acceptance_rate": 0.99875,
+          "known_false_rejection_rate": 0.00125,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.99875,
+          "unknown_false_acceptance_rate": 0.4885,
+          "unknown_rejection_rate": 0.5115000000000001,
+          "open_set_balanced_accuracy": 0.9013,
+          "open_set_macro_f1": 0.869001306928643,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 1.0,
+              "recall": 0.996,
+              "f1": 0.9979959919839679,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.999,
+              "f1": 0.9994997498749375,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.5058168942842691,
+              "recall": 1.0,
+              "f1": 0.6718172657037286,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.995136186770428,
+              "recall": 0.5115,
+              "f1": 0.6756935270805813,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              996,
+              0,
+              0,
+              0,
+              4
+            ],
+            [
+              0,
+              999,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              0,
+              0,
+              977,
+              0,
+              1023
+            ]
+          ]
+        },
+        "fixed_0.70": {
+          "threshold": 0.7,
+          "threshold_name": "Fixed Confidence Baseline (0.70)",
+          "known_acceptance_rate": 0.56725,
+          "known_false_rejection_rate": 0.43275,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.56725,
+          "unknown_false_acceptance_rate": 0.0,
+          "unknown_rejection_rate": 1.0,
+          "open_set_balanced_accuracy": 0.6538,
+          "open_set_macro_f1": 0.6243828684470658,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.269,
+              "f1": 0.4239558707643814,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.5360493165371214,
+              "recall": 1.0,
+              "f1": 0.6979584714709475,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              1000
+            ],
+            [
+              0,
+              269,
+              0,
+              0,
+              731
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              2000
+            ]
+          ]
+        },
+        "fixed_0.90": {
+          "threshold": 0.9,
+          "threshold_name": "Fixed Confidence Baseline (0.90)",
+          "known_acceptance_rate": 0.26375000000000004,
+          "known_false_rejection_rate": 0.73625,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.26375,
+          "unknown_false_acceptance_rate": 0.0,
+          "unknown_rejection_rate": 1.0,
+          "open_set_balanced_accuracy": 0.4109999999999999,
+          "open_set_macro_f1": 0.3360438653059414,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 1.0,
+              "recall": 0.055,
+              "f1": 0.10426540284360189,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.4044489383215369,
+              "recall": 1.0,
+              "f1": 0.5759539236861051,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              1000
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              1000
+            ],
+            [
+              0,
+              0,
+              55,
+              0,
+              945
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              2000
+            ]
+          ]
+        }
+      }
+    },
+    "equalized_1": {
+      "single_rx_1_1_open_set": {
+        "calibrated_99pct_val": {
+          "threshold": 0.5,
+          "threshold_name": "Calibrated 99% Validation Target (percentile 1.0)",
+          "known_acceptance_rate": 0.9895,
+          "known_false_rejection_rate": 0.0105,
+          "known_accuracy_among_accepted": 0.9919151086407276,
+          "known_overall_accuracy": 0.9815,
+          "unknown_false_acceptance_rate": 0.761,
+          "unknown_rejection_rate": 0.239,
+          "open_set_balanced_accuracy": 0.833,
+          "open_set_macro_f1": 0.7526147902385858,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.978744939271255,
+              "recall": 0.967,
+              "f1": 0.9728370221327968,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.7594158339738662,
+              "recall": 0.988,
+              "f1": 0.8587570621468926,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.5012531328320802,
+              "recall": 1.0,
+              "f1": 0.667779632721202,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.8118729096989966,
+              "recall": 0.971,
+              "f1": 0.8843351548269581,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.9192307692307692,
+              "recall": 0.239,
+              "f1": 0.37936507936507935,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              967,
+              2,
+              0,
+              4,
+              27
+            ],
+            [
+              2,
+              988,
+              1,
+              2,
+              7
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              18,
+              3,
+              0,
+              971,
+              8
+            ],
+            [
+              1,
+              308,
+              994,
+              219,
+              478
+            ]
+          ]
+        },
+        "calibrated_95pct_val": {
+          "threshold": 0.61,
+          "threshold_name": "Calibrated 95% Validation Target (percentile 5.0)",
+          "known_acceptance_rate": 0.96625,
+          "known_false_rejection_rate": 0.03375,
+          "known_accuracy_among_accepted": 0.9961190168175937,
+          "known_overall_accuracy": 0.9625,
+          "unknown_false_acceptance_rate": 0.5315,
+          "unknown_rejection_rate": 0.4685,
+          "open_set_balanced_accuracy": 0.8637,
+          "open_set_macro_f1": 0.8319737009333643,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.9906542056074766,
+              "recall": 0.954,
+              "f1": 0.9719816607233825,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.9533941236068896,
+              "recall": 0.941,
+              "f1": 0.9471565173628586,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.5015045135406219,
+              "recall": 1.0,
+              "f1": 0.6680026720106881,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.9705284552845529,
+              "recall": 0.955,
+              "f1": 0.9627016129032258,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.8740671641791045,
+              "recall": 0.4685,
+              "f1": 0.6100260416666666,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              954,
+              0,
+              0,
+              3,
+              43
+            ],
+            [
+              0,
+              941,
+              0,
+              1,
+              58
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              9,
+              2,
+              0,
+              955,
+              34
+            ],
+            [
+              0,
+              44,
+              994,
+              25,
+              937
+            ]
+          ]
+        },
+        "calibrated_90pct_val": {
+          "threshold": 0.66,
+          "threshold_name": "Calibrated 90% Validation Target (percentile 10.0)",
+          "known_acceptance_rate": 0.95175,
+          "known_false_rejection_rate": 0.04825,
+          "known_accuracy_among_accepted": 0.9981612818492251,
+          "known_overall_accuracy": 0.95,
+          "unknown_false_acceptance_rate": 0.511,
+          "unknown_rejection_rate": 0.489,
+          "open_set_balanced_accuracy": 0.8577999999999999,
+          "open_set_macro_f1": 0.8327893034228765,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.9957805907172996,
+              "recall": 0.944,
+              "f1": 0.9691991786447639,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.9744408945686901,
+              "recall": 0.915,
+              "f1": 0.9437854564208354,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.5015045135406219,
+              "recall": 1.0,
+              "f1": 0.6680026720106881,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.9926160337552743,
+              "recall": 0.941,
+              "f1": 0.9661190965092402,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.8351836037574722,
+              "recall": 0.489,
+              "f1": 0.6168401135288553,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              944,
+              0,
+              0,
+              1,
+              55
+            ],
+            [
+              0,
+              915,
+              0,
+              0,
+              85
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              4,
+              2,
+              0,
+              941,
+              53
+            ],
+            [
+              0,
+              22,
+              994,
+              6,
+              978
+            ]
+          ]
+        },
+        "fixed_0.50": {
+          "threshold": 0.5,
+          "threshold_name": "Fixed Confidence Baseline (0.50)",
+          "known_acceptance_rate": 0.9895,
+          "known_false_rejection_rate": 0.0105,
+          "known_accuracy_among_accepted": 0.9919151086407276,
+          "known_overall_accuracy": 0.9815,
+          "unknown_false_acceptance_rate": 0.761,
+          "unknown_rejection_rate": 0.239,
+          "open_set_balanced_accuracy": 0.833,
+          "open_set_macro_f1": 0.7526147902385858,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.978744939271255,
+              "recall": 0.967,
+              "f1": 0.9728370221327968,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.7594158339738662,
+              "recall": 0.988,
+              "f1": 0.8587570621468926,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.5012531328320802,
+              "recall": 1.0,
+              "f1": 0.667779632721202,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.8118729096989966,
+              "recall": 0.971,
+              "f1": 0.8843351548269581,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.9192307692307692,
+              "recall": 0.239,
+              "f1": 0.37936507936507935,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              967,
+              2,
+              0,
+              4,
+              27
+            ],
+            [
+              2,
+              988,
+              1,
+              2,
+              7
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              18,
+              3,
+              0,
+              971,
+              8
+            ],
+            [
+              1,
+              308,
+              994,
+              219,
+              478
+            ]
+          ]
+        },
+        "fixed_0.70": {
+          "threshold": 0.7,
+          "threshold_name": "Fixed Confidence Baseline (0.70)",
+          "known_acceptance_rate": 0.94025,
+          "known_false_rejection_rate": 0.05975,
+          "known_accuracy_among_accepted": 0.9986705663387397,
+          "known_overall_accuracy": 0.939,
+          "unknown_false_acceptance_rate": 0.5025,
+          "unknown_rejection_rate": 0.49750000000000005,
+          "open_set_balanced_accuracy": 0.8507,
+          "open_set_macro_f1": 0.8295426324167353,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 0.9968152866242038,
+              "recall": 0.939,
+              "f1": 0.9670442842430484,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.9866071428571429,
+              "recall": 0.884,
+              "f1": 0.9324894514767933,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.5015045135406219,
+              "recall": 1.0,
+              "f1": 0.6680026720106881,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 0.9989293361884368,
+              "recall": 0.933,
+              "f1": 0.9648397104446742,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.8063209076175041,
+              "recall": 0.4975,
+              "f1": 0.6153370439084724,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              939,
+              0,
+              0,
+              0,
+              61
+            ],
+            [
+              0,
+              884,
+              0,
+              0,
+              116
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              3,
+              2,
+              0,
+              933,
+              62
+            ],
+            [
+              0,
+              10,
+              994,
+              1,
+              995
+            ]
+          ]
+        },
+        "fixed_0.90": {
+          "threshold": 0.9,
+          "threshold_name": "Fixed Confidence Baseline (0.90)",
+          "known_acceptance_rate": 0.75725,
+          "known_false_rejection_rate": 0.24275,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.75725,
+          "unknown_false_acceptance_rate": 0.328,
+          "unknown_rejection_rate": 0.6719999999999999,
+          "open_set_balanced_accuracy": 0.7402,
+          "open_set_macro_f1": 0.7516954745888376,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 1.0,
+              "recall": 0.803,
+              "f1": 0.8907376594564614,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.441,
+              "f1": 0.6120749479528106,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.6036253776435045,
+              "recall": 0.999,
+              "f1": 0.752542372881356,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 0.786,
+              "f1": 0.8801791713325868,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.5805615550755939,
+              "recall": 0.672,
+              "f1": 0.6229432213209734,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              803,
+              0,
+              0,
+              0,
+              197
+            ],
+            [
+              0,
+              441,
+              0,
+              0,
+              559
+            ],
+            [
+              0,
+              0,
+              999,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              786,
+              214
+            ],
+            [
+              0,
+              0,
+              656,
+              0,
+              1344
+            ]
+          ]
+        }
+      },
+      "multi_rx_cluster_open_set": {
+        "calibrated_99pct_val": {
+          "threshold": 0.6819799999999999,
+          "threshold_name": "Calibrated 99% Validation Target (percentile 1.0)",
+          "known_acceptance_rate": 0.8835,
+          "known_false_rejection_rate": 0.1165,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.8835,
+          "unknown_false_acceptance_rate": 0.0255,
+          "unknown_rejection_rate": 0.9745,
+          "open_set_balanced_accuracy": 0.9017,
+          "open_set_macro_f1": 0.9114229648597922,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 1.0,
+              "recall": 0.999,
+              "f1": 0.9994997498749375,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.9908592321755028,
+              "recall": 0.542,
+              "f1": 0.7007110536522301,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.9560229445506692,
+              "recall": 1.0,
+              "f1": 0.9775171065493646,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 0.993,
+              "f1": 0.9964877069744105,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.80703933747412,
+              "recall": 0.9745,
+              "f1": 0.8828992072480181,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              999,
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              542,
+              0,
+              0,
+              458
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              993,
+              7
+            ],
+            [
+              0,
+              5,
+              46,
+              0,
+              1949
+            ]
+          ]
+        },
+        "calibrated_95pct_val": {
+          "threshold": 0.752,
+          "threshold_name": "Calibrated 95% Validation Target (percentile 5.0)",
+          "known_acceptance_rate": 0.79125,
+          "known_false_rejection_rate": 0.20875,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.79125,
+          "unknown_false_acceptance_rate": 0.0,
+          "unknown_rejection_rate": 1.0,
+          "open_set_balanced_accuracy": 0.833,
+          "open_set_macro_f1": 0.8331204000801968,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 1.0,
+              "recall": 0.994,
+              "f1": 0.9969909729187563,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.227,
+              "f1": 0.3700081499592502,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 1.0,
+              "recall": 0.996,
+              "f1": 0.9979959919839679,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 0.948,
+              "f1": 0.973305954825462,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.7054673721340388,
+              "recall": 1.0,
+              "f1": 0.827300930713547,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              994,
+              0,
+              0,
+              0,
+              6
+            ],
+            [
+              0,
+              227,
+              0,
+              0,
+              773
+            ],
+            [
+              0,
+              0,
+              996,
+              0,
+              4
+            ],
+            [
+              0,
+              0,
+              0,
+              948,
+              52
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              2000
+            ]
+          ]
+        },
+        "calibrated_90pct_val": {
+          "threshold": 0.7819999999999999,
+          "threshold_name": "Calibrated 90% Validation Target (percentile 10.0)",
+          "known_acceptance_rate": 0.75475,
+          "known_false_rejection_rate": 0.24525,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.75475,
+          "unknown_false_acceptance_rate": 0.0,
+          "unknown_rejection_rate": 1.0,
+          "open_set_balanced_accuracy": 0.8038000000000001,
+          "open_set_macro_f1": 0.7965463045459515,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 1.0,
+              "recall": 0.985,
+              "f1": 0.9924433249370277,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.137,
+              "f1": 0.24098504837291118,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 1.0,
+              "recall": 0.989,
+              "f1": 0.9944695827048768,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 0.908,
+              "f1": 0.9517819706498952,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.6709158000670916,
+              "recall": 1.0,
+              "f1": 0.8030515960650472,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              985,
+              0,
+              0,
+              0,
+              15
+            ],
+            [
+              0,
+              137,
+              0,
+              0,
+              863
+            ],
+            [
+              0,
+              0,
+              989,
+              0,
+              11
+            ],
+            [
+              0,
+              0,
+              0,
+              908,
+              92
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              2000
+            ]
+          ]
+        },
+        "fixed_0.50": {
+          "threshold": 0.5,
+          "threshold_name": "Fixed Confidence Baseline (0.50)",
+          "known_acceptance_rate": 0.996,
+          "known_false_rejection_rate": 0.004,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.996,
+          "unknown_false_acceptance_rate": 0.7485,
+          "unknown_rejection_rate": 0.25149999999999995,
+          "open_set_balanced_accuracy": 0.8471,
+          "open_set_macro_f1": 0.7716797915632775,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.6604026845637584,
+              "recall": 0.984,
+              "f1": 0.7903614457831325,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.5022601707684581,
+              "recall": 1.0,
+              "f1": 0.6686726847208292,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.9691714836223507,
+              "recall": 0.2515,
+              "f1": 0.39936482731242556,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              1000,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              984,
+              0,
+              0,
+              16
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1000,
+              0
+            ],
+            [
+              0,
+              506,
+              991,
+              0,
+              503
+            ]
+          ]
+        },
+        "fixed_0.70": {
+          "threshold": 0.7,
+          "threshold_name": "Fixed Confidence Baseline (0.70)",
+          "known_acceptance_rate": 0.86175,
+          "known_false_rejection_rate": 0.13825,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.86175,
+          "unknown_false_acceptance_rate": 0.0035,
+          "unknown_rejection_rate": 0.9965,
+          "open_set_balanced_accuracy": 0.8887,
+          "open_set_macro_f1": 0.8992385802321735,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 1.0,
+              "recall": 0.999,
+              "f1": 0.9994997498749375,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 0.9956521739130435,
+              "recall": 0.458,
+              "f1": 0.6273972602739726,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 0.9950248756218906,
+              "recall": 1.0,
+              "f1": 0.9975062344139651,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 0.99,
+              "f1": 0.9949748743718593,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.7827965435978005,
+              "recall": 0.9965,
+              "f1": 0.8768147822261328,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              999,
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              458,
+              0,
+              0,
+              542
+            ],
+            [
+              0,
+              0,
+              1000,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              990,
+              10
+            ],
+            [
+              0,
+              2,
+              5,
+              0,
+              1993
+            ]
+          ]
+        },
+        "fixed_0.90": {
+          "threshold": 0.9,
+          "threshold_name": "Fixed Confidence Baseline (0.90)",
+          "known_acceptance_rate": 0.45325000000000004,
+          "known_false_rejection_rate": 0.54675,
+          "known_accuracy_among_accepted": 1.0,
+          "known_overall_accuracy": 0.45325,
+          "unknown_false_acceptance_rate": 0.0,
+          "unknown_rejection_rate": 1.0,
+          "open_set_balanced_accuracy": 0.5626,
+          "open_set_macro_f1": 0.5738257564142428,
+          "per_class_metrics": {
+            "14-10": {
+              "precision": 1.0,
+              "recall": 0.807,
+              "f1": 0.8931931377974544,
+              "support": 1000
+            },
+            "14-7": {
+              "precision": 1.0,
+              "recall": 0.001,
+              "f1": 0.001998001998001998,
+              "support": 1000
+            },
+            "20-15": {
+              "precision": 1.0,
+              "recall": 0.596,
+              "f1": 0.7468671679197995,
+              "support": 1000
+            },
+            "20-19": {
+              "precision": 1.0,
+              "recall": 0.409,
+              "f1": 0.5805535841022001,
+              "support": 1000
+            },
+            "UNKNOWN": {
+              "precision": 0.47766897540004777,
+              "recall": 1.0,
+              "f1": 0.6465168902537579,
+              "support": 2000
+            }
+          },
+          "confusion_matrix": [
+            [
+              807,
+              0,
+              0,
+              0,
+              193
+            ],
+            [
+              0,
+              1,
+              0,
+              0,
+              999
+            ],
+            [
+              0,
+              0,
+              596,
+              0,
+              404
+            ],
+            [
+              0,
+              0,
+              0,
+              409,
+              591
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              2000
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

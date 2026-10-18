@@ -1,0 +1,30 @@
+{
+  "experiment_id": "EXP-B2-04",
+  "title": "Synthetic IoT Network and Community-Graph Validation",
+  "research_question": "Can a multi-gateway community graph deterministically aggregate distributed witness observations, enforce connectivity invariants, and resolve identity consensus under controlled multi-angle reports?",
+  "network_specification": {
+    "num_devices": 50,
+    "num_gateways": 5,
+    "area_size": 100.0,
+    "device_tx_radius": 40.0,
+    "gateway_tx_radius": 60.0,
+    "random_seed": 20260902
+  },
+  "consensus_thresholds": {
+    "min_witnesses": 2,
+    "unanimous_conf_threshold": 0.85,
+    "majority_conf_threshold": 0.70
+  },
+  "simulation_rounds": 1000,
+  "simulation_cases": {
+    "unanimous_legitimate_ratio": 0.60,
+    "majority_agreement_ratio": 0.20,
+    "disagreement_ambiguity_ratio": 0.10,
+    "adversarial_minority_spoof_ratio": 0.10
+  },
+  "leakage_controls": [
+    "Strictly synthetic graph validation layer",
+    "RF classification features completely separated from graph witness evidence",
+    "No claim that synthetic trust metrics represent real ManySig RF performance"
+  ]
+}

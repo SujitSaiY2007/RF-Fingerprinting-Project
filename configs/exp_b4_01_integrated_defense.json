@@ -1,0 +1,42 @@
+{
+  "experiment_id": "EXP-B4-01",
+  "title": "Integrated Community-Aware Authorization and Continual Adaptation Defense",
+  "research_question": "Can the integrated 8-stage architecture (combining open-set rejection, multi-receiver consensus, drift envelopes, replay tracking, and audit logging) defend against poisoning, spoofing, replay, and unknown transmitters while safely adapting to legitimate drift?",
+  "threat_model": {
+    "adversary_capabilities": [
+      "Physical channel spoofing with synthetic feature displacement",
+      "Slow poison injection targeting prototype distortion",
+      "Bit-exact packet replay with stale nonces / sequence numbers",
+      "Held-out unknown rogue transmitters attempting unauthorized access",
+      "Partial network infrastructure disruption (up to 50% gateway failure)"
+    ],
+    "adversary_limitations": [
+      "Cannot forge physical RF channel signatures at multiple spatially dispersed receivers simultaneously without multi-point physical co-location",
+      "Cannot bypass cryptographic audit hash chaining without breaking SHA-256"
+    ]
+  },
+  "simulation_parameters": {
+    "total_rounds": 1000,
+    "round_distribution": {
+      "legitimate_drift": 500,
+      "stealthy_poisoning": 150,
+      "target_spoofing": 150,
+      "stale_replay": 100,
+      "unknown_transmitter": 100
+    },
+    "learning_rate": 0.05,
+    "max_drift_threshold_std": 3.0,
+    "open_set_confidence_threshold": 0.65,
+    "quarantine_capacity": 10,
+    "min_witnesses_required": 2,
+    "random_seed": 20260902
+  },
+  "evaluated_architectures": [
+    "no_community_naive",
+    "threshold_only",
+    "community_gated_integrated"
+  ],
+  "ablations": [
+    "disrupted_gateways_50pct"
+  ]
+}
