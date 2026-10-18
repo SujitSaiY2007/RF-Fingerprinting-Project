@@ -270,3 +270,6 @@ OK
 - [Master Execution Plan (Phases 3, 4, 5)](docs/04_research/track_b/MASTER_EXECUTION_PLAN_PHASES_3_4_5.md)
 - [WiSig Dataset Qualification Record](datasets/QUALIFICATION_WiSig.md)
 - [Decision Log (DECISIONS.md)](docs/06_continuity/DECISIONS.md)
+- [Future Execution Roadmap (F0–F9)](docs/06_continuity/future_execution/README.md)
+- [F0 Handoff — Start F1 Next](docs/06_continuity/future_execution/F0_HANDOFF.md)
+- [Multi-Chat Execution Template](docs/06_continuity/future_execution/CHAT_EXECUTION_TEMPLATE.md)
