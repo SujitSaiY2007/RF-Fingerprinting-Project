@@ -32,7 +32,7 @@ The current code and results are the starting point, not unquestionable truth. E
 - Start each chat by reading this plan, `F0_HANDOFF.md`, `PROJECT_STATE.md`, and the previous chat's handoff.
 - Keep a running summary of: goal, decisions, files changed, commands/tests, verified findings, unresolved issues, current HEAD, and next action.
 - Stop when the exit criteria are satisfied, when a blocker needs owner input, or when context/workload is becoming large enough to risk continuity. Do not continue just to make the conversation appear complete.
-- At exit, create/update the stage handoff file under this folder, update the status table in this plan and relevant project state, review the diff, and commit scoped changes to `main) only if safe.
+- At exit, create/update the stage handoff file under this folder, update the status table in this plan and relevant project state, review the diff, and commit scoped changes to `main` only if safe.
 - The handoff must specify the exact next chat number, entry point, starting commit, completed work, evidence paths, unresolved questions, forbidden assumptions, and first action.
 - If a stage cannot be completed, mark it **BLOCKED** or **PARTIAL**, explain why, and hand the unresolved item to the next chat without pretending the exit criteria passed.
 - Keep chat labels sequential: F0 is planning; the next chat is F1, then F2, and so on. Do not skip or reuse numbers.
