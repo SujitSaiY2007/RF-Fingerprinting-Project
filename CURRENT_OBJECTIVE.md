@@ -1,20 +1,24 @@
 # CURRENT OBJECTIVE
 
-## Current checkpoint — Track-A Version-B baseline established; Track-B ManySig preparation started
-Track-A Version-B security core is demonstrated and the professional web demonstrator is deployed. The Q/A truth-audit has been completed, the current evidence/limitations have been consolidated, and the complete solo project reference/handoff artifacts have been prepared.
+## Current checkpoint — Track-B B1 ManySig Scientific Validation COMPLETE; Consolidated on main; Next direction Phase B2 Split Design & Community-Aware Modeling
+Track-A Version-B baseline remains frozen and demonstrator deployed. The ManySig streaming feature extraction and Track-B B1 Scientific Validation have been fully executed, verified, and documented. The repository has been consolidated onto main as the sole active working branch.
 
-The project is now treated as one complete project executed through constrained tracks:
+The project is executed through two disciplined tracks:
 
-`Complete Project -> Track A under constraints -> Track-A Version-B final demonstrator baseline -> Track B broader validation -> desired end product`
+Complete Project -> Track A under constraints (FROZEN BASELINE) -> Track-B ManySig Streaming Ingestion (COMPLETE) -> Track-B Feature Extraction (COMPLETE) -> Track-B B1 Scientific Validation (COMPLETE) -> Track-B B2 Split Design & Community-Aware Engine -> desired end product
 
-Track A is complete to its intended demonstration ceiling. Track B is the planned future research/validation direction and is not a completed result.
+Track-A remains complete to its defined ceiling. Track-B B1 has established the empirical data quality, 16-feature distributions, and environmental confounding bounds of ManySig ( = 576,000$ bursts) before machine learning.
 
-## Agreed project direction — Track A -> Track B
-Track A was deliberately created as a quicker, controlled, reproducible implementation and ideation track for the final product demonstrator. It established Version A, improved it into Version B, generated evidence, exposed limitations and produced the working demonstrator.
+### Track-B Completed Milestones
+1. **ManySig Streaming Ingestion POC:** Demonstrated bounded-memory opcode streaming unpickler (src/manysig_streamer.py, .84\text{ MiB}$ peak RSS), superseding the synthetic unpickling limitation documented in 	ools/manysig_streaming_poc.py and docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md.
+2. **ManySig Feature Extraction:** Extracted all 576 leaves (,000\text{ bursts}$) into 24 Parquet partitions (.4\text{ MB}$, datasets/features/manysig/) matching the frozen 16-feature contract.
+3. **Track-B B1 Scientific Validation:** Completed empirical data-quality audit, 16-feature sanity analysis, ANOVA variance decomposition, coordinate duplication checks, leakage hazard evaluation, and sample-rate sensitivity audit (docs/06_continuity/MANYSIG_B1_VALIDATION_2026-09-06.md, experiments/track_b/manysig_b1_validation_results.json).
 
-Track A has a defined ceiling because of its agreed constraints. It should not be presented as universal RF generalization or as complete real-world validation.
-
-Track B is the planned future direction after Track-A Version-B. It should address broader validation outside Track-A constraints, including real temporal/session/environment/receiver conditions, cross-dataset validation, potentially cross-frequency evaluation, broader acquisition conditions and more realistic adversarial evaluation. Track B is future work, not a completed result.
+### Track-B Next Objectives (Phase B2 & Community Integration)
+1. **Formalize Leak-Free Split Protocol:** Implement split-generation routines adhering to DEC-035 (Receiver Holdout, Date Holdout, Transmitter Open-Set Holdout, Equalization Holdout).
+2. **Establish Track-B Recognition Baselines:** Benchmark baseline classifiers under leak-free split protocols.
+3. **Quantify Receiver Penalty Hypothesis:** Test whether moving from matched-receiver evaluation to unseen cross-receiver evaluation induces an estimated 30-percentage-point performance drop (to be empirically tested, not assumed).
+4. **Community-Aware Subsystem Design:** Implement synthetic IoT topology generator (=50$ nodes) to provide graph-level co-occurrence and routing evidence for device authentication.
 
 ## Frozen V-A vs V-B evidence
 - Closed-set RF accuracy: 87.3899% vs 87.3899%.
@@ -30,11 +34,11 @@ Track B is the planned future direction after Track-A Version-B. It should addre
 These are frozen Track-A evidence, not projections. Controlled/derived attack scenarios are explicitly labelled as such.
 
 ## Outcome interpretation
-Demonstrated: reproducible Track-A pipeline, Version-A baseline, open-set evaluation in the defined setting, legitimate profile evolution in the tested scenario, protected update authorization, strong replay improvement in the tested controlled scenario, D8/D9/D10 demonstrations, and final web demonstrator deployment.
+Demonstrated: reproducible Track-A pipeline, Version-A baseline, open-set evaluation in the defined setting, legitimate profile evolution in the tested scenario, protected update authorization, strong replay improvement in the tested controlled scenario, D8/D9/D10 demonstrations, final web demonstrator deployment, ManySig streaming ingestion, ManySig full feature extraction/provenance, and ManySig B1 dataset-quality validation.
 
-Not demonstrated: universal Version-B superiority, prevention of target-like unknown contamination, arbitrary cross-frequency/cross-dataset generalization, complete real-world validation, or formal proof of novelty against all prior art.
+Not demonstrated: universal Version-B superiority, prevention of target-like unknown contamination, arbitrary cross-frequency/cross-dataset generalization, complete real-world validation, Track-B ML benchmarks/classification models, or formal proof of novelty against all prior art.
 
-The 100% target-like unknown contamination result is the principal unresolved security limitation. It must remain visible in documentation/UI and must not be hidden or relabelled.
+The 100% target-like unknown contamination result is the principal unresolved security limitation. It must remain visible in documentation/UI and must not be hidden or relabelled. Proposed community-aware gating targets reducing contamination to <10% while preserving >=90% legitimate adaptation as an engineering acceptance criterion, not an already demonstrated result.
 
 ## Novelty hypothesis status
 The original broad novelty idea (adaptive RF fingerprinting/profile updating itself) was narrowed after prior-art review because adaptive/online RF fingerprinting and profile updating already exist.
@@ -51,58 +55,37 @@ Use exactly: Implemented / Tested / Demonstrated / Scientifically Validated. Do 
 
 Track A may use real SMoRFFI, controlled/derived synthetic scenarios and published-paper evidence. Controlled/derived observations must never be represented as source-dataset measurements.
 
-## Current Track-B ManySig preparation checkpoint — 02 September 2026
-ManySig has been acquired locally and non-destructively inspected with Antigravity IDE. It is retained outside Git as raw data and remains a Track-B validation/reproduction/cross-condition resource; it does not replace the frozen Track-A SMoRFFI baseline.
+## ManySig Track-B engineering & B1 validation summary
+ManySig has been acquired as ManySig.pkl.zip and preserved outside the Git repository. Its verified structure is:
 
-Verified ManySig structure:
-- Python Pickle Protocol 3;
-- top-level keys: `tx_list`, `rx_list`, `capture_date_list`, `equalized_list`, `max_sig`, `data`;
-- 6 transmitters;
-- 12 receivers;
-- 4 March 2021 capture dates;
-- 2 equalization states;
-- `data[tx][rx][date][eq]` hierarchy;
-- 576 leaf arrays;
-- each leaf `(1000, 256, 2)` `float64`;
-- 576,000 signal bursts;
-- compressed archive ~1.355 GB and contained pickle ~2.197 GB.
+6 TX × 12 RX × 4 dates × 2 equalization states = 576 leaves
 
-Detailed evidence record:
-`docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
+Each leaf contains 1,000 bursts of shape (256, 2) float64 I/Q, giving **576,000 bursts total**.
 
-## Streaming/chunked ingestion checkpoint — 02 September 2026
-A controlled synthetic memory POC has now been executed before final extractor implementation. It used 24 Protocol-3 pickle leaves of shape `(1000, 256, 2)` `float64`, approximately matching the inspected ManySig leaf size.
+A real-archive opcode-level streaming ingestion POC was completed with approximately **45–53 MiB peak RSS**, with approximately **14–17 MiB incremental RSS overhead**.
 
-Observed peak RSS:
-- plain pickle + `pickle.load()`: ~184.88 MiB;
-- ZIP member + `pickle.load()`: ~189.19 MiB.
+The full ManySig archive was streamed to produce **576,000 per-burst feature records** using the 16 Track-A RF evidence feature definitions, written as 24 receiver/equalization Parquet partitions (.4\text{ MB}$, datasets/features/manysig/).
 
-The POC demonstrates that ordinary `pickle.load()` does not provide leaf-wise bounded-memory access for a single nested top-level object, and that wrapping the pickle in ZIP streaming does not change that object-materialization behaviour.
-
-This is engineering evidence from a controlled synthetic analogue, **not** a real-ManySig memory measurement. The previous <=25–30 MB claim remains unverified for the real archive.
-
-Detailed record:
-`docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md`
-
-### Immediate next boundary
-Before final feature extraction, Antigravity must test the actual ManySig archive with a narrowly scoped read-only proof-of-concept that determines whether a custom opcode-aware/incremental mechanism can recover selected leaves without materializing the full top-level object. It must measure actual peak RSS and verify correctness before any final extractor is implemented.
-
-Do not load/extract the full dataset merely for inspection. Do not treat the synthetic POC as proof of a <=25–30 MB real-dataset bound.
+The Track-B B1 Scientific Validation established data integrity (\%$ finite, non-null, 0 duplicate feature vectors), perfect factorial balance (,000\text{ bursts/cell}$), strong receiver confounding (intra-TX cross-receiver distance equals inter-TX distance at .00\times$), equalization manifold shift (.41\times$), and sample-rate sensitivity ( = 20.0\text{ MHz}$ is REQUIRES VALIDATION (Engineering default)).
 
 ## Reference and handoff artifacts
-- Complete project reference: `docs/06_continuity/REFERENCE_REPORT_2026-08-31.md`
-- ManySig inspection: `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
-- ManySig streaming POC: `docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md`
-- Current next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-09-02.md`
-- Previous handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
-- Historical Q/A continuation note: `docs/09_handoff/NEXT_CHAT_QA_NOTE.md`
-- D8/D10 milestone addendum: `docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md`
+- Complete project reference: docs/06_continuity/REFERENCE_REPORT_2026-08-31.md
+- ManySig inspection: docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md
+- ManySig synthetic streaming POC: docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md
+- ManySig real streaming POC: docs/06_continuity/MANYSIG_REAL_STREAMING_POC_2026-09-02.md
+- ManySig full extraction report: docs/06_continuity/MANYSIG_FULL_EXTRACTION_2026-09-02.md
+- ManySig manifest: datasets/features/manysig/manifest.json
+- ManySig extraction summary: datasets/features/manysig/extraction_summary.json
+- ManySig Track-B B1 validation report: docs/06_continuity/MANYSIG_B1_VALIDATION_2026-09-06.md
+- ManySig B1 validation artifact: experiments/track_b/manysig_b1_validation_results.json
+- Historical next-chat handoff: docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md
+- Historical Q/A continuation note: docs/09_handoff/NEXT_CHAT_QA_NOTE.md
+- D8/D10 milestone addendum: docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md
 
 ## Repository discipline
-- Preserve all historical documents, experiment artifacts, decisions and commits.
+- Preserve all historical documents, experiment artifacts, decisions, PRs and commits.
 - No unnecessary deletion.
 - No force-push or destructive history rewrite.
-- `develop` is the active implementation branch.
-- Synchronize `main` and `develop` at agreed significant milestones.
-- The current accepted Track-A state must be preserved before Track-B work begins.
+- main is the sole active working branch for all future implementation, documentation, and handoffs.
+- Preserve the accepted Track-A baseline before and throughout Track-B work.
 - Raw datasets and secrets such as GitHub Personal Access Tokens must never be committed to the repository.

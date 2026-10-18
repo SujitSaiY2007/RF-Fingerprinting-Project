@@ -1,26 +1,31 @@
 # PROJECT STATE
 
-**Last updated:** 2026-09-02
+**Last updated:** 2026-10-18
 
 ## Authoritative status
-- Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
-- Stable branch: `main`
-- Integration branch: `develop`
-- Current phase: **Track-A Version-B baseline established; Q/A truth-audit and reference consolidation complete; Track-B ManySig acquisition/schema inspection established; standard pickle streaming limitation experimentally characterized**
-- D2 learning gate: **PASSED**
-- D7 Track A: **COMPLETE / DEMONSTRATED**
-- B0: **COMPLETE / DEMONSTRATED — Version-A control reproduced**
-- B1-B2: **COMPLETE AS MODEL-SELECTION SCREENING / DEMONSTRATED — no learned candidate justified replacing the RF control**
-- D8: **DEMONSTRATED**
-- D9: **DEMONSTRATED — replay protection strong; target-like unknown contamination unresolved**
-- D10: **DEMONSTRATED — integrated lifecycle**
+- Repository: SujitSaiY2007/RF-Fingerprinting-Project
+- Active working branch: main (consolidated and sole active branch)
+- Preserved historical branches: develop, 	ask/manysig-feature-extraction-runner-2026-09-02
+- Current phase: **Track-A Version-B baseline preserved; Track-B ManySig Feature Extraction & B1 Scientific Validation COMPLETE; consolidated on main; next direction Track-B Split Design & Community-Aware Modeling**
+- Track-A D2 learning gate: **PASSED**
+- Track-A D7: **COMPLETE / DEMONSTRATED**
+- Track-A B0: **COMPLETE / DEMONSTRATED — Version-A control reproduced**
+- Track-A B1-B2: **COMPLETE AS MODEL-SELECTION SCREENING / DEMONSTRATED — no learned candidate justified replacing the RF control**
+- Track-A D8: **DEMONSTRATED**
+- Track-A D9: **DEMONSTRATED — replay protection strong; target-like unknown contamination unresolved**
+- Track-A D10: **DEMONSTRATED — integrated lifecycle**
 - Final web demonstrator: **DEPLOYED via GitHub Pages**
-- Current activity: **Track-B ManySig ingestion-method validation; real-archive custom streaming proof-of-concept is next**
+- Track-B ManySig Synthetic Memory POC: **COMPLETE / DEMONSTRATED (Negative baseline: standard pickle not bounded)**
+- Track-B ManySig Real Streaming POC: **COMPLETE / DEMONSTRATED (Bounded-memory custom opcode unpickler)**
+- Track-B ManySig Feature Extraction: **COMPLETE / DEMONSTRATED** (576,000 bursts, 24 Parquet partitions, .4\text{ MB}$, verified checksums)
+- Track-B B1 Scientific Validation: **COMPLETE / TESTED & SCIENTIFICALLY VALIDATED** (cryptographic integrity, full factorial balance, 16-feature sanity, ANOVA confounding analysis, leakage audit, split-design matrix)
+- Track-B Machine Learning: **NOT YET DEMONSTRATED / FUTURE WORK**
+- Community-Aware Subsystem: **PLANNED / ARCHITECTURE STAGE**
 
 ## Project strategy: Track A -> Track B
 The project is treated as one complete project executed through constrained tracks:
 
-`Complete Project -> Track A under constraints -> Track-A Version-B final demonstrator baseline -> Track B broader validation -> desired end product`
+Complete Project -> Track A under constraints -> Track-A Version-B final demonstrator baseline -> Track B broader validation -> desired end product
 
 Track A was deliberately established as a quicker, controlled, reproducible implementation and ideation track for the final product demonstrator. Its purpose was to establish the RF pipeline, create Version A, improve it into Version B, generate evidence, identify architectural limits, and produce a working demonstrator without waiting for the broader validation burden of Track B.
 
@@ -31,17 +36,18 @@ The intended future direction is **Track B after Track-A Version-B**. Track B is
 ## What Track A has achieved
 The Track-A progression is:
 
-`SMoRFFI -> D2 representation -> Version-A RF baseline -> B0-B2 model screening -> Version-B protected adaptive profiles -> D8 -> D9 -> D10 -> web demonstrator`
+SMoRFFI -> D2 representation -> Version-A RF baseline -> B0-B2 model screening -> Version-B protected adaptive profiles -> D8 -> D9 -> D10 -> web demonstrator
 
 Version A established the recognition control. Version B retained the RF recognition backbone and improved the security/governance surrounding persistent profile updates. The project therefore demonstrates a complete Track-A concept-to-demonstrator flow.
 
 ## Frozen D2 contract
-`serialized preamble -> complex[288] -> float32[2,288] I/Q`
+serialized preamble -> complex[288] -> float32[2,288] I/Q
 
 Do not restart D1/D2 or silently change the input schema. Baseline preprocessing remains without per-observation normalization, clipping, filtering, resampling or arbitrary interpolation. Device number/MAC is label/provenance only.
 
 ## Version-A frozen reference
-SMoRFFI known devices 1–33; deterministic 70/15/15 engineering split; 16 deterministic RF evidence features; fixed Random Forest: 100 trees, `random_state=20260830`, `max_features=sqrt`, no tuning.
+SMoRFFI known devices 1–33; deterministic 70/15/15 engineering split; 16 deterministic RF evidence features; fixed Random Forest: 100 trees, 
+andom_state=20260830, max_features=sqrt, no tuning.
 
 - Accuracy: **87.3899%**
 - Macro-F1: **87.3226%**
@@ -60,10 +66,10 @@ This is a legitimate negative model-selection result and must remain in the audi
 ## Version-B architecture
 Working Track-A architecture:
 
-`SMoRFFI observation -> D2 -> RF evidence / RF recognition -> open-set novelty decision -> D8 update authorization -> persistent profile -> D9 poisoning defense -> audit/final decision`
+SMoRFFI observation -> D2 -> RF evidence / RF recognition -> open-set novelty decision -> D8 update authorization -> persistent profile -> D9 poisoning defense -> audit/final decision
 
 The core security design separates:
-`OBSERVATION -> RECOGNITION -> UPDATE AUTHORIZATION -> PROFILE UPDATE`
+OBSERVATION -> RECOGNITION -> UPDATE AUTHORIZATION -> PROFILE UPDATE
 
 Required update outcomes are:
 - ACCEPT / UPDATE
@@ -95,18 +101,26 @@ These values are frozen Track-A evidence, not projections. Controlled/derived at
 - D9 controlled poisoning/security evaluation.
 - D10 integrated lifecycle.
 - Final web demonstrator and GitHub Pages deployment.
+- ManySig archive schema inspection.
+- ManySig synthetic memory POC (characterizing standard pickle limits).
+- ManySig bounded-memory real streaming ingestion POC.
+- ManySig full 576-leaf / 576,000-burst feature extraction and partitioned feature-data provenance.
+- ManySig Track-B B1 scientific validation and dataset quality analysis.
 
 ### Partially achieved / limited
 - General poisoning resistance: only selected tested attack classes improved.
 - Gain-drift handling: improved control but not perfect acceptance.
 - Profile evolution: demonstrated in the tested Track-A setting, not general real-world validation.
+- ManySig sample-rate metadata: **20 MHz is an engineering default and requires validation; it is not a verified source-dataset fact.**
 
 ### Not achieved / not demonstrated
 - Prevention of target-like unknown contamination: **100% remains accepted in the tested scenario**.
 - Universal Version-B superiority over Version A.
 - Generalization across arbitrary real RF frequencies/datasets/acquisition conditions.
 - Formal proof that the narrowed novelty hypothesis is new relative to all prior art.
-- Track-B broader validation.
+- Track-B machine learning / benchmark models.
+- Cross-dataset validation using the remaining datasets.
+- Community-aware reduction of contamination (proposed target: <10% contamination with >=90% legitimate adaptation; unvalidated hypothesis).
 
 ## Novelty hypothesis status
 The original broad hypothesis — that adaptive RF fingerprinting/profile updating itself is novel — was narrowed after prior-art review because adaptive/online RF fingerprinting and profile updating already exist.
@@ -120,6 +134,17 @@ Use exactly: **Implemented / Tested / Demonstrated / Scientifically Validated**.
 
 Track A may use real SMoRFFI, controlled/derived synthetic scenarios and published-paper evidence. Synthetic/derived observations must never be represented as source-dataset measurements.
 
+## Track-B current checkpoint — ManySig
+ManySig has been acquired as ManySig.pkl.zip outside the Git repository and preserved as the original raw archive. Verified structure:
+
+6 TX × 12 RX × 4 dates × 2 equalization states = 576 leaves
+
+Each leaf contains 1,000 bursts, each burst shaped (256, 2) with loat64 I/Q, for **576,000 bursts total**.
+
+The raw archive remains outside Git. Derived Parquet feature partitions (.4\text{ MB}$) are stored under datasets/features/manysig/ and ignored by Git.
+
+Track-B B1 Scientific Validation confirmed \%$ finite values ($ NaNs/$\pm\infty$), perfect balance (,000\text{ bursts/cell}$), strong receiver confounding (.00\times$ ratio to inter-TX distance), equalization variance dominance (.2\%$), and established DEC-035 factor-holdout split policies.
+
 ## Track-B future direction
 Track B should build on the Track-A demonstrator rather than restart it. Candidate future work includes:
 - cross-dataset real RF validation;
@@ -127,67 +152,32 @@ Track B should build on the Track-A demonstrator rather than restart it. Candida
 - potentially cross-frequency evaluation;
 - broader device populations and acquisition conditions;
 - more realistic adversarial/target-like contamination scenarios;
-- improved mechanisms specifically addressing the Track-A target-like unknown failure;
+- improved mechanisms specifically addressing the Track-A target-like unknown failure (Community-Aware modeling);
 - stronger novelty/prior-art validation.
-
-Track B is a **future direction**, not a completed result.
-
-## ManySig acquisition and inspection checkpoint — 2026-09-02
-A user-acquired WiSig ManySig archive is now available locally and has undergone non-destructive schema inspection using Antigravity IDE. The raw archive remains outside Git.
-
-Verified facts:
-- `ManySig.pkl.zip` compressed size: `1,454,577,503` bytes (~1.355 GB);
-- contained `ManySig.pkl` size: `2,359,341,461` bytes (~2.197 GB);
-- Python Pickle Protocol 3;
-- top-level keys: `tx_list`, `rx_list`, `capture_date_list`, `equalized_list`, `max_sig`, `data`;
-- 6 transmitters;
-- 12 receivers;
-- 4 March 2021 capture dates;
-- 2 equalization states;
-- `data[tx][rx][date][eq]` hierarchy;
-- 576 leaf arrays;
-- each leaf array `(1000, 256, 2)` with `float64` values;
-- 576,000 total signal bursts.
-
-Detailed record:
-`docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
-
-## ManySig streaming/chunked ingestion checkpoint — 02 September 2026
-A controlled synthetic memory POC was executed before final feature extraction. It used 24 Protocol-3 NumPy leaves with the inspected ManySig leaf shape `(1000, 256, 2)` `float64`.
-
-Observed peak process RSS:
-- plain pickle + `pickle.load()`: **~184.88 MiB**;
-- ZIP member + `pickle.load()`: **~189.19 MiB**.
-
-The result demonstrates that ordinary `pickle.load()` does not provide leaf-wise bounded-memory access for a single nested top-level object. Reading the pickle from a compressed ZIP member does not change that object-materialization behaviour.
-
-This is controlled engineering evidence from a synthetic analogue, not a real-ManySig memory measurement. The prior <=25–30 MB claim remains unverified for the real archive.
-
-Detailed record:
-`docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md`
-
-### Immediate next boundary
-Use Antigravity IDE against the actual ManySig archive for a narrowly scoped read-only proof-of-concept. Determine whether a custom opcode-aware/incremental mechanism can recover selected leaves without materializing the complete top-level object, measure actual peak RSS, and verify recovered-leaf correctness. Do not implement the final extractor until this is demonstrated.
-
-ManySig remains a Track-B data-preparation/validation resource and does not replace the frozen Track-A SMoRFFI baseline.
 
 ## Final demonstrator
 The web application is separated from the RF engine. Current/planned UI surfaces include Dashboard, Identification, Device Profiles, Open-Set Security, Security/Attack Lab, Audit Trail and Evaluation/Research. The UI must present frozen results, methodology, provenance and limitations without inventing measurements.
 
 ## Current checkpoint artifacts
-- Complete project reference: `docs/06_continuity/REFERENCE_REPORT_2026-08-31.md`
-- 02 Sep ManySig inspection record: `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
-- 02 Sep ManySig streaming POC: `docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md`
-- 02 Sep next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-09-02.md`
-- Previous next-chat handoff: `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md`
-- Historical Q/A continuation note: `docs/09_handoff/NEXT_CHAT_QA_NOTE.md`
-- D8/D10 milestone addendum: `docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md`
+- Complete project reference: docs/06_continuity/REFERENCE_REPORT_2026-08-31.md
+- ManySig inspection record: docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md
+- ManySig synthetic streaming POC: docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md
+- ManySig real streaming POC report: docs/06_continuity/MANYSIG_REAL_STREAMING_POC_2026-09-02.md
+- ManySig feature extraction design: docs/06_continuity/MANYSIG_FEATURE_EXTRACTION_DESIGN_2026-09-02.md
+- ManySig full extraction report: docs/06_continuity/MANYSIG_FULL_EXTRACTION_2026-09-02.md
+- ManySig extraction manifest: datasets/features/manysig/manifest.json
+- ManySig extraction summary: datasets/features/manysig/extraction_summary.json
+- ManySig Track-B B1 validation report: docs/06_continuity/MANYSIG_B1_VALIDATION_2026-09-06.md
+- ManySig B1 validation artifact: experiments/track_b/manysig_b1_validation_results.json
+- Historical next-chat handoff: docs/09_handoff/NEXT_CHAT_HANDOFF_2026-08-31.md
+- Historical Q/A continuation note: docs/09_handoff/NEXT_CHAT_QA_NOTE.md
+- D8/D10 milestone addendum: docs/06_continuity/D8_D10_TRACK_A_MILESTONE_ADDENDUM_2026-08-30.md
 
 ## Repository discipline
 - Preserve all historical documents, experiment artifacts, decisions, PRs and commits.
 - No unnecessary deletion.
 - No force-push or destructive history rewrite.
-- `develop` is the active implementation branch.
-- `main` is synchronized with `develop` at agreed significant milestones.
+- main is the sole active working branch for all future implementation, documentation, and handoffs.
+- Synchronize main and remote only after explicit validation and milestone review.
 - Before new Track-B implementation, preserve the accepted Track-A baseline and explicitly define the new dated research boundary.
 - Raw datasets and secrets such as GitHub Personal Access Tokens must never be committed to the repository.

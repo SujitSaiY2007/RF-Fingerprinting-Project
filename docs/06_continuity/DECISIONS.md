@@ -201,3 +201,32 @@ This establishes an engineering boundary for the proposed implementation: ordina
 This decision is based on a controlled synthetic analogue, not the real ManySig archive. It therefore does **not** establish the real archive's peak memory or prove that a custom parser can achieve <=25–30 MB.
 
 Until a real-archive proof-of-concept demonstrates correctness and measured memory behaviour, the final ManySig extractor must not assume a bounded-memory streaming mechanism.
+
+## DEC-032 — ManySig streaming ingestion via custom opcode dispatch
+To prevent memory exhaustion during Track-B large-scale ingestion of `ManySig.pkl` (2.2 GB uncompressed), the project adopts an opcode-level streaming unpickler (`src/manysig_streamer.py`) that overrides `REDUCE (0x52)` and `BINBYTES (0x42)`.
+
+This ensures that non-target 4 MB leaf buffers are bypassed without accumulating Python bytes objects on the evaluation stack or memo table, keeping process memory bounded at $\approx 45\text{--}52\text{ MiB}$ peak RSS ($\approx 14\text{--}17\text{ MiB}$ delta) during both selective leaf extraction and single-pass sequential streaming across all 576,000 observations.
+
+## DEC-033 — ManySig per-burst feature extraction and columnar Parquet format
+For Track-B research experiments on WiSig ManySig:
+1. The **fundamental feature extraction unit is the individual burst** (`(256, 2)` complex baseband samples). Each 1,000-burst leaf generates 1,000 discrete feature records, preserving all 576,000 dataset observations without lossy aggregation.
+2. The **16 Track-A RF evidence feature definitions** (`src/smorffi_d3.py`) are reused without alteration or artificial normalization.
+3. Feature records are structured into a 23-column Apache Arrow schema (7 coordinate/provenance + 16 features) and written to partitioned Parquet files with cryptographic SHA-256 manifests.
+
+## DEC-034 — ManySig B1 dataset quality, physical validity, and environmental confounding
+Following empirical validation across all 576,000 bursts in `datasets/features/manysig/`:
+1. **Dataset Integrity & Sanity:** The ManySig feature dataset is cryptographically verified ($100\%$ SHA-256 match against manifest), $100\%$ finite ($0$ NaNs / $\pm\infty$), non-degenerate, and $100\%$ balanced across $6\text{ TX} \times 12\text{ RX} \times 4\text{ Dates} \times 2\text{ Eq states} = 576\text{ leaves}$ ($1,000\text{ bursts/cell}$). Zero coordinate collisions or duplicate feature vectors exist.
+2. **Environmental & Receiver Confounding:** 
+   - Equalization preprocessing accounts for up to $97.17\%$ of total feature variance in signal magnitude, power, and DC bias (`amplitude_mean` $\eta^2 = 0.9717$, `i_std` $\eta^2 = 0.9675$).
+   - Receiver hardware and channel multipath dominate phase and frequency features (`mean_phase_step_rad` $\eta^2_{\text{RX}} = 0.3019$ vs $\eta^2_{\text{TX}} = 0.0045$; `spectral_centroid_hz` $\eta^2_{\text{RX}} = 0.2876$ vs $\eta^2_{\text{TX}} = 0.0047$).
+   - In metric space, intra-transmitter distance across receivers ($2.605$) equals inter-transmitter distance under matched conditions ($2.608$, ratio $1.00\times$). Receiver effects must be explicitly isolated or adapted in downstream Track-B evaluation.
+3. **Emitter Signatures:** `crest_factor` is the primary equalization-invariant emitter feature ($\eta^2_{\text{TX}} = 0.4230$, $\eta^2_{\text{Eq}} = 0.0000$). Under equalized preprocessing, DC bias and envelope variance (`q_mean` $\eta^2_{\text{TX}} = 0.6294$, `q_std` $\eta^2_{\text{TX}} = 0.5020$) provide strong emitter discrimination.
+
+## DEC-035 — ManySig split-design policy and leakage prohibition
+For all future Track-B machine learning evaluations on ManySig:
+1. **Prohibition of Random Row Splits:** Uniform random row-level splitting of the 576,000 bursts is strictly prohibited. Because bursts within the same leaf share channel multipath, capture session, and receiver LO drift, random splitting creates severe methodological leakage and falsely reports near-perfect generalization.
+2. **Mandatory Factor-Holdout Evaluation:** Evaluation claims must explicitly specify their testing axis:
+   - **Receiver Holdout (Spatial Generalization):** Train on a subset of receiver nodes; evaluate on unseen receiver nodes.
+   - **Date Holdout (Temporal Generalization):** Train on early dates (e.g. Days 1–3); evaluate on later dates (e.g. Day 4).
+   - **Transmitter Holdout (Open-Set Security):** Train on known transmitters; evaluate unknown detection on held-out transmitters.
+   - **Equalization Holdout (Preprocessing Invariance):** Train on raw bursts; evaluate on equalized bursts (or vice versa).

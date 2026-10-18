@@ -1,150 +1,169 @@
-# NEXT CHAT HANDOFF — 02 September 2026
+# NEXT CHAT HANDOFF — 2026-09-02
 
 ## Purpose
+This handoff closes the current Antigravity/ChatGPT working session and defines the exact starting point for the next session. The next session must continue from this state rather than repeating completed Track-A work, ManySig inspection, streaming POC, or full feature extraction.
 
-This is the continuation point after the 02 September 2026 ManySig acquisition/inspection and Antigravity IDE setup work. The next chat must continue from the accepted repository state without restarting completed Track-A work or treating ManySig inspection as scientific validation.
+## Canonical repository state at handoff
+- Repository: `SujitSaiY2007/RF-Fingerprinting-Project`
+- Working branch for the completed ManySig engineering phase: `task/manysig-feature-extraction-runner-2026-09-02`
+- ManySig extraction/provenance checkpoint: commit `0bee709552e440b620205ed4cd412a6625449f44`
+- State/objective handoff updates follow that checkpoint on the same task branch.
+- Current working direction: **Track-B B1 — ManySig Scientific Validation / Dataset Quality Analysis**
+- Do not merge this task branch into `develop`/`main` as part of B1. Promotion is a separate milestone decision.
 
-## Current project position
+## What is already complete — DO NOT REPEAT
 
-The project remains one complete project executed through constrained tracks:
+### Track A — frozen baseline
+Track-A Version-B is complete to its intended demonstration ceiling. The following are frozen and must not be silently changed, deleted or recomputed as a replacement baseline:
+- D2 input contract: `serialized preamble -> complex[288] -> float32[2,288] I/Q`
+- 16 deterministic RF evidence features
+- Version-A fixed Random Forest control
+- B0-B2 model-selection screening and negative result for learned replacements
+- D8 profile evolution
+- D9 security/poisoning evaluation
+- D10 integrated lifecycle
+- final web demonstrator
+- all historical evidence, limitations and novelty decisions
 
-`Complete Project -> Track A under constraints -> Track-A Version-B final demonstrator baseline -> Track B broader validation -> desired end product`
+Principal unresolved Track-A security limitation: **target-like unknown contamination remained 100% accepted in the tested scenario**. Do not hide, relabel or imply that Track B has already solved this problem.
 
-Track A remains the frozen demonstrator baseline. Track B is the broader validation/strengthening direction.
+### ManySig acquisition and inspection
+ManySig was acquired as `ManySig.pkl.zip` and preserved as the original raw archive outside Git.
 
-## What happened in this chat
-
-### 1. Antigravity IDE adopted as the local execution environment
-
-The user is using **Antigravity IDE** (not a generic Antigravity service) to assist with local dataset inspection and later Python extraction/processing.
-
-The repository is opened in Antigravity as the working project. The user configured GitHub access using a GitHub Personal Access Token for repository operations. **The token value must never be stored in GitHub, project files, prompts, logs or documentation.**
-
-The preferred security posture is least-privilege, one-time approval for sensitive/expensive commands where practical. Repeated read-only inspection prompts may be approved when the exact command is understood, but unrestricted blanket execution permission should not be assumed.
-
-### 2. ManySig was acquired locally
-
-A large WiSig ManySig archive is now present locally. The raw dataset is kept outside the Git repository.
-
-Observed copies/locations:
-
-- `C:\Users\sujit\Downloads\ManySig.pkl.zip`
-- `C:\Users\sujit\OneDrive\Documents\RF-Fingerprinting-Project-Integration\RF-Fingerprinting-Data\ManySig.pkl.zip`
-- an empty `C:\Users\sujit\Downloads\ManySig.pkl` directory was observed as an extraction artifact;
-- a multi-volume ManySig 7z archive also exists under `C:\Users\sujit\OneDrive\Documents\RF-Datasets\WiSig\`.
-
-Do not delete or overwrite copies without an explicit preservation/checksum decision.
-
-### 3. ManySig non-destructive inspection completed
-
-The archive was inspected without full extraction or modification. The verified schema is recorded in:
-
-`docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
-
-Key verified facts:
-
-- ZIP archive compressed size: `1,454,577,503` bytes (~1.355 GB)
-- contained `ManySig.pkl`: `2,359,341,461` bytes (~2.197 GB)
-- Pickle Protocol 3
-- top-level dictionary keys: `tx_list`, `rx_list`, `capture_date_list`, `equalized_list`, `max_sig`, `data`
-- 6 transmitters
-- 12 USRP receivers
-- 4 capture dates in March 2021
+Verified archive structure:
+- 6 TX
+- 12 RX
+- 4 dates
 - 2 equalization states
-- 576 leaf arrays
-- each leaf array: `(1000, 256, 2)` `float64`
-- total: 576,000 signal bursts
-- each burst: 256 I/Q sample pairs
+- 576 leaves total
+- 1,000 bursts per leaf
+- 576,000 bursts total
+- each burst `(256, 2)` float64 I/Q
 
-The report distinguishes verified facts from dataset-context inferences.
+The raw archive must remain outside Git and must not be modified, renamed, moved, extracted into the repository, or committed.
 
-### 4. What has NOT yet happened
+### Synthetic-analog streaming POC (Negative baseline)
+Prior to implementing the custom opcode unpickler, a controlled synthetic POC was evaluated:
+- Documented in: docs/06_continuity/MANYSIG_STREAMING_POC_2026-09-02.md
+- Script: 	ools/manysig_streaming_poc.py
+- Key finding: Standard pickle.load() on nested NumPy objects accumulates memory (>= 185 MiB peak RSS for only 24 leaves), proving that standard unpickling is not a bounded-memory streaming reader. This negative result motivated the opcode-level streaming implementation below.
 
-Do not claim that:
+### Real-archive streaming POC
+Completed and documented in:
+`docs/06_continuity/MANYSIG_REAL_STREAMING_POC_2026-09-02.md`
 
-- the final ManySig extractor exists;
-- the entire ManySig dataset has been processed;
-- the proposed <=25–30 MB streaming-memory claim is proven;
-- ManySig has produced model results;
-- ManySig has validated D7/D8/D9;
-- Track B has been scientifically validated;
-- the novelty hypothesis has been proven.
+Core implementation:
+`src/manysig_streamer.py`
 
-The streaming/chunked ingestion mechanism still needs a small controlled proof-of-concept before final extractor implementation.
+The POC demonstrated real-archive opcode-level streaming with bounded process memory. Selective/full-stream tests reached approximately 45–53 MiB peak RSS and approximately 14–17 MiB incremental RSS overhead. The informal earlier `<=25–30 MB total RSS` target is not claimed as an absolute process-RSS achievement; runtime/interpreter baseline makes that target unsuitable.
 
-## Relationship to existing Track-A state
+The POC is an **engineering result**, not Track-B scientific validation.
 
-Do not replace the Track-A SMoRFFI baseline with ManySig merely because ManySig is now available.
+### ManySig full feature extraction
+Completed and committed in:
+`0bee709552e440b620205ed4cd412a6625449f44`
 
-Track A remains the accepted SMoRFFI-based demonstrator baseline and its frozen evidence remains unchanged. ManySig is now an acquired, inspected dataset that can support the next broader validation/reproduction/cross-condition work under Track B.
+Tracked artifacts include:
+- `src/manysig_feature_extractor.py`
+- `scripts/run_manysig_feature_extraction.py`
+- `docs/06_continuity/MANYSIG_FULL_EXTRACTION_2026-09-02.md`
+- `datasets/features/manysig/manifest.json`
+- `datasets/features/manysig/extraction_summary.json`
+- updated `docs/06_continuity/SESSION_LOG.md`
 
-This is consistent with the existing two-track strategy and the prior decision that ManySig is preserved separately rather than silently becoming the Track-A baseline.
+The extraction produced:
+- 576,000 per-burst feature records
+- 16 Track-A RF evidence features reused without changing their definitions
+- 24 receiver/equalization Parquet partitions
+- cryptographic SHA-256 manifest
+- machine-readable extraction summary
 
-## Immediate next research/engineering boundary
+The Parquet files are intentionally ignored by Git. The raw ManySig archive is not tracked. Provenance metadata and continuity documentation are tracked.
 
-The next ManySig task is:
+The extraction is an **engineering input artifact**, not a scientific result.
 
-1. verify the actual incremental access/memory behaviour;
-2. define the exact experimental purpose for ManySig;
-3. design the minimum extraction required for that experiment;
-4. preserve raw data unchanged;
-5. implement extraction only after the above are accepted;
-6. keep extracted/derived data reproducible and provenance-linked.
+## Important scientific qualification
+The ManySig source inspection did not verify a sample-rate field. A nominal **20 MHz** sample rate exists only as an engineering default and is explicitly **REQUIRES VALIDATION**. Do not convert it into a verified dataset fact.
 
-Do not jump directly to full feature extraction without first resolving the streaming proof-of-concept and experimental split design.
+## Dataset acquisition status
+Only ManySig has been acquired so far. The remaining qualified datasets have not yet been downloaded. This does **not** block B1. Do not delay B1 solely to acquire the remaining datasets. Their later role is cross-dataset validation.
 
-## Deferred Antigravity prompt
+## Exact next phase — B1
+### Phase name
+**Track-B B1 — ManySig Scientific Validation / Dataset Quality Analysis**
 
-When the user is ready to continue inside Antigravity, the following prompt should be used:
+### Objective
+Determine whether the completed ManySig feature dataset is scientifically usable and characterize its structure, coverage, variation and risks before any Track-B model training or hypothesis testing.
 
-> Before implementing the ManySig feature extractor, verify the claimed streaming/chunked ingestion mechanism experimentally.
->
-> Do not modify the original `ManySig.pkl.zip`. Do not create a full extracted copy of the dataset.
->
-> Determine whether the proposed approach can actually access the 576 leaf NumPy arrays incrementally from the compressed pickle while keeping memory bounded.
->
-> Perform a small controlled proof-of-concept using only a few leaf arrays and report:
->
-> 1. The exact Python mechanism being used to access a leaf array.
-> 2. Whether standard `pickle.load()` / `pickle.Unpickler` is being used, or whether a custom pickle-stream parser is required.
-> 3. Peak RAM usage during the test.
-> 4. Whether the complete 2.2 GB pickle is ever materialized in memory.
-> 5. Whether the ZIP archive must first be fully extracted or can remain compressed.
-> 6. Whether one `(1000, 256, 2)` leaf array can be processed and discarded before accessing the next leaf.
-> 7. Whether the proposed approach is reliable enough to use for the complete 576,000-burst extraction.
->
-> Do not implement the final extractor yet. Do not extract the complete dataset.
->
-> Clearly distinguish experimentally verified results from assumptions.
+### B1 tasks
+1. Read this handoff first and treat it as the starting checkpoint.
+2. Verify the current Git branch/commit and working-tree status without rewriting history.
+3. Inspect only the targeted files needed to execute B1; do not restart the full historical repository audit unless a specific inconsistency is found.
+4. Verify the tracked ManySig manifest and extraction summary against the existing extraction report.
+5. Verify schema, row counts, coordinate coverage and partition completeness.
+6. Characterize coverage across TX, RX, date and equalization dimensions.
+7. Perform feature-level sanity checks and descriptive statistical/distribution analysis.
+8. Look for obvious duplication, leakage, partition contamination and split-design risks.
+9. Examine receiver/date/equalization variation that will matter for future train/test or cross-condition validation.
+10. Check whether the 16-feature definitions remain exactly aligned with the frozen Track-A definitions. This is a methodological consistency check, not a modification of Track A.
+11. Explicitly document the sample-rate metadata gap and any other provenance limitations.
+12. Separate every output into **Verified Fact / Engineering Observation / Inference / Scientific Result** as appropriate.
+13. Produce a dated B1 report in `docs/06_continuity/` and update continuity/handoff state as necessary.
 
-## Recommended next-chat opening prompt for ChatGPT
+### B1 is NOT allowed to do
+- Do not redo ManySig archive inspection unless required to resolve a concrete inconsistency.
+- Do not rerun the real-archive streaming POC merely to reproduce an already verified result.
+- Do not re-extract all 576 leaves unless a specific reproducibility defect is discovered.
+- Do not alter the frozen Track-A feature definitions.
+- Do not alter the frozen Track-A metrics or evidence.
+- Do not start unrestricted ML training.
+- Do not perform classifier benchmarking as a Track-B scientific result.
+- Do not perform adversarial/poisoning experiments.
+- Do not perform cross-dataset validation yet.
+- Do not claim cross-frequency/generalization evidence.
+- Do not claim scientific validation merely because descriptive analysis succeeds.
+- Do not invent or silently assume sample-rate metadata.
+- Do not commit raw data or ignored Parquet binaries.
+- Do not delete historical files.
+- Do not force-push, reset, rebase destructively, or rewrite history.
 
-Use this as the first message in the next ChatGPT project chat:
+## B1 deliverables
+At the end of B1, the repository should contain, as appropriate:
+- a dated ManySig B1 scientific validation/quality report;
+- any small, reproducible analysis/validation scripts needed for the report;
+- machine-readable summary artifacts only where they materially improve reproducibility;
+- updated session/decision/current-objective documentation if the evidence changes the project state;
+- a new next-chat handoff defining the next bounded phase.
 
-> Continue the RF Fingerprinting Project from the GitHub repository's canonical state as of 02 September 2026. Do not restart completed Track-A work or alter frozen evidence.
->
-> First read and reconcile:
-> 1. `PROJECT_STATE.md`
-> 2. `CURRENT_OBJECTIVE.md`
-> 3. `docs/09_handoff/NEXT_CHAT_HANDOFF_2026-09-02.md`
-> 4. `docs/06_continuity/REFERENCE_REPORT_2026-08-31.md`
-> 5. `docs/06_continuity/DECISIONS.md`
-> 6. `docs/06_continuity/SESSION_LOG.md`
-> 7. `docs/06_continuity/MANYSIG_INSPECTION_2026-09-02.md`
->
-> The current immediate direction is Track-B ManySig preparation using Antigravity IDE. ManySig has been acquired and non-destructively inspected. Its verified structure is 6 TX × 12 RX × 4 dates × 2 equalization states, with 1,000 bursts per leaf and each burst shaped `(256, 2)` float64 I/Q. The raw archive must remain outside Git.
->
-> Before implementing the final extractor, verify the proposed streaming/chunked ingestion mechanism with a small controlled memory test. Do not treat the previous Antigravity inspection claim of <=25–30 MB peak RAM as proven until experimentally demonstrated.
->
-> Preserve the existing Track-A SMoRFFI baseline, all historical decisions, evidence and documents. Clearly separate verified facts, inferences, engineering decisions and scientific results. No deletion, force-push, destructive rewrite or silent change of frozen evidence.
+Do not create unnecessary duplicate documents or duplicate analysis scripts.
 
-## Continuity rules
+## B1 stop condition
+**Stop the chat after B1 is complete.** Completion means:
+- provenance/schema integrity is assessed;
+- coverage across TX/RX/date/equalization is documented;
+- feature sanity/distributions are documented;
+- leakage/duplication/split risks are documented;
+- the sample-rate limitation is explicitly preserved;
+- the scientific usability and limitations of ManySig features are stated;
+- all claims are evidence-labelled;
+- the B1 report and continuity state are committed/pushed;
+- the next-chat handoff is written.
 
-- GitHub remains the project source of truth.
-- Preserve historical documents and experiment artifacts.
-- Do not store raw ManySig or GitHub PATs in the repository.
-- Do not claim ManySig scientific results until experiments are actually run.
-- Keep controlled/derived observations explicitly labelled.
-- Use Implemented / Tested / Demonstrated / Scientifically Validated accurately.
-- If evidence is insufficient, state: **Not demonstrated by the current evidence.**
-- At a substantial accepted milestone, synchronize `main` and `develop` to the same canonical state without destructive history changes.
+At that point, do not continue into ML, adversarial experiments or cross-dataset validation in the same chat. Stop and hand off.
+
+## Evidence vocabulary
+Use only the project vocabulary:
+- **Implemented** — code exists.
+- **Tested** — a defined test was executed.
+- **Demonstrated** — the behaviour was empirically shown in the stated setting.
+- **Scientifically Validated** — only when the appropriate scientific experiment/design supports that level.
+
+Never upgrade an engineering demonstration into scientific validation.
+
+## Preservation rules
+The project is intentionally cumulative. Preserve all historical evidence and decisions. Prefer additive updates over replacement. Do not remove files because a new phase supersedes them. The Track-A baseline remains the control/reference against which later Track-B work may be interpreted.
+
+## Starting instruction for the next Antigravity chat
+Begin with the following principle:
+
+> **Continue from this handoff. Do not restart completed work. First verify the current Git state, then execute only Track-B B1 ManySig Scientific Validation / Dataset Quality Analysis. Stop at the B1 stop condition and create the next handoff.**
